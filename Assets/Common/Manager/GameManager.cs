@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
 using Photon.Pun.UtilityScripts;
+using UnityEngine.UI;
+using UnityEngine;
+using System.Collections;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
