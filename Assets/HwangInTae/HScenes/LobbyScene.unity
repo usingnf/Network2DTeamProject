@@ -4811,7 +4811,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1974264563}
   - component: {fileID: 1974264565}
-  - component: {fileID: 1974264566}
+  - component: {fileID: 1974264564}
   m_Layer: 5
   m_Name: InfoPanel
   m_TagString: Untagged
@@ -4840,15 +4840,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
---- !u!222 &1974264565
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1974264562}
-  m_CullTransparentMesh: 1
---- !u!114 &1974264566
+--- !u!114 &1974264564
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4860,9 +4852,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 697021fa14337e94686a2089096e5a04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateText: {fileID: 1089629954}
-  errorPanel: {fileID: 935698520}
-  errorText: {fileID: 963319340}
+  stateText: {fileID: 0}
+  errorPanel: {fileID: 0}
+  errorText: {fileID: 0}
+--- !u!222 &1974264565
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974264562}
+  m_CullTransparentMesh: 1
 --- !u!1 &2013042336
 GameObject:
   m_ObjectHideFlags: 0
