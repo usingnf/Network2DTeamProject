@@ -581,12 +581,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8a6e9eb2457441479d6cf7c237ef2ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loginPanel: {fileID: 0}
-  inConnectPanel: {fileID: 0}
-  createRoomPanel: {fileID: 0}
-  inLobbyPanel: {fileID: 0}
-  inRoomPanel: {fileID: 0}
-  infoPanel: {fileID: 0}
+  loginPanel: {fileID: 48812977}
+  inConnectPanel: {fileID: 1752283859}
+  createRoomPanel: {fileID: 819061959}
+  inLobbyPanel: {fileID: 1490811440}
+  inRoomPanel: {fileID: 495516498}
+  infoPanel: {fileID: 1974264564}
 --- !u!114 &484014393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2314,7 +2314,7 @@ Camera:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0.052910283, g: 0.13872819, b: 0.2735849, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -4852,9 +4852,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 697021fa14337e94686a2089096e5a04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateText: {fileID: 0}
-  errorPanel: {fileID: 0}
-  errorText: {fileID: 0}
+  stateText: {fileID: 1827738547}
+  errorPanel: {fileID: 935698520}
+  errorText: {fileID: 963319340}
 --- !u!222 &1974264565
 CanvasRenderer:
   m_ObjectHideFlags: 0
