@@ -24,4 +24,8 @@ public class InConnectPanel : MonoBehaviour
         PhotonNetwork.Disconnect();
         LobbyManager.instance.SetActivePanel(LobbyManager.PANEL.Login);
     }
+    public void ExitGameClicked()
+    {
+        Application.Quit();
+    }
 }
