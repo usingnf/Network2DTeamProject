@@ -89,11 +89,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         string roomName = "Room " + Random.Range(1000, 10000);
         RoomOptions options = new RoomOptions { MaxPlayers = 4 };
         PhotonNetwork.CreateRoom(roomName, options, null);
+        Debug.Log(roomName + " 방만듬");
     }
 
     public override void OnJoinedRoom()
     {
-        SetActivePanel(PANEL.Room);
+        // TODO : SetActivePanel(PANEL.Room);
+        PhotonNetwork.LoadLevel("PlayLobbyScene");
+        Debug.Log("방들어감");
     }
 
     public override void OnLeftRoom()

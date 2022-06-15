@@ -12,7 +12,6 @@ public class InPlayLobby : MonoBehaviourPunCallbacks
     public Text playerCount;
 
     int p = 0;
-    CreateRoomPanel createRoom;
 
     public GameObject[] playerPrefab;
 
@@ -20,10 +19,11 @@ public class InPlayLobby : MonoBehaviourPunCallbacks
 
     int playerMax;
     int curPlayerCount;
-
+   
     private void Start()
     {
         curPlayerCount = PhotonNetwork.CountOfPlayersInRooms;
+        curPlayer.text = curPlayerCount.ToString();
     }
 
     public void EnterPlayer()
