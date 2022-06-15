@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/HwangInTae/HScenes/PlayLobbyScene.unity
     guid: 35065a67c2513e0489845fcf7bc8d300
   - enabled: 1
-    path: Assets/Common/GameScene.unity
+    path: Assets/HwangInTae/HScenes/GameScene.unity
     guid: 2dd348104eb553e4dbd2d5e646a48aaf
   m_configObjects: {}
