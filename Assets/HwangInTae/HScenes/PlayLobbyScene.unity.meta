@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/HwangInTae/HScenes/PlayLobbyScene.unity.meta
 guid: 35065a67c2513e0489845fcf7bc8d300
+========
+guid: 6a462b7458efbbd419e9a6dfb8141c2e
+folderAsset: yes
+>>>>>>>> Moons:Assets/MagicCliffsArtwork.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
