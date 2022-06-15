@@ -26,6 +26,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        if (PhotonNetwork.IsConnected)
+        {
+            SetActivePanel(PANEL.Connect);
+        }
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
@@ -52,12 +56,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         SetActivePanel(PANEL.Connect);
     }
+    
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         inLobbyPanel.OnRoomListUpdate(roomList);
     }
-
     public override void OnJoinedLobby()
     {
         inLobbyPanel.ClearRoomList();
@@ -83,7 +87,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         string roomName = "Room " + Random.Range(1000, 10000);
-        RoomOptions options = new RoomOptions { MaxPlayers = 8 };
+        RoomOptions options = new RoomOptions { MaxPlayers = 4 };
         PhotonNetwork.CreateRoom(roomName, options, null);
     }
 

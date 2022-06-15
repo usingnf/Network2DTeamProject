@@ -27,10 +27,11 @@ public class PlayerEntry : MonoBehaviour
     {
         isPlayerReady = !isPlayerReady;
         SetPlayerReady(isPlayerReady);
-
+    
         Hashtable props = new Hashtable() { { GameData.PLAYER_READY, isPlayerReady } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
+      
         if (PhotonNetwork.IsMasterClient)
         {
             LobbyManager.instance.LocalPlayerPropertiesUpdated();
