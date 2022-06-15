@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine.UI;
 
 public class InPlayLobby : MonoBehaviourPun
@@ -9,10 +10,9 @@ public class InPlayLobby : MonoBehaviourPun
     public Text curPlayer;
     public Text playerCount;
 
-    public GameObject playerPrefab;
+    CreateRoomPanel createRoom;
 
-    public Button playButton;
-    public Button leaveButton;
+    public GameObject playerPrefab;
 
     public Transform spawnPos;
 
@@ -21,18 +21,18 @@ public class InPlayLobby : MonoBehaviourPun
 
     private void Start()
     {
-
+        curPlayerCount = PhotonNetwork.CountOfPlayersInRooms;
     }
 
-    private void EnterPlayer()
+    public void EnterPlayer()
     {
         GameObject entry = PhotonNetwork.Instantiate("player플레이어 프리펩", spawnPos.position, playerPrefab.transform.rotation);
     }
-    private void PlayButtonClicker()
+    public void PlayButtonClicker()
     {
         PhotonNetwork.LoadLevel("GameScene");
     }
-    private void LeaveButtonClicker()
+    public void LeaveButtonClicker()
     {
         PhotonNetwork.LeaveRoom();
     }
