@@ -8,7 +8,7 @@ public class LoginPanel : MonoBehaviour
 
     void Start()
     {
-        playerNameInput.text = "Player " + Random.Range(1000, 10000);
+        playerNameInput.text = "난" + Random.Range(1000, 10000) + "번째데구리얌";
     }
 
     public void OnLoginButtonClicked()

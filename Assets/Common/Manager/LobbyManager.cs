@@ -33,7 +33,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
-    public enum PANEL { Login, Connect, Lobby, Room, CreateRoom }
+    public enum PANEL { Login, Connect, Lobby, Room, CreateRoom, Option}
     public void SetActivePanel(PANEL panel)
     {
         loginPanel.gameObject.SetActive(panel == PANEL.Login);
