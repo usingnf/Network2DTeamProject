@@ -1,5 +1,6 @@
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.SceneManagement;
 
 public class InConnectPanel : MonoBehaviour
 {
@@ -10,8 +11,8 @@ public class InConnectPanel : MonoBehaviour
 
     public void OnRandomMatchingButtonClicked()
     {
-        //TODO : PhotonNetwork.JoinRandomRoom();
-        PhotonNetwork.LoadLevel("PlayLobbyScene");
+        PhotonNetwork.JoinRandomRoom();
+        
         Debug.Log("방랜덤들어감");
     }
 

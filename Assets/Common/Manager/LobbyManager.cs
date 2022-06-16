@@ -4,6 +4,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
@@ -86,16 +87,18 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        string roomName = "Room " + Random.Range(1000, 10000);
+        string roomName = "데구리방 " + Random.Range(1000, 10000);
         RoomOptions options = new RoomOptions { MaxPlayers = 4 };
         PhotonNetwork.CreateRoom(roomName, options, null);
+        //SceneManager.LoadScene(1);
+        //PhotonNetwork.LoadLevel(1);
         Debug.Log(roomName + " 방만듬");
     }
 
     public override void OnJoinedRoom()
     {
         // TODO : SetActivePanel(PANEL.Room);
-        PhotonNetwork.LoadLevel("PlayLobbyScene");
+        PhotonNetwork.LoadLevel(1);
         Debug.Log("방들어감");
     }
 
