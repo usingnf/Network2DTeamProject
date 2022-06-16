@@ -70,6 +70,10 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
         PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
+        if(PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.Instantiate("Wall", new Vector3(0.24f, -1.41f, 0), Quaternion.identity, 0);
+        }
     }
 
     private bool CheckAllPlayerLoadLevel()
