@@ -1,29 +1,29 @@
-﻿using Photon.Pun;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class InPlayLobby : MonoBehaviourPunCallbacks
 {
-    public Text curReayPlayer;
+    public Text curPlayer;
     public Text playerCount;
 
     int p = 0;
 
-    public GameObject chatPrefab;
     public GameObject[] playerPrefab;
 
     public Transform spawnPos;
 
-    public int playerMax;
-    public int curReadyPlayerCount;
-
+    int playerMax;
+    int curPlayerCount;
+   
     private void Start()
     {
-        if (null != chatPrefab)
-        {
-            chatPrefab.SetActive(true);
-        }
+        curPlayerCount = PhotonNetwork.CountOfPlayersInRooms;
+        curPlayer.text = curPlayerCount.ToString();
     }
 
     public void EnterPlayer()
@@ -39,12 +39,7 @@ public class InPlayLobby : MonoBehaviourPunCallbacks
     }
     public void LeaveButtonClicker()
     {
-        PhotonNetwork.LeaveRoom();
-        
-    }
-
-    public override void OnLeftRoom()
-    {
         SceneManager.LoadScene("LobbyScene");
+        PhotonNetwork.LeaveRoom();
     }
 }

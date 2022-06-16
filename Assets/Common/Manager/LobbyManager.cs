@@ -16,7 +16,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public InLobbyPanel inLobbyPanel;
     public InRoomPanel inRoomPanel;
     public InfoPanel infoPanel;
-    public OptionPanel optionPanel;
 
     #region UNITY
 
@@ -34,7 +33,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
-    public enum PANEL { Login, Connect, Lobby, Room, CreateRoom , Option}
+    public enum PANEL { Login, Connect, Lobby, Room, CreateRoom }
     public void SetActivePanel(PANEL panel)
     {
         loginPanel.gameObject.SetActive(panel == PANEL.Login);
@@ -42,7 +41,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         createRoomPanel.gameObject.SetActive(panel == PANEL.CreateRoom);
         inLobbyPanel.gameObject.SetActive(panel == PANEL.Lobby);
         inRoomPanel.gameObject.SetActive(panel == PANEL.Room);
-        optionPanel.gameObject.SetActive(panel == PANEL.Option);
     }
 
     public void ShowError(string error)
