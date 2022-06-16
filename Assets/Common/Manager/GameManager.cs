@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         return count;
     }
 
-    private void PrintInfo(string info)
+    public void PrintInfo(string info)
     {
         Debug.Log(info);
         infoText.text = info;
@@ -106,4 +106,5 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         throw new System.NotImplementedException();
     }
+
 }

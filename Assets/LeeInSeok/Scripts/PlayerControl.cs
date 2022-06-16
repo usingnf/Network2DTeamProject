@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class PlayerControl : MonoBehaviourPun, IPunObservable
 {
@@ -9,13 +10,15 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     public float speed = 4.0f;
     public float jumpPower = 5.0f;
     public float size = 1.0f;
-    // Start is called before the first frame update
+
+
+
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         if (photonView.IsMine == false)
@@ -60,5 +63,14 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         {
 
         }
+    }
+
+    public void ClearStage()
+    {   // TODO 시점
+        Hashtable props = new Hashtable() {{GameData.PLAYER_CLEAR, true}};
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        
+        StageManager.Instance.CheckClear();
     }
 }
