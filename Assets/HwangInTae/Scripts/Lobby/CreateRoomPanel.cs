@@ -6,7 +6,6 @@ using Photon.Realtime;
 public class CreateRoomPanel : MonoBehaviour
 {
     public InputField roomNameInputField;
-    public InputField maxPlayersInputField;
 
     public void OnCreateRoomCancelButtonClicked()
     {
@@ -20,9 +19,7 @@ public class CreateRoomPanel : MonoBehaviour
         if (roomName == "")
             roomName = "Room" + Random.Range(1000, 10000);
 
-        byte maxPlayer = byte.Parse(maxPlayersInputField.text);
-        maxPlayer = (byte)Mathf.Clamp(maxPlayer, 1, 8);
-
+        byte maxPlayer = 4;
         RoomOptions options = new RoomOptions { MaxPlayers = maxPlayer };
         PhotonNetwork.CreateRoom(roomName, options, null);
     }

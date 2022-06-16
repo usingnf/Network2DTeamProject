@@ -10,7 +10,9 @@ public class InConnectPanel : MonoBehaviour
 
     public void OnRandomMatchingButtonClicked()
     {
-        PhotonNetwork.JoinRandomRoom();
+        //TODO : PhotonNetwork.JoinRandomRoom();
+        PhotonNetwork.LoadLevel("PlayLobbyScene");
+        Debug.Log("방랜덤들어감");
     }
 
     public void OnLobbyButtonClicked()
@@ -23,5 +25,9 @@ public class InConnectPanel : MonoBehaviour
     {
         PhotonNetwork.Disconnect();
         LobbyManager.instance.SetActivePanel(LobbyManager.PANEL.Login);
+    }
+    public void ExitGameClicked()
+    {
+        Application.Quit();
     }
 }
