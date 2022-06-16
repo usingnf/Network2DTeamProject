@@ -5,6 +5,7 @@ using Photon.Pun.UtilityScripts;
 using UnityEngine.UI;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -68,7 +69,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         PrintInfo("Start Game!");
 
         int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
-        PhotonNetwork.Instantiate("PlayerModel", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
+        PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
     }
 
     private bool CheckAllPlayerLoadLevel()
@@ -99,5 +100,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         Debug.Log(info);
         infoText.text = info;
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        throw new System.NotImplementedException();
     }
 }
