@@ -1,10 +1,11 @@
-﻿using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
 using Photon.Pun.UtilityScripts;
 using UnityEngine.UI;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -12,6 +13,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public Text infoText;
     public Transform[] spawnPos;
+    public Dictionary<int, GameObject> players = new Dictionary<int, GameObject>();
+    public int masterNum = 0;
 
     private void Awake()
     {
@@ -22,9 +25,47 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable() { { GameData.PLAYER_LOAD, true } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        
+        if(PhotonNetwork.IsMasterClient)
+        {
+            props = new ExitGames.Client.Photon.Hashtable() { { "RoomState", "Start" } };
+            PhotonNetwork.CurrentRoom.SetCustomProperties(props);
+            masterNum = PhotonNetwork.MasterClient.ActorNumber;
+            StartGame();
+        }
+        else
+        {
+            if((string)PhotonNetwork.CurrentRoom.CustomProperties["RoomState"] == "Start")
+            {
+                Rejoin();
+                Debug.Log("Rejoin");
+            }
+            else
+            {
+                StartGame();
+            }
+        }
+        
     }
 
     #region PHOTON CALLBACK
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        Debug.Log("MasterChange");
+        GameObject[] obj = GameObject.FindGameObjectsWithTag("Respawn");
+        foreach(GameObject obj2 in obj)
+        {
+            Debug.Log("obj");
+            //obj2.GetComponent<PhotonView>().OwnerActorNr = newMasterClient.ActorNumber;
+            //obj2.GetComponent<PhotonView>().TransferOwnership(newMasterClient);
+            if(PhotonNetwork.LocalPlayer == newMasterClient)
+            {
+                PhotonNetwork.Instantiate("Wall", obj2.transform.position, obj2.transform.rotation, 0);
+            }
+            
+        }
+    }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
@@ -39,6 +80,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
+        /*
         if (changedProps.ContainsKey(GameData.PLAYER_LOAD))
         {
             if (CheckAllPlayerLoadLevel())
@@ -50,9 +92,30 @@ public class GameManager : MonoBehaviourPunCallbacks
                 PrintInfo("wait players " + PlayersLoadLevel() + " / " + PhotonNetwork.PlayerList.Length);
             }
         }
+        */
     }
 
     #endregion PHOTON CALLBACK
+
+    private void Rejoin()
+    {
+        int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
+        GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[0].position, spawnPos[0].rotation, 0);
+        Camera.main.transform.parent = obj.transform;
+    }
+
+    private void StartGame()
+    {
+        PrintInfo("Start Game!");
+
+        int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
+        GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
+        Camera.main.transform.parent = obj.transform;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.Instantiate("Wall", new Vector3(0.24f, -1.41f, 0), Quaternion.identity, 0);
+        }
+    }
 
     private IEnumerator StartCountDown()
     {
@@ -68,7 +131,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         PrintInfo("Start Game!");
 
         int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
-        PhotonNetwork.Instantiate("PlayerModel", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
+        GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
+        Camera.main.transform.parent = obj.transform;
+        if(PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.Instantiate("Wall", new Vector3(0.24f, -1.41f, 0), Quaternion.identity, 0);
+        }
     }
 
     private bool CheckAllPlayerLoadLevel()
@@ -95,11 +163,48 @@ public class GameManager : MonoBehaviourPunCallbacks
         return count;
     }
 
-    private void PrintInfo(string info)
+    public void PrintInfo(string info)
     {
         if(info != null) { 
         Debug.Log(info);
         infoText.text = info;
         }
     }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        throw new System.NotImplementedException();
+    }
+
+
+    public Transform GetNextObserveTF(int obNumber)
+    {
+        for (int i = 1; i <= players.Count; i++)
+        {
+            obNumber += 1;
+            //Debug.Log("obNumber : " + obNumber + " / PhotonNetwork.LocalPlayer.ActorNumber : " + PhotonNetwork.LocalPlayer.ActorNumber);
+
+            if (obNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+            {   
+                continue;
+            }
+
+            if (obNumber == players.Count + 1)
+            {
+                obNumber = 1;
+            }
+
+            GameObject player;
+            players.TryGetValue(obNumber, out player);
+
+            Transform tf = player.GetComponent<PlayerControl>().GetObserveTransform();
+            
+            if (null != tf)
+            {
+                return tf;
+            }
+        }
+        return null;
+    }
+
 }

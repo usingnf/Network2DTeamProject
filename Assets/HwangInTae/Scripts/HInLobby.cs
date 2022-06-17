@@ -25,7 +25,7 @@ using UnityEngine.SceneManagement;
         {
             ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable() { { GameData.PLAYER_IN, true } };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-            PhotonNetwork.Instantiate("HTestPlayer", spawnPos.position, spawnPos.rotation, 0);
+            PhotonNetwork.Instantiate("PlayerCharacter", spawnPos.position, spawnPos.rotation, 0);
             PhotonNetwork.Instantiate("ReadyPotal", potalPos.position, potalPos.rotation, 0);
         }
 

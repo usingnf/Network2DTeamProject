@@ -43,7 +43,7 @@ public class ReadyPotal : MonoBehaviourPun
             HInLobby.Instance.PlayersLoadLevel();
             //savePlayer[readyPlayer] = other.gameObject;
             Debug.Log(PhotonNetwork.CurrentRoom.MaxPlayers);
-            if (PhotonNetwork.CurrentRoom.MaxPlayers == (byte)readyPlayer) 
+            if (/*PhotonNetwork.CurrentRoom.MaxPlayers*/1 == (byte)readyPlayer) 
                 StartCoroutine(StartCountDown());
             PhotonNetwork.Destroy(playerColl.gameObject);
         }

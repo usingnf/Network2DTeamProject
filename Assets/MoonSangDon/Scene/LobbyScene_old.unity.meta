@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/MoonSangDon/Scene/LobbyScene_old.unity.meta
 guid: 95715fafe6af0e041b3d690adbeb8cc4
+========
+guid: b25c87f81b56aec4195d4c3b803c194f
+folderAsset: yes
+>>>>>>>> main:Assets/Resources.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

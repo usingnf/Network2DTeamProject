@@ -8,7 +8,7 @@ public class LoginPanel : MonoBehaviour
 
     void Start()
     {
-        playerNameInput.text = "난" + Random.Range(1000, 10000) + "번째데구리얌";
+        playerNameInput.text = "Player " + Random.Range(1000, 10000);
     }
 
     public void OnLoginButtonClicked()
@@ -23,5 +23,14 @@ public class LoginPanel : MonoBehaviour
 
         PhotonNetwork.LocalPlayer.NickName = playerName;
         PhotonNetwork.ConnectUsingSettings();
+    }
+    public void QuitButtonClicked()
+    {
+        if (PhotonNetwork.IsConnected)
+            return;
+        else
+        {
+            Application.Quit();
+        }
     }
 }
