@@ -14,6 +14,8 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
+        GameManager.Instance.players.Add(PhotonNetwork.LocalPlayer.ActorNumber, this.gameObject);
+        Debug.Log(PhotonNetwork.LocalPlayer.ActorNumber);
     }
 
     // Update is called once per frame

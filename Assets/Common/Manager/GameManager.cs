@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public Text infoText;
     public Transform[] spawnPos;
+    public Dictionary<int, GameObject> players = new Dictionary<int, GameObject>();
 
     private void Awake()
     {
@@ -69,7 +70,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         PrintInfo("Start Game!");
 
         int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
-        PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
+        GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
+        Camera.main.transform.parent = obj.transform;
         if(PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.Instantiate("Wall", new Vector3(0.24f, -1.41f, 0), Quaternion.identity, 0);
