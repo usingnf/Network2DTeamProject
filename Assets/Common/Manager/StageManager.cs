@@ -16,7 +16,6 @@ public class StageManager : MonoBehaviourPunCallbacks
 
     private void Awake() {
         Instance = this;
-        DontDestroyOnLoad(this);
     }
 
 
@@ -38,7 +37,7 @@ public class StageManager : MonoBehaviourPunCallbacks
         //PhotonNetwork.LoadLevel("StageScene_1");
     }
 
-    public void CheckClear()
+    public bool CheckClear()
     {
         foreach(Player player in PhotonNetwork.PlayerList)
         {   // 플레이어 돌면서 Clear 확인
@@ -47,12 +46,13 @@ public class StageManager : MonoBehaviourPunCallbacks
             {
                 if (!(bool)isClear) 
                 {
-                    return;
+                    return false;
                 }
             }
         }
 
         StartCoroutine(StageClear());
+        return true;
     }
 
 
@@ -64,8 +64,9 @@ public class StageManager : MonoBehaviourPunCallbacks
 
         yield return new WaitForSeconds(1f);
         // TODO 스테이지 전환
-        PhotonNetwork.LoadLevel(
-            string.Format("StageScene_{0}", ++curStage)
-        );
+        // PhotonNetwork.LoadLevel(
+        //     string.Format("StageScene_{0}", ++curStage)
+        // );
+        PhotonNetwork.LoadLevel("GameScene");
     }
 }

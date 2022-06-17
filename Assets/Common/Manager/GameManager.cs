@@ -113,4 +113,35 @@ public class GameManager : MonoBehaviourPunCallbacks
         throw new System.NotImplementedException();
     }
 
+
+    public Transform GetNextObserveTF(int obNumber)
+    {
+        for (int i = 1; i <= players.Count; i++)
+        {
+            obNumber += 1;
+            //Debug.Log("obNumber : " + obNumber + " / PhotonNetwork.LocalPlayer.ActorNumber : " + PhotonNetwork.LocalPlayer.ActorNumber);
+
+            if (obNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+            {   
+                continue;
+            }
+
+            if (obNumber == players.Count + 1)
+            {
+                obNumber = 1;
+            }
+
+            GameObject player;
+            players.TryGetValue(obNumber, out player);
+
+            Transform tf = player.GetComponent<PlayerControl>().GetObserveTransform();
+            
+            if (null != tf)
+            {
+                return tf;
+            }
+        }
+        return null;
+    }
+
 }

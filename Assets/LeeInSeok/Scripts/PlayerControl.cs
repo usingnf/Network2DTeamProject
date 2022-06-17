@@ -7,16 +7,43 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class PlayerControl : MonoBehaviourPun, IPunObservable
 {
     private Rigidbody2D rigid;
+    private BoxCollider2D coll;
+    private SpriteRenderer rend;
     public float speed = 4.0f;
     public float jumpPower = 5.0f;
     public float size = 1.0f;
     Vector2 moveVec = Vector2.zero;
-    // Start is called before the first frame update
+    public bool isObserve;
+    public int ObserveNumber;
+
+
+
+    private void OnEnable() 
+    {
+        ResetClearCustomProperties();
+    }
+
+    void ResetClearCustomProperties()
+    {
+        Hashtable props = new Hashtable {{ GameData.PLAYER_CLEAR, false }};
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+        isObserve = false;
+    }
+
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
-        GameManager.Instance.players.Add(PhotonNetwork.LocalPlayer.ActorNumber, this.gameObject);
-        Debug.Log(PhotonNetwork.LocalPlayer.ActorNumber);
+        coll = GetComponent<BoxCollider2D>();
+        rend = GetComponent<SpriteRenderer>();
+
+        GameManager.Instance.players.Add(photonView.OwnerActorNr, this.gameObject);
+
+        Debug.Log(string.Format(
+            "photonView.OwnerActorNr : {0} / LocalPlayer.ActorNumber : {1}",
+            photonView.OwnerActorNr,
+            PhotonNetwork.LocalPlayer.ActorNumber)
+        );
     }
 
 
@@ -25,6 +52,19 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine == false)
             return;
 
+        
+        if (isObserve)
+        {
+            Observe();
+        }
+        else
+        {
+            Move();
+        }
+    }
+
+    void Move()
+    {
         moveVec = Vector2.zero;
         if (Input.GetKey(KeyCode.A))
         {
@@ -38,11 +78,17 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         {
             //Jump(jumpPower);
             photonView.RPC("Jump", RpcTarget.All, jumpPower);
-
         }
         moveVec = moveVec.normalized;
         rigid.position += moveVec * speed * Time.fixedDeltaTime;
+    }
 
+    void Observe()
+    {
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            ObserveNext(ObserveNumber);
+        }
     }
 
     [PunRPC]
@@ -74,11 +120,35 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     }
 
     public void ClearStage()
-    {   // TODO 시점
+    {   
         Hashtable props = new Hashtable() {{GameData.PLAYER_CLEAR, true}};
 
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         
-        StageManager.Instance.CheckClear();
+        // 아직 스테이지 완전 클리어 아니면 옵저버 모드로 전환
+        if (!StageManager.Instance.CheckClear())
+        {   // TODO 캐릭터 렌더
+            isObserve = true;
+            rend.enabled = false;
+            coll.enabled = false;
+            ObserveNext(photonView.OwnerActorNr);
+        }
+
+    }
+
+    public Transform GetObserveTransform()
+    {
+        if (isObserve)
+        {
+            return null;
+        }
+
+        return transform;
+    }
+
+    void ObserveNext(int obNumber)
+    {
+        Camera.main.transform.SetParent(GameManager.Instance.GetNextObserveTF(obNumber));
+        Camera.main.transform.localPosition = new Vector3(0f, 0f, -10f);
     }
 }

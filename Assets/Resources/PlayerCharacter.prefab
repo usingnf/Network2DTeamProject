@@ -226,3 +226,5 @@ MonoBehaviour:
   speed: 4
   jumpPower: 5
   size: 1
+  isObserve: 0
+  ObserveNumber: 0

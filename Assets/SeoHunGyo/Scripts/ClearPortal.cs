@@ -5,7 +5,7 @@ using UnityEngine;
 public class ClearPortal : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other) 
-    {   // TODO 플레이어랑만 충돌체크 하도록 하던가 예외처리로 하던가  
+    {   // 캐릭터 렌더
         // w or 위쪽 방향키 눌러야 통과하게
 
         if (other.gameObject.layer == 5)
