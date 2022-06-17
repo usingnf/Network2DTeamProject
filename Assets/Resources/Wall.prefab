@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 4765761260204341843}
   - component: {fileID: 4765761260204341844}
   - component: {fileID: 4765761260204341845}
+  - component: {fileID: 1011900287653009141}
   m_Layer: 4
   m_Name: Wall
-  m_TagString: Untagged
+  m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -164,10 +165,22 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 2
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
   - {fileID: 4765761260204341844}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1011900287653009141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4765761260204341806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 039d224594b375944a2767b550851d61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
