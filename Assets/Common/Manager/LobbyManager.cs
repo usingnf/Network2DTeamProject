@@ -29,7 +29,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsConnected)
         {
-            SetActivePanel(PANEL.Connect);
+            SetActivePanel(PANEL.Connect);//여기 참고할것
         }
         PhotonNetwork.AutomaticallySyncScene = true;
     }

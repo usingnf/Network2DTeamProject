@@ -39,7 +39,17 @@ public class InPlayLobby : MonoBehaviourPunCallbacks
     }
     public void LeaveButtonClicker()
     {
+<<<<<<< Updated upstream
         SceneManager.LoadScene("LobbyScene");
         PhotonNetwork.LeaveRoom();
+=======
+        PhotonNetwork.LeaveRoom();
+        
+    }
+
+    public override void OnLeftRoom()
+    {
+        SceneManager.LoadScene(0);//썌얘::
+>>>>>>> Stashed changes
     }
 }
