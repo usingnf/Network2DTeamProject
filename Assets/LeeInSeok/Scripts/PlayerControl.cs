@@ -9,10 +9,13 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     public float speed = 4.0f;
     public float jumpPower = 5.0f;
     public float size = 1.0f;
+    Vector2 moveVec = Vector2.zero;
     // Start is called before the first frame update
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
+        GameManager.Instance.players.Add(PhotonNetwork.LocalPlayer.ActorNumber, this.gameObject);
+        Debug.Log(PhotonNetwork.LocalPlayer.ActorNumber);
     }
 
     // Update is called once per frame
@@ -21,7 +24,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine == false)
             return;
 
-        Vector2 moveVec = Vector2.zero;
+        moveVec = Vector2.zero;
         if (Input.GetKey(KeyCode.A))
         {
             moveVec += new Vector2(-1, 0);
@@ -32,16 +35,23 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Jump(jumpPower);
-            //photonView.RPC("Jump", RpcTarget.All, photonView.ViewID, jumpPower);
+            //Jump(jumpPower);
+            photonView.RPC("Jump", RpcTarget.All, jumpPower);
 
         }
         moveVec = moveVec.normalized;
-        rigid.position += moveVec * speed * Time.deltaTime;
+        rigid.position += moveVec * speed * Time.fixedDeltaTime;
+
     }
 
+    [PunRPC]
     public void Jump(float power)
     {
+        RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.down, size / 2, LayerMask.GetMask("UI", "Water"));
+        if (downHit.Length <= 1)
+        {
+            return;
+        }
         RaycastHit2D[] upHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.up, size / 2, LayerMask.GetMask("UI"));
         if(upHit.Length <= 1)
         {
@@ -54,11 +64,11 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
-
+            //stream.SendNext(rigid.position);
         }
         else
         {
-
+            //rigid.position = (Vector2)stream.ReceiveNext();
         }
     }
 }
