@@ -228,3 +228,4 @@ MonoBehaviour:
   size: 1
   isObserve: 0
   ObserveNumber: 0
+  key: {fileID: 0}

@@ -15,6 +15,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     Vector2 moveVec = Vector2.zero;
     public bool isObserve;
     public int ObserveNumber;
+    public KeyScript key = null;
 
 
 

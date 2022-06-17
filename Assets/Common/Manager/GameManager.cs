@@ -7,10 +7,19 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+public enum GameState
+{
+    None,
+    Play,
+    Clear,
+    Pause,
+}
+
 public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager Instance { get; private set; }
 
+    public GameState state = GameState.None;
     public Text infoText;
     public Transform[] spawnPos;
     public Dictionary<int, GameObject> players = new Dictionary<int, GameObject>();
@@ -25,9 +34,12 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable() { { GameData.PLAYER_LOAD, true } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
         
-        if(PhotonNetwork.IsMasterClient)
+
+        if (PhotonNetwork.IsMasterClient)
         {
+            Debug.Log("master");
             props = new ExitGames.Client.Photon.Hashtable() { { "RoomState", "Start" } };
             PhotonNetwork.CurrentRoom.SetCustomProperties(props);
             masterNum = PhotonNetwork.MasterClient.ActorNumber;
@@ -42,6 +54,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
             else
             {
+                Debug.Log("noMaster");
                 StartGame();
             }
         }

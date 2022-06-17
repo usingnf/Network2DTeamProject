@@ -67,6 +67,7 @@ public class StageManager : MonoBehaviourPunCallbacks
         // PhotonNetwork.LoadLevel(
         //     string.Format("StageScene_{0}", ++curStage)
         // );
+        Debug.Log("clear");
         PhotonNetwork.LoadLevel("GameScene");
     }
 }
