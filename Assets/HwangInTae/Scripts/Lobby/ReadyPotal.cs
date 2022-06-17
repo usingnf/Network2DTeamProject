@@ -7,53 +7,64 @@ using UnityEngine.UI;
 
 public class ReadyPotal : MonoBehaviourPun
 {
-    public Player[] savePlayers;
-    public Button playButton;
-  
-    int number = 0;
-    bool[] playerReady;
-    /* foreach (Player p in PhotonNetwork.PlayerList)
-      {
-          GameObject entry = Instantiate(playerEntryPrefab);
-          entry.transform.SetParent(playerListContent.transform);
-          entry.transform.localScale = Vector3.one;
-          entry.GetComponent<PlayerEntry>().Initialize(p.ActorNumber, p.NickName);
+    public GameObject[] savePlayer;
+    public Text startCount;
+    bool ischeck = false;
+    int readyPlayer = 0;
 
-          object isPlayerReady;
-          if (p.CustomProperties.TryGetValue(GameData.PLAYER_READY, out isPlayerReady))
-          {
-              entry.GetComponent<PlayerEntry>().SetPlayerReady((bool)isPlayerReady);
-          }
-
-          playerListEntries.Add(p.ActorNumber, entry);
-      }*/
+    Collider2D playerColl;
+   
     private void OnTriggerEnter2D(Collider2D other)
     {
-        InPlayLobby lobby = new InPlayLobby();
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (other.gameObject.tag == "Player")
         {
-            playerReady[number] = true;
-            savePlayers[number] = other.GetComponent<Player>();
-            PhotonNetwork.Destroy(other.gameObject);
-            number++;
-            photonView.RPC("ReadyPlayerCount",PhotonNetwork.LocalPlayer);
-            if (lobby.playerMax == ReadyPlayerCount())
-            {
-                if (PhotonNetwork.IsMasterClient)
-                    playButton.gameObject.SetActive(true);
-                else
-                    return;
-            }
+            ischeck = true;
+            playerColl = other;
         }
     }
-    [PunRPC]
-    public int ReadyPlayerCount()
+    private void Update()
     {
-        int p = 0;
-        if (playerReady[p])
-            p++;
-        else
-            p--;
-        return p;
+        if (ischeck)
+            Ready();
     }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Player") { 
+            ischeck = false;
+            playerColl = null;
+        }
+    }
+    public void Ready()
+    {
+        if (Input.GetKey(KeyCode.R))
+        {
+            readyPlayer++;
+            HInLobby.Instance.PlayersLoadLevel();
+            //savePlayer[readyPlayer] = other.gameObject;
+            Debug.Log(PhotonNetwork.CurrentRoom.MaxPlayers);
+            if (PhotonNetwork.CurrentRoom.MaxPlayers == (byte)readyPlayer) 
+                StartCoroutine(StartCountDown());
+            PhotonNetwork.Destroy(playerColl.gameObject);
+        }
+    }
+    private IEnumerator StartCountDown()
+    {
+
+        HInLobby.Instance.PrintInfo("All Player Loaded, Start Count Down");
+        yield return new WaitForSeconds(1.0f);
+
+        for (int i = GameData.COUNTDOWN; i > 0; i--)
+        {
+            HInLobby.Instance.PrintInfo("Count Down " + i);
+            yield return new WaitForSeconds(1.0f);
+        }
+        HInLobby.Instance.PrintInfo("Start Game!");
+        yield return new WaitForSeconds(0.3f);
+        PhotonNetwork.LoadLevel(2);
+
+        //int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
+        //PhotonNetwork.Instantiate("TestPlayer", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
+    }
+   
 }

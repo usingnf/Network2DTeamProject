@@ -31,4 +31,8 @@ public class InConnectPanel : MonoBehaviour
     {
         Application.Quit();
     }
+    public void OptionPanelClicked()
+    {
+        LobbyManager.instance.SetActivePanel(LobbyManager.PANEL.Option);
+    }
 }

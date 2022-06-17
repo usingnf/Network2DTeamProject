@@ -33,9 +33,9 @@ public class InPlayLobby : MonoBehaviourPunCallbacks
         if (p < playerPrefab.Length)
             p = 0;
     }
-    public void PlayButtonClicker()
+    public void GameStart()
     {
-        PhotonNetwork.LoadLevel("GameScene");
+        PhotonNetwork.LoadLevel(2);
     }
     public void LeaveButtonClicker()
     {
@@ -45,6 +45,6 @@ public class InPlayLobby : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
-        SceneManager.LoadScene("LobbyScene");
+        SceneManager.LoadScene(0);
     }
 }
