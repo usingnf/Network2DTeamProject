@@ -6,9 +6,10 @@ using UnityEngine;
 public class KeyScript : MonoBehaviourPun
 {
     public GameObject owner = null;
+    public Vector3 startVec = Vector3.zero;
     void Start()
     {
-        
+        startVec = transform.position;
     }
 
     // Update is called once per frame
@@ -28,9 +29,18 @@ public class KeyScript : MonoBehaviourPun
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        /*
         if(collision.gameObject.layer == LayerMask.NameToLayer("UI"))
         {
             SetOwner(collision.gameObject.GetComponent<PlayerControl>());
         }
+        */
+    }
+
+    public void Return()
+    {
+        owner.GetComponent<PlayerControl>().key = null;
+        this.owner = null;
+        this.transform.position = startVec;
     }
 }

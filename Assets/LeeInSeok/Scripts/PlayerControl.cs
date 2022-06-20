@@ -14,9 +14,9 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     public float size = 1.0f;
     Vector2 moveVec = Vector2.zero;
     public bool isObserve;
-    public int ObserveNumber;
+    public int observeNumber;
     public KeyScript key = null;
-
+    private GameObject doorObj = null;
 
 
     private void OnEnable() 
@@ -38,7 +38,8 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         coll = GetComponent<BoxCollider2D>();
         rend = GetComponent<SpriteRenderer>();
 
-        GameManager.Instance.players.Add(photonView.OwnerActorNr, this.gameObject);
+        if(GameManager.Instance != null)
+            GameManager.Instance.players.Add(photonView.OwnerActorNr, this.gameObject);
 
         Debug.Log(string.Format(
             "photonView.OwnerActorNr : {0} / LocalPlayer.ActorNumber : {1}",
@@ -95,13 +96,29 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void Jump(float power)
     {
+        int count = 0;
         RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.down, size / 2, LayerMask.GetMask("UI", "Water"));
-        if (downHit.Length <= 1)
+        foreach(RaycastHit2D hit in downHit)
+        {
+            if(hit.collider.isTrigger == false)
+            {
+                count++;
+            }
+        }
+        if (count <= 1)
         {
             return;
         }
+        count = 0;
         RaycastHit2D[] upHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.up, size / 2, LayerMask.GetMask("UI"));
-        if(upHit.Length <= 1)
+        foreach (RaycastHit2D hit in upHit)
+        {
+            if (hit.collider.isTrigger == false)
+            {
+                count++;
+            }
+        }
+        if (count <= 1)
         {
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         }
@@ -158,6 +175,37 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     {   
         Camera.main.transform.SetParent(GameManager.Instance.GetNextObserveTF(ref obNumber));
         Camera.main.transform.localPosition = new Vector3(0f, 0f, -10f);
+    }
+
+    [PunRPC]
+    void UseKey()
+    {
+        if (this.key != null)
+        {
+            Destroy(key.gameObject);
+            this.key = null;
+            Destroy(doorObj.gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //TODO: 테그 추가해야함.
+        if (collision.gameObject.tag == "Key")
+        {
+            if(collision.GetComponent<KeyScript>().owner == null)
+                collision.GetComponent<KeyScript>().SetOwner(this);
+        }
+        if (collision.gameObject.tag == "Door")
+        {
+            if(this.key != null)
+            {
+                doorObj = collision.gameObject;
+                photonView.RPC("UseKey", RpcTarget.All);
+                
+            }
+            
+        }
     }
 
 }
