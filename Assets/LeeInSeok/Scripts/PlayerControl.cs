@@ -13,8 +13,8 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     public float jumpPower = 5.0f;
     public float size = 1.0f;
     Vector2 moveVec = Vector2.zero;
-    public bool isObserve;
-    public int ObserveNumber;
+    public bool isObserve;              
+    public int observeNumber;               // 현재 관전중인 플레이어 번호
 
 
 
@@ -25,8 +25,8 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
     void ResetClearCustomProperties()
     {
-        Hashtable props = new Hashtable {{ GameData.PLAYER_CLEAR, false }};
-        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        // Hashtable props = new Hashtable {{ GameData.PLAYER_CLEAR, false }};
+        // PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
         isObserve = false;
     }
@@ -48,7 +48,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
 
     void Update()
-    {
+     {
         if (photonView.IsMine == false)
             return;
 
@@ -87,7 +87,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     {
         if (Input.GetKeyDown(KeyCode.D))
         {
-            ObserveNext(ObserveNumber);
+            ObserveNext(ref observeNumber);
         }
     }
 
@@ -122,34 +122,40 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
     public void ClearStage()
     {   
-        Hashtable props = new Hashtable() {{GameData.PLAYER_CLEAR, true}};
+        // Hashtable props = new Hashtable() {{GameData.PLAYER_CLEAR, true}};
 
-        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        // PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         
+
+
         // 아직 스테이지 완전 클리어 아니면 옵저버 모드로 전환
-        if (!StageManager.Instance.CheckClear())
-        {   // TODO 캐릭터 렌더
-            isObserve = true;
-            rend.enabled = false;
-            coll.enabled = false;
-            ObserveNext(photonView.OwnerActorNr);
-        }
+        StageManager.Instance.GoalIn(this);
+
+        // if (!StageManager.Instance.CheckClear())
+        // {   
+        //     isObserve = true;
+        //     rend.enabled = false;
+        //     coll.enabled = false;
+        //     ObserveNext(photonView.OwnerActorNr);
+        // }
 
     }
 
-    public Transform GetObserveTransform()
+    public void SetObserveMode()
     {
-        if (isObserve)
-        {
-            return null;
-        }
+        isObserve = true;
+        rend.enabled = false;
+        coll.enabled = false;
+        rigid.gravityScale = 0f;
 
-        return transform;
+        observeNumber = photonView.OwnerActorNr;
+
+        ObserveNext(ref observeNumber);
     }
 
-    void ObserveNext(int obNumber)
-    {
-        Camera.main.transform.SetParent(GameManager.Instance.GetNextObserveTF(obNumber));
+    void ObserveNext(ref int obNumber)
+    {   
+        Camera.main.transform.SetParent(GameManager.Instance.GetNextObserveTF(ref obNumber));
         Camera.main.transform.localPosition = new Vector3(0f, 0f, -10f);
     }
 }
