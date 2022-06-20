@@ -6,13 +6,16 @@ using UnityEngine.UI;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class StageManager : MonoBehaviourPunCallbacks
 {
     public static StageManager Instance { get; private set; }
 
-    public int curStage = 1;
-    public int clearCount = 0;      // 4명 다 들어오면 다음 스테이지
+    public int curStage = 1;        // 매 스테이지 StageMgr 둘거면 string nextSceneName 두고 그걸로 불러와도 될듯
+    public int clearCount = 0;      // 클리어한 플레이어 수 체크
+
+
 
     private void Awake() {
         Instance = this;
@@ -33,19 +36,23 @@ public class StageManager : MonoBehaviourPunCallbacks
 
     void Restart()
     {   // TODO 씬 이름 "Stage " + curStage로
-        PhotonNetwork.LoadLevel("LoadingScene");
+
+        Hashtable props = new Hashtable() { { "RoomState", "ReStart" } };
+        PhotonNetwork.CurrentRoom.SetCustomProperties(props);
+
+        PhotonNetwork.LoadLevel("GameScene");
         //PhotonNetwork.LoadLevel("StageScene_1");
     }
 
     public bool CheckClear()
-    {
+    {   
         foreach(Player player in PhotonNetwork.PlayerList)
         {   // 플레이어 돌면서 Clear 확인
             object isClear;
             if (player.CustomProperties.TryGetValue(GameData.PLAYER_CLEAR, out isClear))
             {
                 if (!(bool)isClear) 
-                {
+                {   //Debug.Log("UnClear");
                     return false;
                 }
             }
@@ -55,6 +62,20 @@ public class StageManager : MonoBehaviourPunCallbacks
         return true;
     }
 
+    public void GoalIn(PlayerControl player)
+    {
+        clearCount++;
+
+        if (clearCount == PhotonNetwork.PlayerList.Length)
+        {
+            StartCoroutine(StageClear());
+        }
+        else
+        {
+            player.SetObserveMode();
+        }
+    }
+
 
     IEnumerator StageClear()
     {
@@ -62,12 +83,12 @@ public class StageManager : MonoBehaviourPunCallbacks
         GameManager.Instance.PrintInfo("Stage Clear");
 
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
+        
+        Hashtable props = new Hashtable() { { "RoomState", "Clear" } };
+        PhotonNetwork.CurrentRoom.SetCustomProperties(props);
+
         // TODO 스테이지 전환
-        // PhotonNetwork.LoadLevel(
-        //     string.Format("StageScene_{0}", ++curStage)
-        // );
-        Debug.Log("clear");
         PhotonNetwork.LoadLevel("GameScene");
     }
 }

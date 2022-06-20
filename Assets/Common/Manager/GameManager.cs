@@ -199,32 +199,32 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
 
-    public Transform GetNextObserveTF(int obNumber)
+    public Transform GetNextObserveTF(ref int obNumber)
     {
         for (int i = 1; i <= players.Count; i++)
         {
             obNumber += 1;
             //Debug.Log("obNumber : " + obNumber + " / PhotonNetwork.LocalPlayer.ActorNumber : " + PhotonNetwork.LocalPlayer.ActorNumber);
 
-            if (obNumber == PhotonNetwork.LocalPlayer.ActorNumber)
-            {   
-                continue;
+            if (obNumber == players.Count + 1)
+            {   // 유효범위
+                obNumber = 1;
             }
 
-            if (obNumber == players.Count + 1)
-            {
-                obNumber = 1;
+            if (obNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+            {   // 자기 자신인 경우
+                continue;
             }
 
             GameObject player;
             players.TryGetValue(obNumber, out player);
 
-            Transform tf = player.GetComponent<PlayerControl>().GetObserveTransform();
-            
-            if (null != tf)
-            {
-                return tf;
+            if (player.GetComponent<PlayerControl>().isObserve) 
+            {   // 이미 클리어 해서 옵저버 모드인 경우
+                continue;
             }
+
+            return player.transform;
         }
         return null;
     }

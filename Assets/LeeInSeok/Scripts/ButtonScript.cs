@@ -20,10 +20,10 @@ public class ButtonScript : MonoBehaviourPun
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("collide");
+        //Debug.Log("collide");
         if(collision.gameObject.layer == LayerMask.NameToLayer("UI"))
         {
-            Debug.Log("ui");
+            //Debug.Log("ui");
             count++;
             if(count > 0)
             {
@@ -48,7 +48,7 @@ public class ButtonScript : MonoBehaviourPun
     [PunRPC]
     public void Button(bool swt)
     {
-        Debug.Log("button");
+        //Debug.Log("button");
         if (swt == true)
         {
             wall.SetActive(false);
