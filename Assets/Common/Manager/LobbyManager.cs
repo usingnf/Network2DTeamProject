@@ -81,8 +81,17 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        SetActivePanel(PANEL.Connect);
-        infoPanel.ShowError("Join Room Failed with Error(" + returnCode + ") : " + message);
+        if (true)
+        {
+            SetActivePanel(PANEL.Connect);
+            infoPanel.ShowError("비밀번호가 틀렸어요! \n다시 입력해주세요 \n^오^");
+        }
+        else
+        {
+            SetActivePanel(PANEL.Connect);
+            infoPanel.ShowError("Join Room Failed with Error(" + returnCode + ") : " + message);
+        }
+        
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
@@ -90,8 +99,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         string roomName = "데구리방 " + Random.Range(1000, 10000);
         RoomOptions options = new RoomOptions { MaxPlayers = 4 };
         PhotonNetwork.CreateRoom(roomName, options, null);
-        //SceneManager.LoadScene(1);
-        //PhotonNetwork.LoadLevel(1);
         Debug.Log(roomName + " 방만듬");
     }
 

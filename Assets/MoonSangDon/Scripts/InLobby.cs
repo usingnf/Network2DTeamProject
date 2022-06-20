@@ -36,12 +36,6 @@ namespace MoonS
             SceneManager.LoadScene(0);
         }
 
-        public override void OnLeftRoom()
-        {
-            //if
-            PhotonNetwork.Disconnect();//todo:
-        }
-
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
         {
             PrintInfo("플레이어를 기다리고있어요 ^오^  " + PlayersLoadLevel() + " / " + PhotonNetwork.PlayerList.Length);
@@ -97,6 +91,18 @@ namespace MoonS
         {
             Debug.Log(info);
             infoText.text = info;
+        }
+        public void LeaveButtonClicker()
+        {
+            PhotonNetwork.LeaveRoom();        
+        }
+        public override void OnLeftRoom()
+        {
+            if (SceneManager.GetActiveScene().buildIndex == 1)
+            {
+                SceneManager.LoadScene(0);
+                return;
+            }
         }
     }
 }

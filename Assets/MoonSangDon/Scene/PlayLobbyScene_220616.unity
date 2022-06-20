@@ -150,6 +150,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 858409263360166096, guid: 07aba7d93e9ca834581f17fb088733da,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 858409263360166096, guid: 07aba7d93e9ca834581f17fb088733da,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 858409263360166096, guid: 07aba7d93e9ca834581f17fb088733da,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 858409263360166096, guid: 07aba7d93e9ca834581f17fb088733da,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1115,7 +1130,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2121508347}
+      - m_Target: {fileID: 2121508345}
         m_MethodName: LeaveButtonClicker
         m_Mode: 1
         m_Arguments:
@@ -1230,7 +1245,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2121508346}
   - component: {fileID: 2121508345}
-  - component: {fileID: 2121508347}
   m_Layer: 0
   m_Name: PlayLobbyManager
   m_TagString: Untagged
@@ -1266,22 +1280,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2121508347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2121508344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41c9895dc0ff6ac4f82e064442ee00ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  curReayPlayer: {fileID: 0}
-  playerCount: {fileID: 0}
-  chatPrefab: {fileID: 0}
-  playerPrefab: []
-  spawnPos: {fileID: 0}
-  playerMax: 0
-  curReadyPlayerCount: 0

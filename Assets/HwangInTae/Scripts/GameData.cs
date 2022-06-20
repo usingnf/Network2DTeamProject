@@ -9,6 +9,7 @@ public class GameData : MonoBehaviour
     public const string PLAYER_READY = "Ready";
     public const string PLAYER_LOAD = "Load";
     public const string PLAYER_IN = "In";
+    public const string PRIVATE_ROOM = "Private";
     
     public static Color GetColor(int playerNumber)
     {

@@ -1,5 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 using UnityEngine.SceneManagement;
 
 public class InConnectPanel : MonoBehaviour
@@ -11,8 +13,11 @@ public class InConnectPanel : MonoBehaviour
 
     public void OnRandomMatchingButtonClicked()
     {
-        PhotonNetwork.JoinRandomRoom();
-        
+
+        ExitGames.Client.Photon.Hashtable customProperties = new ExitGames.Client.Photon.Hashtable() { { "password" , false } };
+        PhotonNetwork.JoinRandomRoom(customProperties, 0, MatchmakingMode.FillRoom, null, null);
+        //PhotonNetwork.JoinRandomRoom();
+
         Debug.Log("방랜덤들어감");
     }
 
