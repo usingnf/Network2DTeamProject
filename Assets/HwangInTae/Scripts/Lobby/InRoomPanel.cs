@@ -66,7 +66,7 @@ public class InRoomPanel : MonoBehaviour
         //PhotonNetwork.CurrentRoom.IsOpen = false;
         //PhotonNetwork.CurrentRoom.IsVisible = false;
 
-        PhotonNetwork.LoadLevel("GameScene");
+        PhotonNetwork.LoadLevel("PlayLobbyScene");
     }
 
     private bool CheckPlayersReady()

@@ -187,8 +187,10 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void PrintInfo(string info)
     {
+        if(info != null) { 
         Debug.Log(info);
         infoText.text = info;
+        }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

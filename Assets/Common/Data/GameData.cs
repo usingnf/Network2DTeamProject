@@ -10,6 +10,7 @@ public class GameData : MonoBehaviour
     public const string PLAYER_LOAD = "Load";
     public const string PLAYER_CLEAR = "Clear";
     public const int Stage = 0;
+    public const string PLAYER_IN = "Clear";
 
 
 

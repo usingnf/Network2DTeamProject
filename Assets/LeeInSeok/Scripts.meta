@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Resources.meta
+guid: 6e20c55841dfe9049bcc490ddc78b654
+========
 guid: ccac45e0a7cc4cc45869449c7ca1626a
+>>>>>>>> main:Assets/LeeInSeok/Scripts.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
