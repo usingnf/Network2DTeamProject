@@ -39,7 +39,12 @@ using UnityEngine.SceneManagement;
 
         public override void OnLeftRoom()
         {
-            PhotonNetwork.Disconnect();
+            if (SceneManager.GetActiveScene().buildIndex == 1)
+            {
+                PhotonNetwork.LeaveRoom();
+                SceneManager.LoadScene(0);
+                return;
+            }
         }
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)

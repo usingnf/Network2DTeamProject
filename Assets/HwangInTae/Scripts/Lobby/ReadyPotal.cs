@@ -9,6 +9,8 @@ public class ReadyPotal : MonoBehaviourPun
 {
     public GameObject[] savePlayer;
     public Text startCount;
+
+    int enterPlayers = 0;
     bool ischeck = false;
     int readyPlayer = 0;
 
@@ -18,8 +20,10 @@ public class ReadyPotal : MonoBehaviourPun
     {
         if (other.gameObject.tag == "Player")
         {
-            ischeck = true;
+            enterPlayers++;
             playerColl = other;
+            if (enterPlayers > 0)
+                ischeck = true;
         }
     }
     private void Update()
@@ -31,7 +35,9 @@ public class ReadyPotal : MonoBehaviourPun
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player") { 
-            ischeck = false;
+            enterPlayers--;
+            if (enterPlayers <= 0)
+                ischeck = false;
             playerColl = null;
         }
     }
@@ -43,7 +49,7 @@ public class ReadyPotal : MonoBehaviourPun
             HInLobby.Instance.PlayersLoadLevel();
             //savePlayer[readyPlayer] = other.gameObject;
             Debug.Log(PhotonNetwork.CurrentRoom.MaxPlayers);
-            if (/*PhotonNetwork.CurrentRoom.MaxPlayers*/1 == (byte)readyPlayer) 
+            if (/*PhotonNetwork.CurrentRoom.MaxPlayers*/1 == readyPlayer) 
                 StartCoroutine(StartCountDown());
             PhotonNetwork.Destroy(playerColl.gameObject);
         }
@@ -61,7 +67,8 @@ public class ReadyPotal : MonoBehaviourPun
         }
         HInLobby.Instance.PrintInfo("Start Game!");
         yield return new WaitForSeconds(0.3f);
-        PhotonNetwork.LoadLevel(2);
+        if(PhotonNetwork.IsMasterClient)
+            PhotonNetwork.LoadLevel(2);
 
         //int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
         //PhotonNetwork.Instantiate("TestPlayer", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);

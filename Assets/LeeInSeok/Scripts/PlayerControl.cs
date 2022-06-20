@@ -44,6 +44,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             photonView.OwnerActorNr,
             PhotonNetwork.LocalPlayer.ActorNumber)
         );
+        Camera.main.GetComponent<HCameraController>().SetTarget(this.transform);
     }
 
 
@@ -156,6 +157,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     void ObserveNext(ref int obNumber)
     {   
         Camera.main.transform.SetParent(GameManager.Instance.GetNextObserveTF(ref obNumber));
-        Camera.main.transform.localPosition = new Vector3(0f, 0f, -10f);
+        Camera.main.GetComponent<HCameraController>().SetTarget(this.transform);
+        //Camera.main.transform.localPosition = new Vector3(0f, 0f, -10f);
     }
 }
