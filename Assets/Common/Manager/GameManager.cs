@@ -50,19 +50,19 @@ public class GameManager : MonoBehaviourPunCallbacks
             props = new ExitGames.Client.Photon.Hashtable() { { "RoomState", "Start" } };
             PhotonNetwork.CurrentRoom.SetCustomProperties(props);
             masterNum = PhotonNetwork.MasterClient.ActorNumber;
-            StartGame();
+            StartCoroutine(StartGame());
         }
         else
         {
             if((string)PhotonNetwork.CurrentRoom.CustomProperties["RoomState"] == "Start")
             {
-                Rejoin();
+                StartCoroutine(Rejoin());
                 Debug.Log("Rejoin");
             }
             else
             {
                 Debug.Log("noMaster");
-                StartGame();
+                StartCoroutine(StartGame());
             }
         }
         
@@ -117,19 +117,22 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     #endregion PHOTON CALLBACK
 
-    private void Rejoin()
+    private IEnumerator Rejoin()
     {
+        yield return new WaitForSeconds(1.0f);
         int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
         GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
         Camera.main.transform.parent = obj.transform;
         Camera.main.transform.position = new Vector3(0, 0, -10);
     }
 
-    private void StartGame()
+    private IEnumerator StartGame()
     {
+        yield return new WaitForSeconds(1.0f);
         PrintInfo("Start Game!");
-
+        
         int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
+        Debug.Log(playerNumber);
         GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
         Camera.main.transform.parent = obj.transform;
         Camera.main.transform.position = new Vector3(0, 0, -10);

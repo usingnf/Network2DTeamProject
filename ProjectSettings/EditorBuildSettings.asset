@@ -6,20 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/HwangInTae/HScenes/LobbyScene.unity
+    guid: f4866eb3c3b34eb4c800aa407cac71dd
+  - enabled: 1
+    path: Assets/HwangInTae/HScenes/GameScene.unity
+    guid: 2dd348104eb553e4dbd2d5e646a48aaf
+  - enabled: 1
     path: Assets/HwangInTae/HScenes/HLobbyScene_new_220617.unity
     guid: 1a3e55deee17d2f46ae023865edc1b8d
   - enabled: 1
     path: Assets/HwangInTae/HScenes/HPlayLobbyScene_220617.unity
     guid: cbfb4c0ab87ec684dbec6aa7818ffbd3
   - enabled: 1
-    path: Assets/HwangInTae/HScenes/GameScene.unity
-    guid: 2dd348104eb553e4dbd2d5e646a48aaf
-  - enabled: 1
     path: Assets/MoonSangDon/Scene/PlayLobbyScene_220616.unity
     guid: 35065a67c2513e0489845fcf7bc8d300
-  - enabled: 1
-    path: Assets/HwangInTae/HScenes/LobbyScene.unity
-    guid: f4866eb3c3b34eb4c800aa407cac71dd
   - enabled: 1
     path: Assets/HwangInTae/HScenes/LoadingScene.unity
     guid: 124b7d2326b851643b87e64b72da3c6b

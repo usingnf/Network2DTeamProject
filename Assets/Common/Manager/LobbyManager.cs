@@ -5,6 +5,7 @@ using Photon.Realtime;
 using ExitGames.Client.Photon;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
@@ -107,8 +108,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         // TODO : SetActivePanel(PANEL.Room);
-        PhotonNetwork.LoadLevel(1);
         Debug.Log("방들어감");
+        StartCoroutine(Join());
+        
+    }
+
+    private IEnumerator Join()
+    {
+        yield return new WaitForSeconds(1.0f);
+        PhotonNetwork.LoadLevel("HPlayLobbyScene_220617");
     }
 
     public override void OnLeftRoom()
@@ -118,6 +126,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
+        Debug.Log("방들어감2");
         inRoomPanel.OnPlayerEnteredRoom(newPlayer);
     }
 
@@ -131,7 +140,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         inRoomPanel.OnMasterClientSwitched(newMasterClient);
     }
 
-    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
         inRoomPanel.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
     }
