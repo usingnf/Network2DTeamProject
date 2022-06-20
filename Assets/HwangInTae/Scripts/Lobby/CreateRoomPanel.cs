@@ -21,11 +21,11 @@ public class CreateRoomPanel : MonoBehaviour
         if (roomName == "")
             roomName = "나는데구리야앙기모디" + Random.Range(1000, 10000);
 
-        string roomPW = "1313";
+        string roomPW = "1313";//너가 원하는 비밀번호 아무거나
 
         string roomInfo = roomName + "_" + roomPW;
 
-        RoomOptions roomOptions = new RoomOptions { MaxPlayers = 4, IsVisible = true, IsOpen = true };
+        RoomOptions roomOptions = new RoomOptions { MaxPlayers = 4, IsVisible = true, IsOpen = true, };
         roomOptions.CustomRoomProperties = new Hashtable() 
         { 
             {"roominfo",roomInfo },     //roomName + PW
