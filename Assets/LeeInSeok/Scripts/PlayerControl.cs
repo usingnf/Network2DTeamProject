@@ -153,4 +153,5 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         Camera.main.transform.SetParent(GameManager.Instance.GetNextObserveTF(obNumber));
         Camera.main.transform.localPosition = new Vector3(0f, 0f, -10f);
     }
+
 }

@@ -28,6 +28,13 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void Awake()
     {
         Instance = this;
+        object stage = 0;
+        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(GameData.Stage, out stage) == true)
+        {
+            ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable() { { GameData.Stage, (int)stage } };
+            PhotonNetwork.CurrentRoom.SetCustomProperties(props);
+        }
+        
     }
 
     public void Start()
@@ -35,7 +42,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable() { { GameData.PLAYER_LOAD, true } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
-        
+        Debug.Log("GameManager");
 
         if (PhotonNetwork.IsMasterClient)
         {
@@ -113,8 +120,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void Rejoin()
     {
         int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
-        GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[0].position, spawnPos[0].rotation, 0);
+        GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
         Camera.main.transform.parent = obj.transform;
+        Camera.main.transform.position = new Vector3(0, 0, -10);
     }
 
     private void StartGame()
@@ -124,6 +132,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
         GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
         Camera.main.transform.parent = obj.transform;
+        Camera.main.transform.position = new Vector3(0, 0, -10);
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.Instantiate("Wall", new Vector3(0.24f, -1.41f, 0), Quaternion.identity, 0);

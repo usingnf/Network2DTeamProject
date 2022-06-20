@@ -33,7 +33,7 @@ public class StageManager : MonoBehaviourPunCallbacks
 
     void Restart()
     {   // TODO 씬 이름 "Stage " + curStage로
-        PhotonNetwork.LoadLevel("GameScene");
+        PhotonNetwork.LoadLevel("LoadingScene");
         //PhotonNetwork.LoadLevel("StageScene_1");
     }
 
