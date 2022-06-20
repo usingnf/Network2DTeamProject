@@ -14,7 +14,7 @@ public class InConnectPanel : MonoBehaviour
     public void OnRandomMatchingButtonClicked()
     {
 
-        ExitGames.Client.Photon.Hashtable customProperties = new ExitGames.Client.Photon.Hashtable() { { "password" , false } };
+        ExitGames.Client.Photon.Hashtable customProperties = new ExitGames.Client.Photon.Hashtable() { { "password" , "" } };
         PhotonNetwork.JoinRandomRoom(customProperties, 0, MatchmakingMode.FillRoom, null, null);
         //PhotonNetwork.JoinRandomRoom();
 

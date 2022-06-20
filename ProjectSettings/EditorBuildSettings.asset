@@ -5,13 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/MoonSangDon/Scene/LobbyScene_new_220616.unity
-    guid: 876e9e64aed48b549bce3eb1a79437ea
+    guid: 11c46eddf26ab0f4191867f72f77d05c
   - enabled: 1
-    path: Assets/MoonSangDon/Scene/PlayLobbyScene_220616.unity
-    guid: 35065a67c2513e0489845fcf7bc8d300
+    path: Assets/HwangInTae/HScenes/HPlayLobbyScene_220617.unity
+    guid: cbfb4c0ab87ec684dbec6aa7818ffbd3
+  - enabled: 1
+    path: Assets/HwangInTae/HScenes/InGameScene.unity
+    guid: 3320f855ee9c84f4bbf09e06c69b68a9
   m_configObjects: {}

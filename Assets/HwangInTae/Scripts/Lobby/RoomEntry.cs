@@ -50,7 +50,7 @@ public class RoomEntry : MonoBehaviour
         else
         {
             PhotonNetwork.LeaveLobby();
-            PhotonNetwork.JoinRoom(roomName+"_");
+            PhotonNetwork.JoinRoom(roomName);
         }
     }
 }
