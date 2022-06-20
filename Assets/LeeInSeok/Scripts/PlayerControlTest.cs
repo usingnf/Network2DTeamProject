@@ -10,13 +10,14 @@ public class PlayerControlTest : MonoBehaviourPun, IPunObservable
     public float speed = 4.0f;
     public float jumpPower = 5.0f;
     public float size = 1.0f;
-    // Start is called before the first frame update
+
+
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         if (photonView.IsMine == false)
