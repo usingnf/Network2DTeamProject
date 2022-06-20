@@ -33,12 +33,7 @@ namespace MoonS
         public override void OnDisconnected(DisconnectCause cause)
         {
             Debug.Log("Disconnected : " + cause.ToString());
-            SceneManager.LoadScene("LobbyScene");
-        }
-
-        public override void OnLeftRoom()
-        {
-            PhotonNetwork.Disconnect();
+            SceneManager.LoadScene(0);
         }
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
@@ -96,6 +91,18 @@ namespace MoonS
         {
             Debug.Log(info);
             infoText.text = info;
+        }
+        public void LeaveButtonClicker()
+        {
+            PhotonNetwork.LeaveRoom();        
+        }
+        public override void OnLeftRoom()
+        {
+            if (SceneManager.GetActiveScene().buildIndex == 1)
+            {
+                SceneManager.LoadScene(0);
+                return;
+            }
         }
     }
 }
