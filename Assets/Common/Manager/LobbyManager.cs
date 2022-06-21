@@ -6,6 +6,7 @@ using ExitGames.Client.Photon;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {

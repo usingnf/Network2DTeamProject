@@ -48,6 +48,14 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             photonView.OwnerActorNr,
             PhotonNetwork.LocalPlayer.ActorNumber)
         );
+
+        photonView.RPC("SetName", RpcTarget.All, photonView.Owner.NickName);
+    }
+
+    [PunRPC]
+    public void SetName(string str)
+    {
+        text.text = str;
     }
 
 
@@ -84,7 +92,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             photonView.RPC("Jump", RpcTarget.All, jumpPower);
         }
         moveVec = moveVec.normalized;
-        rigid.position += moveVec * speed * Time.fixedDeltaTime;
+        rigid.position += moveVec * speed * Time.deltaTime;
     }
 
     void Observe()
