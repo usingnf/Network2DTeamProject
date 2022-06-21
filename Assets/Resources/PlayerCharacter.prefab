@@ -228,3 +228,4 @@ MonoBehaviour:
   size: 1
   isObserve: 0
   observeNumber: 0
+  isShoot: 0

@@ -11,13 +11,14 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     private SpriteRenderer rend;
     Vector2 moveVec = Vector2.zero;
 
+    public static float defalutGravity = 1f;
+
     public float speed = 4.0f;
     public float jumpPower = 5.0f;
     public float size = 1.0f;
     public bool isObserve;              
     public int observeNumber;                   // 현재 관전중인 플레이어 번호
-    public EDir eBlockDir;    
-
+    public bool isShoot;                        // 발사(캐릭터가 직선으로 발사됨) // 중력X, 입력X    
 
 
     private void OnEnable() 
@@ -67,6 +68,15 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
     void Move()
     {
+        if (isShoot)
+        {
+            if (rigid.velocity == Vector2.zero)
+            {
+                ShootStop();
+            }
+            return;
+        }
+
         moveVec = Vector2.zero;
         if (Input.GetKey(KeyCode.A))
         {
@@ -180,8 +190,30 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         transform.position = GameManager.Instance.spawnPos[0].position;
     }
 
-    public void Block(EDir eDir)
+    public void ShootInit(Vector2 shootVelocity)
     {
-
+        isShoot = true;
+        rigid.gravityScale = 0f;
+        
+        rigid.velocity = shootVelocity;
     }
+
+    public void ShootStop()
+    {
+        isShoot = false;
+        rigid.gravityScale = defalutGravity;
+
+        rigid.velocity = Vector2.zero;
+    }
+
+    // private void OnTriggerEnter2D(Collider2D other) 
+    // {
+    //     if (isShoot)
+    //     {
+    //         if (other.gameObject.CompareTag("Water"))
+    //         {
+    //             ShootStop();
+    //         }
+    //     }
+    // }
 }
