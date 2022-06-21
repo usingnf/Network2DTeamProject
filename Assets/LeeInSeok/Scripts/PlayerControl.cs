@@ -115,7 +115,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         RaycastHit2D[] upHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.up, size / 2, LayerMask.GetMask("UI"));
         if(upHit.Length <= 1)
         {
-            rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            rigid.AddForce(Vector2.up * power, ForceMode2D.Impulse);
         }
         
     }
@@ -133,7 +133,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     }
 
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)  
     {
         if (stream.IsWriting)
         {
@@ -190,12 +190,13 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         transform.position = GameManager.Instance.spawnPos[0].position;
     }
 
-    public void ShootInit(Vector2 shootVelocity)
+    public void ShootInit(Vector2 shootVelocity, Vector2 pos)
     {
         isShoot = true;
         rigid.gravityScale = 0f;
         
         rigid.velocity = shootVelocity;
+        transform.position = pos;
     }
 
     public void ShootStop()
@@ -205,15 +206,4 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
         rigid.velocity = Vector2.zero;
     }
-
-    // private void OnTriggerEnter2D(Collider2D other) 
-    // {
-    //     if (isShoot)
-    //     {
-    //         if (other.gameObject.CompareTag("Water"))
-    //         {
-    //             ShootStop();
-    //         }
-    //     }
-    // }
 }

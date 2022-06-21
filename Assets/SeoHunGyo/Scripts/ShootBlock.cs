@@ -11,7 +11,7 @@ public class ShootBlock : MonoBehaviourPun
     {
         if (other.gameObject.layer == 5)
         {   
-            other.transform.GetComponent<PlayerControl>().ShootInit(shootVelocity);
+            other.transform.GetComponent<PlayerControl>().ShootInit(shootVelocity, transform.position);
         }
     }
 }
