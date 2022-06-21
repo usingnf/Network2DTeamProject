@@ -7,10 +7,19 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+public enum GameState
+{
+    None,
+    Play,
+    Clear,
+    Pause,
+}
+
 public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager Instance { get; private set; }
 
+    public GameState state = GameState.None;
     public Text infoText;
     public Transform[] spawnPos;
     public Dictionary<int, GameObject> players = new Dictionary<int, GameObject>();
@@ -19,30 +28,41 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void Awake()
     {
         Instance = this;
+        object stage = 0;
+        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(GameData.Stage, out stage) == true)
+        {
+            ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable() { { GameData.Stage, (int)stage } };
+            PhotonNetwork.CurrentRoom.SetCustomProperties(props);
+        }
+        
     }
 
     public void Start()
     {
         ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable() { { GameData.PLAYER_LOAD, true } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-        
-        if(PhotonNetwork.IsMasterClient)
+
+        Debug.Log("GameManager");
+
+        if (PhotonNetwork.IsMasterClient)
         {
+            Debug.Log("master");
             props = new ExitGames.Client.Photon.Hashtable() { { "RoomState", "Start" } };
             PhotonNetwork.CurrentRoom.SetCustomProperties(props);
             masterNum = PhotonNetwork.MasterClient.ActorNumber;
-            StartGame();
+            StartCoroutine(StartGame());
         }
         else
         {
             if((string)PhotonNetwork.CurrentRoom.CustomProperties["RoomState"] == "Start")
             {
-                Rejoin();
+                StartCoroutine(Rejoin());
                 Debug.Log("Rejoin");
             }
             else
             {
-                StartGame();
+                Debug.Log("noMaster");
+                StartCoroutine(StartGame());
             }
         }
         
@@ -97,25 +117,27 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     #endregion PHOTON CALLBACK
 
-    private void Rejoin()
+    private IEnumerator Rejoin()
     {
-        int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
-        GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[0].position, spawnPos[0].rotation, 0);
-        //Camera.main.transform.parent = obj.transform;
-        Camera.main.GetComponent<HCameraController>().target = obj;
-        
-        //Camera.main.GetComponent<HCameraController>().SetTarget(obj.transform);
-    }
-
-    private void StartGame()
-    {
-        PrintInfo("Start Game!");
-
+        yield return new WaitForSeconds(1.0f);
         int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
         GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
-        //Camera.main.transform.parent = obj.transform;
-        Camera.main.GetComponent<HCameraController>().target = obj;
-        //Camera.main.GetComponent<HCameraController>().SetTarget(obj.transform);
+        obj.GetComponent<PlayerControl>().text.text = PhotonNetwork.LocalPlayer.NickName;
+        Camera.main.transform.parent = obj.transform;
+        Camera.main.transform.position = new Vector3(0, 0, -10);
+    }
+
+    private IEnumerator StartGame()
+    {
+        yield return new WaitForSeconds(1.0f);
+        PrintInfo("Start Game!");
+        
+        int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
+        Debug.Log(playerNumber);
+        GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
+        obj.GetComponent<PlayerControl>().text.text = PhotonNetwork.LocalPlayer.NickName;
+        Camera.main.transform.parent = obj.transform;
+        Camera.main.transform.position = new Vector3(0, 0, -10);
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.Instantiate("Wall", new Vector3(0.24f, -1.41f, 0), Quaternion.identity, 0);
@@ -136,6 +158,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         PrintInfo("Start Game!");
 
         int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
+
         GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
         Camera.main.transform.parent = obj.transform;
         if(PhotonNetwork.IsMasterClient)

@@ -1,10 +1,9 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
-using ExitGames.Client.Photon;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
@@ -35,7 +34,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
-    public enum PANEL { Login, Connect, Lobby, Room, CreateRoom, Option}
+    public enum PANEL { Login, Connect, Lobby, Room, CreateRoom, Option }
     public void SetActivePanel(PANEL panel)
     {
         loginPanel.gameObject.SetActive(panel == PANEL.Login);
@@ -43,7 +42,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         createRoomPanel.gameObject.SetActive(panel == PANEL.CreateRoom);
         inLobbyPanel.gameObject.SetActive(panel == PANEL.Lobby);
         inRoomPanel.gameObject.SetActive(panel == PANEL.Room);
-        optionPanel.gameObject.SetActive(panel == PANEL.Option);
+        //optionPanel.gameObject.SetActive(panel == PANEL.Option);
     }
 
     public void ShowError(string error)
@@ -59,7 +58,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         SetActivePanel(PANEL.Connect);
     }
-    
+
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
@@ -93,22 +92,51 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             SetActivePanel(PANEL.Connect);
             infoPanel.ShowError("Join Room Failed with Error(" + returnCode + ") : " + message);
         }
-        
+
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        string roomName = "데구리방 " + Random.Range(1000, 10000);
-        RoomOptions options = new RoomOptions { MaxPlayers = 4 };
-        PhotonNetwork.CreateRoom(roomName, options, null);
-        Debug.Log(roomName + " 방만듬");
+        string roomName = "나는데구리야앙기모디" + Random.Range(1000, 10000);
+        string roomPW = "";
+
+        string roomInfo = roomName + "_" + roomPW;
+        RoomOptions roomOptions = new RoomOptions { MaxPlayers = 4, IsVisible = true, IsOpen = true, };
+
+        roomOptions.CustomRoomProperties = new Hashtable()
+        {
+            {"roominfo",roomInfo },     //roomName + PW
+            {"password",roomPW },       //PW
+            {"displayname",roomName }   //roomName
+        };
+
+        roomOptions.CustomRoomPropertiesForLobby = new string[]
+        {
+            "roominfo",
+            "password",
+            "displayname",
+        };
+
+        Debug.Log(roomPW);
+        PhotonNetwork.CreateRoom(roomInfo, roomOptions, null);
+        //string roomName = "데구리방 " + Random.Range(1000, 10000);
+        //RoomOptions options = new RoomOptions { MaxPlayers = 4 };
+        //PhotonNetwork.CreateRoom(roomName, options, null);
+        //Debug.Log(roomName + " 방만듬");
     }
 
     public override void OnJoinedRoom()
     {
         // TODO : SetActivePanel(PANEL.Room);
-        PhotonNetwork.LoadLevel(1);
         Debug.Log("방들어감");
+        StartCoroutine(Join());
+        
+    }
+
+    private IEnumerator Join()
+    {
+        yield return new WaitForSeconds(1.0f);
+        PhotonNetwork.LoadLevel("HPlayLobbyScene_220617");
     }
 
     public override void OnLeftRoom()
@@ -118,6 +146,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
+        Debug.Log("방들어감2");
         inRoomPanel.OnPlayerEnteredRoom(newPlayer);
     }
 
@@ -131,7 +160,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         inRoomPanel.OnMasterClientSwitched(newMasterClient);
     }
 
-    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
         inRoomPanel.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
     }

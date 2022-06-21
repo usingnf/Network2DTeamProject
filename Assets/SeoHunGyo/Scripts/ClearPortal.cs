@@ -5,9 +5,7 @@ using UnityEngine;
 public class ClearPortal : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other) 
-    {   // 캐릭터 렌더
-        // w or 위쪽 방향키 눌러야 통과하게
-
+    {   
         if (other.gameObject.layer == 5)
         {   
             GameManager.Instance.PrintInfo(

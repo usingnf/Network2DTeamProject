@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class PlayerControl : MonoBehaviourPun, IPunObservable
@@ -9,13 +10,19 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     private Rigidbody2D rigid;
     private BoxCollider2D coll;
     private SpriteRenderer rend;
+    Vector2 moveVec = Vector2.zero;
+
+    public static float defalutGravity = 1f;
+
     public float speed = 4.0f;
     public float jumpPower = 5.0f;
     public float size = 1.0f;
-    Vector2 moveVec = Vector2.zero;
-    public bool isObserve;              
-    public int observeNumber;               // 현재 관전중인 플레이어 번호
-
+    public bool isObserve;
+    public int observeNumber;
+    public Text text;
+    public KeyScript key = null;
+    private GameObject doorObj = null;             // 현재 관전중인 플레이어 번호
+    public bool isShoot;                        // 발사(캐릭터가 직선으로 발사됨) // 중력X, 입력X    
 
 
     private void OnEnable() 
@@ -24,7 +31,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     }
 
     void ResetClearCustomProperties()
-    {
+    {   // CustomProperty로 하려고 했으나 Set하는 데 시간이 걸려서 플레이어 bool변수로 대체
         // Hashtable props = new Hashtable {{ GameData.PLAYER_CLEAR, false }};
         // PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
@@ -37,7 +44,8 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         coll = GetComponent<BoxCollider2D>();
         rend = GetComponent<SpriteRenderer>();
 
-        GameManager.Instance.players.Add(photonView.OwnerActorNr, this.gameObject);
+        if(GameManager.Instance != null)
+            GameManager.Instance.players.Add(photonView.OwnerActorNr, this.gameObject);
 
         Debug.Log(string.Format(
             "photonView.OwnerActorNr : {0} / LocalPlayer.ActorNumber : {1}",
@@ -48,7 +56,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
 
     void Update()
-     {
+    {
         if (photonView.IsMine == false)
             return;
 
@@ -65,6 +73,15 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
     void Move()
     {
+        if (isShoot)
+        {
+            if (rigid.velocity == Vector2.zero)
+            {
+                ShootStop();
+            }
+            return;
+        }
+
         moveVec = Vector2.zero;
         if (Input.GetKey(KeyCode.A))
         {
@@ -90,25 +107,54 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             ObserveNext(ref observeNumber);
         }
     }
+    
 
     [PunRPC]
     public void Jump(float power)
     {
+        int count = 0;
         RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.down, size / 2, LayerMask.GetMask("UI", "Water"));
-        if (downHit.Length <= 1)
+        foreach(RaycastHit2D hit in downHit)
+        {
+            if(hit.collider.isTrigger == false)
+            {
+                count++;
+            }
+        }
+        if (count <= 1)
         {
             return;
         }
+        count = 0;
         RaycastHit2D[] upHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.up, size / 2, LayerMask.GetMask("UI"));
-        if(upHit.Length <= 1)
+        foreach (RaycastHit2D hit in upHit)
         {
-            rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            if (hit.collider.isTrigger == false)
+            {
+                count++;
+            }
+        }
+        if (count <= 1)
+        {
+            rigid.AddForce(Vector2.up * power, ForceMode2D.Impulse);
         }
         
     }
 
+    public void SuperJump(float multiplier)
+    {
+        photonView.RPC("HighJump", RpcTarget.All, jumpPower * multiplier);
+    }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    [PunRPC]
+    void HighJump(float jumpPower)
+    {
+        rigid.velocity = new Vector2(rigid.velocity.x, 0f);
+        rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+    }
+
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)  
     {
         if (stream.IsWriting)
         {
@@ -127,7 +173,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         // PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         
 
-
+        
         // 아직 스테이지 완전 클리어 아니면 옵저버 모드로 전환
         StageManager.Instance.GoalIn(this);
 
@@ -157,5 +203,60 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     {   
         Camera.main.transform.SetParent(GameManager.Instance.GetNextObserveTF(ref obNumber));
         Camera.main.transform.localPosition = new Vector3(0f, 0f, -10f);
+    }
+
+    [PunRPC]
+    void UseKey()
+    {
+        if (this.key != null)
+        {
+            Destroy(key.gameObject);
+            this.key = null;
+            Destroy(doorObj.gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //TODO: 테그 추가해야함.
+        if (collision.gameObject.tag == "Key")
+        {
+            if(collision.GetComponent<KeyScript>().owner == null)
+                collision.GetComponent<KeyScript>().SetOwner(this);
+        }
+        if (collision.gameObject.tag == "Door")
+        {
+            if(this.key != null)
+            {
+                doorObj = collision.gameObject;
+                photonView.RPC("UseKey", RpcTarget.All);
+                
+            }
+            
+        }
+    }
+
+
+    public void Reset()
+    {   
+        // TODO 열쇠 획득 시 열쇠 해제
+        transform.position = GameManager.Instance.spawnPos[0].position;
+    }
+
+    public void ShootInit(Vector2 shootVelocity, Vector2 pos)
+    {
+        isShoot = true;
+        rigid.gravityScale = 0f;
+        
+        rigid.velocity = shootVelocity;
+        transform.position = pos;
+    }
+
+    public void ShootStop()
+    {
+        isShoot = false;
+        rigid.gravityScale = defalutGravity;
+
+        rigid.velocity = Vector2.zero;
     }
 }

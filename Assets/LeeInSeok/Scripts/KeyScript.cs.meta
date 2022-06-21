@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/LeeInSeok/Scripts/KeyScript.cs.meta
+guid: b934a2f05cbd09e46b6cf066adca4558
+========
+guid: 41fb2a48da0e4ec4ba80b947a1ca696f
+>>>>>>>> SeoHunGyo:Assets/SeoHunGyo/Scripts/JumpBlock.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
