@@ -125,6 +125,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         obj.GetComponent<PlayerControl>().text.text = PhotonNetwork.LocalPlayer.NickName;
         Camera.main.transform.parent = obj.transform;
         Camera.main.transform.position = new Vector3(0, 0, -10);
+        //TODO: 황인태 1줄 아래 추가
+        Camera.main.GetComponent<HCameraController>().target = obj;
     }
 
     private IEnumerator StartGame()
@@ -138,6 +140,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         obj.GetComponent<PlayerControl>().text.text = PhotonNetwork.LocalPlayer.NickName;
         Camera.main.transform.parent = obj.transform;
         Camera.main.transform.position = new Vector3(0, 0, -10);
+        //TODO: 황인태 2줄 아래 추가
+        Camera.main.GetComponent<HCameraController>().target = obj;
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.Instantiate("Wall", new Vector3(0.24f, -1.41f, 0), Quaternion.identity, 0);
