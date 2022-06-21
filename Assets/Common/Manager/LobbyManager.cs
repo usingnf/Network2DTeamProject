@@ -4,6 +4,7 @@ using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
@@ -103,7 +104,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         string roomInfo = roomName + "_" + roomPW;
         RoomOptions roomOptions = new RoomOptions { MaxPlayers = 4, IsVisible = true, IsOpen = true, };
 
-        roomOptions.CustomRoomProperties = new Hashtable()
+        roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable()
         {
             {"roominfo",roomInfo },     //roomName + PW
             {"password",roomPW },       //PW

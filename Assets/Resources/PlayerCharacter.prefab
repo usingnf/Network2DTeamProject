@@ -409,6 +409,7 @@ MonoBehaviour:
   observeNumber: 0
   text: {fileID: 8957238652555610740}
   key: {fileID: 0}
+  isShoot: 0
 --- !u!61 &4948414743163805168
 BoxCollider2D:
   m_ObjectHideFlags: 0
