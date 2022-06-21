@@ -10,15 +10,19 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     private Rigidbody2D rigid;
     private BoxCollider2D coll;
     private SpriteRenderer rend;
+    Vector2 moveVec = Vector2.zero;
+
+    public static float defalutGravity = 1f;
+
     public float speed = 4.0f;
     public float jumpPower = 5.0f;
     public float size = 1.0f;
-    Vector2 moveVec = Vector2.zero;
     public bool isObserve;
     public int observeNumber;
     public Text text;
     public KeyScript key = null;
-    private GameObject doorObj = null;
+    private GameObject doorObj = null;             // 현재 관전중인 플레이어 번호
+    public bool isShoot;                        // 발사(캐릭터가 직선으로 발사됨) // 중력X, 입력X    
 
 
     private void OnEnable() 
@@ -27,7 +31,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     }
 
     void ResetClearCustomProperties()
-    {
+    {   // CustomProperty로 하려고 했으나 Set하는 데 시간이 걸려서 플레이어 bool변수로 대체
         // Hashtable props = new Hashtable {{ GameData.PLAYER_CLEAR, false }};
         // PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
@@ -52,7 +56,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
 
     void Update()
-     {
+    {
         if (photonView.IsMine == false)
             return;
 
@@ -69,6 +73,15 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
     void Move()
     {
+        if (isShoot)
+        {
+            if (rigid.velocity == Vector2.zero)
+            {
+                ShootStop();
+            }
+            return;
+        }
+
         moveVec = Vector2.zero;
         if (Input.GetKey(KeyCode.A))
         {
@@ -94,6 +107,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             ObserveNext(ref observeNumber);
         }
     }
+    
 
     [PunRPC]
     public void Jump(float power)
@@ -127,8 +141,20 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         
     }
 
+    public void SuperJump(float multiplier)
+    {
+        photonView.RPC("HighJump", RpcTarget.All, jumpPower * multiplier);
+    }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    [PunRPC]
+    void HighJump(float jumpPower)
+    {
+        rigid.velocity = new Vector2(rigid.velocity.x, 0f);
+        rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+    }
+
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)  
     {
         if (stream.IsWriting)
         {
@@ -210,4 +236,27 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         }
     }
 
+
+    public void Reset()
+    {   
+        // TODO 열쇠 획득 시 열쇠 해제
+        transform.position = GameManager.Instance.spawnPos[0].position;
+    }
+
+    public void ShootInit(Vector2 shootVelocity, Vector2 pos)
+    {
+        isShoot = true;
+        rigid.gravityScale = 0f;
+        
+        rigid.velocity = shootVelocity;
+        transform.position = pos;
+    }
+
+    public void ShootStop()
+    {
+        isShoot = false;
+        rigid.gravityScale = defalutGravity;
+
+        rigid.velocity = Vector2.zero;
+    }
 }

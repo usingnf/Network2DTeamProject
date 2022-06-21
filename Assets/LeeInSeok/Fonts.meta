@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/LeeInSeok/Fonts.meta
 guid: 6ab70aee4d56447429c680537fbf93ed
+========
+guid: 8e7e8f5a82a3a134e91c54efd2274ea9
+>>>>>>>> SeoHunGyo:Assets/LeeInSeok/Documentation.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
