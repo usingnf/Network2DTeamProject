@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class PlayerControl : MonoBehaviourPun, IPunObservable
@@ -15,6 +16,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     Vector2 moveVec = Vector2.zero;
     public bool isObserve;
     public int observeNumber;
+    public Text text;
     public KeyScript key = null;
     private GameObject doorObj = null;
 
@@ -120,7 +122,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         }
         if (count <= 1)
         {
-            rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            rigid.AddForce(Vector2.up * power, ForceMode2D.Impulse);
         }
         
     }
@@ -145,7 +147,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         // PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         
 
-
+        
         // 아직 스테이지 완전 클리어 아니면 옵저버 모드로 전환
         StageManager.Instance.GoalIn(this);
 

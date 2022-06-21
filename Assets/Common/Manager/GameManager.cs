@@ -122,6 +122,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(1.0f);
         int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
         GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
+        obj.GetComponent<PlayerControl>().text.text = PhotonNetwork.LocalPlayer.NickName;
         Camera.main.transform.parent = obj.transform;
         Camera.main.transform.position = new Vector3(0, 0, -10);
     }
@@ -134,6 +135,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
         Debug.Log(playerNumber);
         GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
+        obj.GetComponent<PlayerControl>().text.text = PhotonNetwork.LocalPlayer.NickName;
         Camera.main.transform.parent = obj.transform;
         Camera.main.transform.position = new Vector3(0, 0, -10);
         if (PhotonNetwork.IsMasterClient)
