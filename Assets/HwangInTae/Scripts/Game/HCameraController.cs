@@ -5,31 +5,78 @@ using UnityEngine;
 
 public class HCameraController : MonoBehaviourPun
 {
-    public Transform target;
+    public GameObject target;
     public float speed = 10.0f;
-    float posZ = -10f;
-
+    bool shake = false;
+    int shakeCount = 0;
+    public float shakePower = 0.3f; // 흔들림 파워
     private void Start()
     {
 
     }
-
-    private void Update()
+    private void LateUpdate()
     {
+        MoveCamera();
+        if(shake)
+            CameraShake();
     }
-  
-
-    public void SetTarget(Transform _target)
+    public void MoveCamera()
     {
-        StartCoroutine(MovePos(_target));
-    }
-    IEnumerator MovePos(Transform _target)
-    {
-        yield return new WaitForFixedUpdate();
-        while(Vector3.Distance(target.position, _target.position) > 1f)
+        if (null == target)
+            return;
+        if (shake)
+            return;
+        Vector3 vec = this.transform.position;
+        
+        vec.z = 0f;
+        //vec2.z = -10.0f;
+        if(Vector3.Distance(vec, target.transform.position) < 0.1f)
         {
-            Debug.Log("작동");
-            target.Translate(new Vector3(_target.position.x * Time.deltaTime * speed, _target.position.y * Time.deltaTime * speed, posZ));
+            Vector3 vec2 = target.transform.position;
+            vec2.z = -10.0f;
+            this.transform.position = vec2;
         }
+        else
+        {
+            Vector3 vec2 = Vector3.Lerp(vec, target.transform.position, Time.deltaTime);
+            vec2.z = -10.0f;
+            this.transform.position = vec2;
+        }
+
+        //Vector3 dir = transform.position - target.transform.position;
+        //Vector3  moveVector = new Vector3(dir.x * Time.deltaTime * speed, dir.y * Time.deltaTime * speed, posZ);
+        //transform.Translate(moveVector);
+    }
+    public void FadeIn()
+    {
+       
+    }
+    public void FadeOut()
+    {
+
+    }
+    public void CameraShake()
+    {
+        shake = true;
+        StartCoroutine(Shake());
+           
+        shakeCount = 0;
+    }
+    IEnumerator Shake()
+    {
+        float posX = Random.RandomRange(-shakePower, shakePower);
+        float posY = Random.RandomRange(-shakePower, shakePower);
+        Vector2 randomDir = new Vector2(posX, posY);
+        Vector3 playerPos = transform.position;
+        for (shakeCount = 0; shakeCount < 10; shakeCount++)
+        {
+            Vector3 vec = Vector3.Lerp(playerPos, randomDir, 0.5f);
+            vec.z = -10.0f;
+            Debug.Log(shakeCount);
+            transform.position = vec;
+            yield return new WaitForSeconds(0.6f); //한번 주기에 흔들리는 시간
+        }
+
+        shake = false;
     }
 }

@@ -101,8 +101,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
         GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[0].position, spawnPos[0].rotation, 0);
-        Camera.main.transform.parent = obj.transform;
-        Camera.main.GetComponent<HCameraController>().SetTarget(obj.transform);
+        //Camera.main.transform.parent = obj.transform;
+        Camera.main.GetComponent<HCameraController>().target = obj;
+        
+        //Camera.main.GetComponent<HCameraController>().SetTarget(obj.transform);
     }
 
     private void StartGame()
@@ -111,8 +113,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
         GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
-        Camera.main.transform.parent = obj.transform;
-        Camera.main.GetComponent<HCameraController>().SetTarget(obj.transform);
+        //Camera.main.transform.parent = obj.transform;
+        Camera.main.GetComponent<HCameraController>().target = obj;
+        //Camera.main.GetComponent<HCameraController>().SetTarget(obj.transform);
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.Instantiate("Wall", new Vector3(0.24f, -1.41f, 0), Quaternion.identity, 0);
