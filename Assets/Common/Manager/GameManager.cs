@@ -131,6 +131,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         PrintInfo("Start Game!");
 
         int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
+
         GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
         Camera.main.transform.parent = obj.transform;
         if(PhotonNetwork.IsMasterClient)

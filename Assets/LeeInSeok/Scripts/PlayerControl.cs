@@ -9,12 +9,14 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     private Rigidbody2D rigid;
     private BoxCollider2D coll;
     private SpriteRenderer rend;
+    Vector2 moveVec = Vector2.zero;
+
     public float speed = 4.0f;
     public float jumpPower = 5.0f;
     public float size = 1.0f;
-    Vector2 moveVec = Vector2.zero;
     public bool isObserve;              
-    public int observeNumber;               // 현재 관전중인 플레이어 번호
+    public int observeNumber;                   // 현재 관전중인 플레이어 번호
+    public EDir eBlockDir;    
 
 
 
@@ -24,7 +26,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     }
 
     void ResetClearCustomProperties()
-    {
+    {   // CustomProperty로 하려고 했으나 Set하는 데 시간이 걸려서 플레이어 bool변수로 대체
         // Hashtable props = new Hashtable {{ GameData.PLAYER_CLEAR, false }};
         // PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
@@ -48,7 +50,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
 
     void Update()
-     {
+    {
         if (photonView.IsMine == false)
             return;
 
@@ -90,6 +92,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             ObserveNext(ref observeNumber);
         }
     }
+    
 
     [PunRPC]
     public void Jump(float power)
@@ -105,6 +108,18 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         }
         
+    }
+
+    public void SuperJump(float multiplier)
+    {
+        photonView.RPC("HighJump", RpcTarget.All, jumpPower * multiplier);
+    }
+
+    [PunRPC]
+    void HighJump(float jumpPower)
+    {
+        rigid.velocity = new Vector2(rigid.velocity.x, 0f);
+        rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
     }
 
 
@@ -157,5 +172,16 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     {   
         Camera.main.transform.SetParent(GameManager.Instance.GetNextObserveTF(ref obNumber));
         Camera.main.transform.localPosition = new Vector3(0f, 0f, -10f);
+    }
+
+    public void Reset()
+    {   
+        // TODO 열쇠 획득 시 열쇠 해제
+        transform.position = GameManager.Instance.spawnPos[0].position;
+    }
+
+    public void Block(EDir eDir)
+    {
+
     }
 }

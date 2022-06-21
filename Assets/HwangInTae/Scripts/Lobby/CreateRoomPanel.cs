@@ -19,9 +19,9 @@ public class CreateRoomPanel : MonoBehaviour
     {
         string roomName = roomNameInputField.text;
         if (roomName == "")
-            roomName = "³ª´Âµ¥±¸¸®¾ß¾Ó±â¸ðµð" + Random.Range(1000, 10000);
+            roomName = "ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¾Ó±ï¿½ï¿½ï¿½" + Random.Range(1000, 10000);
 
-        string roomPW = "1313";//³Ê°¡ ¿øÇÏ´Â ºñ¹Ð¹øÈ£ ¾Æ¹«°Å³ª
+        string roomPW = "";//ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Ð¹ï¿½È£ ï¿½Æ¹ï¿½ï¿½Å³ï¿½
 
         string roomInfo = roomName + "_" + roomPW;
 
@@ -33,13 +33,13 @@ public class CreateRoomPanel : MonoBehaviour
             {"displayname",roomName }   //roomName
         };
 
-        roomOptions.CustomRoomPropertiesForLobby = new string[]//ÀÌ ½Ã¹ß º´½Å¾Ó ¹è¿­·Î ³Ö¾úÀ¸´Ï±î ¹è¿­·Î Á¢±ÙÇØ¾ßÁö
+        roomOptions.CustomRoomPropertiesForLobby = new string[] //ï¿½ï¿½ ï¿½Ã¹ï¿½ ï¿½ï¿½ï¿½Å¾ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½
         {
             "roominfo",
             "password",
             "displayname",
         };
-        //ÀÌ»õ³¢°¡ °¡´Â°Í °³°°Àº Ä¿½ºÅÒÇÁ·ÎÆÛÆ¼
+        //ï¿½Ì»ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼
 
         PhotonNetwork.CreateRoom(roomInfo, roomOptions, null);
 
@@ -56,7 +56,7 @@ public class CreateRoomPanel : MonoBehaviour
 
         //if (PhotonNetwork.CreateRoom(roomName + "_" + 111, options, null))
         //{
-        //   /* PhotonNetwork.CurrentRoom.SetCustomProperties()*///TODO:¹æ¿¡ ºñ¹Ð¹æ Ãß°¡
+        //   /* PhotonNetwork.CurrentRoom.SetCustomProperties()*///TODO:ï¿½æ¿¡ ï¿½ï¿½Ð¹ï¿½ ï¿½ß°ï¿½
         //}
         //string displayName = "test";
         //string roomName = displayName + "_" + "1234";
@@ -65,6 +65,6 @@ public class CreateRoomPanel : MonoBehaviour
         //roomOptions.CustomRoomPropertiesForLobby = new string[] { "displayname" };
         ////
 
-        //PhotonNetwork.CreateRoom(roomName, roomOp¤·tions, null);
+        //PhotonNetwork.CreateRoom(roomName, roomOpï¿½ï¿½tions, null);
     }
 }

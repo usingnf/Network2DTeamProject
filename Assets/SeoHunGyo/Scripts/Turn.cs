@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class TurnObstacle : MonoBehaviourPun
+public class Turn : MonoBehaviourPun
 {
     public LayerMask        obstacleLayer;
     public MoveObject       moveObjectScript;
