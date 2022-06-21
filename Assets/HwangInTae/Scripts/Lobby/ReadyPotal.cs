@@ -45,7 +45,9 @@ public class ReadyPotal : MonoBehaviourPun
             Debug.Log(PhotonNetwork.CurrentRoom.MaxPlayers);
             if (/*PhotonNetwork.CurrentRoom.MaxPlayers*/1 == (byte)readyPlayer) 
                 StartCoroutine(StartCountDown());
-            PhotonNetwork.Destroy(playerColl.gameObject);
+
+            //if(PhotonNetwork.IsMasterClient)
+                PhotonNetwork.Destroy(playerColl.gameObject);
         }
     }
     private IEnumerator StartCountDown()
@@ -61,7 +63,8 @@ public class ReadyPotal : MonoBehaviourPun
         }
         HInLobby.Instance.PrintInfo("Start Game!");
         yield return new WaitForSeconds(0.3f);
-        PhotonNetwork.LoadLevel(2);
+        if(PhotonNetwork.IsMasterClient)
+            PhotonNetwork.LoadLevel("GameScene");
 
         //int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
         //PhotonNetwork.Instantiate("TestPlayer", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);

@@ -7,6 +7,9 @@ public class ButtonScript : MonoBehaviourPun
 {
     public GameObject wall;
     public int count = 0;
+    public bool defaultState = true;
+    public bool permament = false;
+    private bool isUsed = false;
     void Start()
     {
         
@@ -27,7 +30,7 @@ public class ButtonScript : MonoBehaviourPun
             count++;
             if(count > 0)
             {
-                photonView.RPC("Button", RpcTarget.All, true);
+                photonView.RPC("Button", RpcTarget.All, defaultState);
             }
             
         }
@@ -40,7 +43,7 @@ public class ButtonScript : MonoBehaviourPun
             count--;
             if(count <= 0)
             {
-                photonView.RPC("Button", RpcTarget.All, false);
+                photonView.RPC("Button", RpcTarget.All, !defaultState);
             }
         }
     }
@@ -48,6 +51,14 @@ public class ButtonScript : MonoBehaviourPun
     [PunRPC]
     public void Button(bool swt)
     {
+        if(isUsed == true)
+        {
+            return;
+        }
+        if(permament == true)
+        {
+            isUsed = true;
+        }
         //Debug.Log("button");
         if (swt == true)
         {

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using ExitGames.Client.Photon;
+using System.Collections;
 
 public class RoomEntry : MonoBehaviour
 {
@@ -52,5 +53,10 @@ public class RoomEntry : MonoBehaviour
             PhotonNetwork.LeaveLobby();
             PhotonNetwork.JoinRoom(roomName);
         }
+    }
+
+    private IEnumerator Join()
+    {
+        yield return new WaitForSeconds(1.0f);
     }
 }
