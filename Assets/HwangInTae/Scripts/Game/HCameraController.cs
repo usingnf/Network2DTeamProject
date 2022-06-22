@@ -2,14 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HCameraController : MonoBehaviourPun
 {
     public GameObject target;
-    public float speed = 10.0f;
+    public GameObject fadePanel;
+   
     bool shake = false;
     int shakeCount = 0;
-    public float shakePower = 0.3f; // 흔들림 파워
+    float shakePower = 0.3f; // 흔들림 파워
     private void Start()
     {
 
@@ -49,7 +51,20 @@ public class HCameraController : MonoBehaviourPun
     }
     public void FadeIn()
     {
-       
+        PhotonNetwork.Instantiate("FadePanel",Vector3.zero,transform.rotation);
+        StartCoroutine(FadeInCoroutine());
+    }
+    IEnumerator FadeInCoroutine()
+    {
+        float fadeIn = 0f;
+        Image obj = fadePanel.GetComponent<Image>();
+        while (fadeIn <= 1f)
+        {
+            fadeIn += 0.2f;
+            yield return new WaitForSeconds(0.1f);
+            obj.color = new Color(0, 0, 0, fadeIn);
+        }
+        PhotonNetwork.Destroy(obj.gameObject);
     }
     public void FadeOut()
     {
