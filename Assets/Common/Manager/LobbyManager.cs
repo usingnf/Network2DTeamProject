@@ -1,8 +1,6 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
-using ExitGames.Client.Photon;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Collections;
@@ -37,7 +35,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
-    public enum PANEL { Login, Connect, Lobby, Room, CreateRoom, Option}
+    public enum PANEL { Login, Connect, Lobby, Room, CreateRoom, Option }
     public void SetActivePanel(PANEL panel)
     {
         loginPanel.gameObject.SetActive(panel == PANEL.Login);
@@ -61,7 +59,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         SetActivePanel(PANEL.Connect);
     }
-    
+
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
@@ -95,15 +93,37 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             SetActivePanel(PANEL.Connect);
             infoPanel.ShowError("Join Room Failed with Error(" + returnCode + ") : " + message);
         }
-        
+
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        string roomName = "데구리방 " + Random.Range(1000, 10000);
-        RoomOptions options = new RoomOptions { MaxPlayers = 4 };
-        PhotonNetwork.CreateRoom(roomName, options, null);
-        Debug.Log(roomName + " 방만듬");
+        string roomName = "나는데구리야앙기모디" + Random.Range(1000, 10000);
+        string roomPW = "";
+
+        string roomInfo = roomName + "_" + roomPW;
+        RoomOptions roomOptions = new RoomOptions { MaxPlayers = 4, IsVisible = true, IsOpen = true, };
+
+        roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable()
+        {
+            {"roominfo",roomInfo },     //roomName + PW
+            {"password",roomPW },       //PW
+            {"displayname",roomName }   //roomName
+        };
+
+        roomOptions.CustomRoomPropertiesForLobby = new string[]
+        {
+            "roominfo",
+            "password",
+            "displayname",
+        };
+
+        Debug.Log(roomPW);
+        PhotonNetwork.CreateRoom(roomInfo, roomOptions, null);
+        //string roomName = "데구리방 " + Random.Range(1000, 10000);
+        //RoomOptions options = new RoomOptions { MaxPlayers = 4 };
+        //PhotonNetwork.CreateRoom(roomName, options, null);
+        //Debug.Log(roomName + " 방만듬");
     }
 
     public override void OnJoinedRoom()

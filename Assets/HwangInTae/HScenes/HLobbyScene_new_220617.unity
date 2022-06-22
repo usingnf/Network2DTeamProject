@@ -2076,6 +2076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomNameInputField: {fileID: 511315673}
+  roomPWInputField: {fileID: 0}
 --- !u!1 &870234196
 GameObject:
   m_ObjectHideFlags: 0
@@ -4527,6 +4528,7 @@ MonoBehaviour:
   roomContent: {fileID: 2118677990}
   roomEntryPrefab: {fileID: 7596514663934387256, guid: e2488bfdaf4975e468c33b1c9379eeee,
     type: 3}
+  lockImage: {fileID: 0}
 --- !u!1 &1535905144
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/HwangInTae/Scripts/Lobby/HTeleportal.cs.meta
+guid: 206bcc6cfdad7e34487b2d9cbd5a15c2
+========
+guid: ecda82a698de3144dbee933c272a7ecd
+>>>>>>>> main:Assets/LeeInSeok/Scripts/LoadScene.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
