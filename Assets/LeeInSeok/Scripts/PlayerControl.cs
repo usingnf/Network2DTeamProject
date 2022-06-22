@@ -12,7 +12,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     private SpriteRenderer rend;
     Vector2 moveVec = Vector2.zero;
 
-    public static float gravity = 1f;
+    public float gravity = 1f;
 
     public float speed = 4.0f;
     public float jumpPower = 5.0f;
@@ -120,13 +120,30 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void Jump(float power)
     {
+        Debug.Log("Jump");
+        int count = 0;
         RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.down * gravity, size / 2, LayerMask.GetMask("UI", "Water"));
-        if (downHit.Length <= 1)
+        foreach(RaycastHit2D hit in downHit)
+        {
+            if(hit.collider.isTrigger == false)
+            {
+                count++;
+            }
+        }
+        if (count <= 1)
         {
             return;
         }
         RaycastHit2D[] upHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.up * gravity, size / 2, LayerMask.GetMask("UI"));
-        if(upHit.Length <= 1)
+        count = 0;
+        foreach (RaycastHit2D hit in upHit)
+        {
+            if (hit.collider.isTrigger == false)
+            {
+                count++;
+            }
+        }
+        if (count <= 1)
         {
             rigid.AddForce(Vector2.up * gravity * power, ForceMode2D.Impulse);
         }

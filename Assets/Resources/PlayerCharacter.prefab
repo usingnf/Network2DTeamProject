@@ -318,7 +318,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
+  m_SynchronizeParameters:
+  - Type: 9
+    SynchronizeType: 0
+    Name: Die
+  - Type: 4
+    SynchronizeType: 0
+    Name: isJump
+  - Type: 4
+    SynchronizeType: 0
+    Name: isFall
+  - Type: 1
+    SynchronizeType: 0
+    Name: speed
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -404,6 +416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b017ae98e8981843baaeec5c40bb912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gravity: 1
   speed: 4
   jumpPower: 5
   size: 1
