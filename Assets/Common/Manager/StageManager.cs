@@ -4,19 +4,28 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using UnityEngine.UI;
 
 public class StageManager : MonoBehaviourPunCallbacks
 {
     public UnityAction onReverseGravity;
     public static StageManager Instance { get; private set; }
 
+    public Text portalText = null;
     public int curStage = 1;        // 매 스테이지 StageMgr 둘거면 string nextSceneName 두고 그걸로 불러와도 될듯
     public int clearCount = 0;      // 클리어한 플레이어 수 체크
+    public int maxPlayer = 0;
 
 
 
     private void Awake() {
         Instance = this;
+    }
+
+    private void Start()
+    {
+        maxPlayer = PhotonNetwork.PlayerList.Length;
+        portalText.text = $"{clearCount}/{maxPlayer}";
     }
 
 
@@ -43,8 +52,8 @@ public class StageManager : MonoBehaviourPunCallbacks
     }
 
     public bool CheckClear()
-    {   
-        foreach(Player player in PhotonNetwork.PlayerList)
+    {
+        foreach (Player player in PhotonNetwork.PlayerList)
         {   // 플레이어 돌면서 Clear 확인
             object isClear;
             if (player.CustomProperties.TryGetValue(GameData.PLAYER_CLEAR, out isClear))
@@ -63,6 +72,8 @@ public class StageManager : MonoBehaviourPunCallbacks
     public void GoalIn(PlayerControl player)
     {
         clearCount++;
+        maxPlayer = PhotonNetwork.PlayerList.Length;
+        portalText.text = $"{clearCount}/{maxPlayer}";
 
         if (clearCount == PhotonNetwork.PlayerList.Length)
         {
@@ -99,5 +110,17 @@ public class StageManager : MonoBehaviourPunCallbacks
     public void Event_ReverseGravity()
     {   
         onReverseGravity?.Invoke();
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        maxPlayer = PhotonNetwork.PlayerList.Length;
+        portalText.text = $"{clearCount}/{maxPlayer}";
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        maxPlayer = PhotonNetwork.PlayerList.Length;
+        portalText.text = $"{clearCount}/{maxPlayer}";
     }
 }

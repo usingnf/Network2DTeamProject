@@ -29,12 +29,11 @@ public class KeyScript : MonoBehaviourPun
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        /*
         if(collision.gameObject.layer == LayerMask.NameToLayer("UI"))
         {
             SetOwner(collision.gameObject.GetComponent<PlayerControl>());
         }
-        */
+        
     }
 
     public void Return()
