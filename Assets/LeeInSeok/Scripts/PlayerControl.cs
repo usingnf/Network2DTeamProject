@@ -11,7 +11,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     private SpriteRenderer rend;
     Vector2 moveVec = Vector2.zero;
 
-    public static float defalutGravity = 1f;
+    public static float gravity = 1f;
 
     public float speed = 4.0f;
     public float jumpPower = 5.0f;
@@ -41,6 +41,8 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         rend = GetComponent<SpriteRenderer>();
 
         GameManager.Instance.players.Add(photonView.OwnerActorNr, this.gameObject);
+        
+        StageManager.Instance.onReverseGravity += ReverseGravity;
 
         Debug.Log(string.Format(
             "photonView.OwnerActorNr : {0} / LocalPlayer.ActorNumber : {1}",
@@ -107,15 +109,15 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void Jump(float power)
     {
-        RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.down, size / 2, LayerMask.GetMask("UI", "Water"));
+        RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.down * gravity, size / 2, LayerMask.GetMask("UI", "Water"));
         if (downHit.Length <= 1)
         {
             return;
         }
-        RaycastHit2D[] upHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.up, size / 2, LayerMask.GetMask("UI"));
+        RaycastHit2D[] upHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.up * gravity, size / 2, LayerMask.GetMask("UI"));
         if(upHit.Length <= 1)
         {
-            rigid.AddForce(Vector2.up * power, ForceMode2D.Impulse);
+            rigid.AddForce(Vector2.up * gravity * power, ForceMode2D.Impulse);
         }
         
     }
@@ -129,7 +131,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     void HighJump(float jumpPower)
     {
         rigid.velocity = new Vector2(rigid.velocity.x, 0f);
-        rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+        rigid.AddForce(Vector2.up * gravity * jumpPower, ForceMode2D.Impulse);
     }
 
 
@@ -202,8 +204,19 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     public void ShootStop()
     {
         isShoot = false;
-        rigid.gravityScale = defalutGravity;
+        rigid.gravityScale = gravity;
 
         rigid.velocity = Vector2.zero;
+    }
+
+    public void ReverseGravity()
+    {   Debug.Log("ReverseGravity()");
+        gravity *= -1f;
+        rigid.gravityScale = gravity;
+        transform.Rotate(new Vector3(0f, 0f, 180f * gravity), Space.Self); 
+
+
+        Camera.main.transform.Rotate(new Vector3(0f, 0f, 180f * gravity), Space.Self);   
+        Camera.main.transform.localPosition = new Vector3(0f, 0f, -10f);
     }
 }
