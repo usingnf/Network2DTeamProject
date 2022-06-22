@@ -318,7 +318,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
+  m_SynchronizeParameters:
+  - Type: 9
+    SynchronizeType: 0
+    Name: Die
+  - Type: 4
+    SynchronizeType: 0
+    Name: isJump
+  - Type: 4
+    SynchronizeType: 0
+    Name: isFall
+  - Type: 1
+    SynchronizeType: 0
+    Name: speed
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -412,6 +424,8 @@ MonoBehaviour:
   text: {fileID: 8957238652555610740}
   key: {fileID: 0}
   isShoot: 0
+  isReady: 0
+  readyPlayers: 0
 --- !u!61 &4948414743163805168
 BoxCollider2D:
   m_ObjectHideFlags: 0
