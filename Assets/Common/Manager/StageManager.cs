@@ -25,7 +25,8 @@ public class StageManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         maxPlayer = PhotonNetwork.PlayerList.Length;
-        portalText.text = $"{clearCount}/{maxPlayer}";
+        if(portalText != null)
+            portalText.text = $"{clearCount}/{maxPlayer}";
     }
 
 
@@ -48,7 +49,7 @@ public class StageManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.SetCustomProperties(props);
 
         //PhotonNetwork.LoadLevel("GameScene");
-        PhotonNetwork.LoadLevel("StageScene_1");
+        PhotonNetwork.LoadLevel("StageScene_" + curStage);
     }
 
     public bool CheckClear()
@@ -73,7 +74,8 @@ public class StageManager : MonoBehaviourPunCallbacks
     {
         clearCount++;
         maxPlayer = PhotonNetwork.PlayerList.Length;
-        portalText.text = $"{clearCount}/{maxPlayer}";
+        if(portalText != null)
+            portalText.text = $"{clearCount}/{maxPlayer}";
 
         if (clearCount == PhotonNetwork.PlayerList.Length)
         {
@@ -91,13 +93,21 @@ public class StageManager : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(0.5f);
         GameManager.Instance.PrintInfo("Stage Clear");
 
-
         yield return new WaitForSeconds(0.5f);
         
         Hashtable props = new Hashtable() { { "RoomState", "Clear" } };
         PhotonNetwork.CurrentRoom.SetCustomProperties(props);
-
-        PhotonNetwork.LoadLevel("StageScene_1"); // 임시로
+        if(PhotonNetwork.IsMasterClient)
+        {
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject obj in players)
+            {
+                Debug.Log(obj.name);
+                PhotonNetwork.Destroy(obj);
+            }
+            PhotonNetwork.LoadLevel("StageScene_1");
+        }
+            
         //PhotonNetwork.LoadLevel(string.Format( "StageScene_{0}", ++curStage ));
 
     }
@@ -116,12 +126,14 @@ public class StageManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         maxPlayer = PhotonNetwork.PlayerList.Length;
-        portalText.text = $"{clearCount}/{maxPlayer}";
+        if(portalText != null)
+            portalText.text = $"{clearCount}/{maxPlayer}";
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         maxPlayer = PhotonNetwork.PlayerList.Length;
-        portalText.text = $"{clearCount}/{maxPlayer}";
+        if (portalText != null)
+            portalText.text = $"{clearCount}/{maxPlayer}";
     }
 }
