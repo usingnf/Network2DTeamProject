@@ -64,7 +64,7 @@ public class HCameraController : MonoBehaviourPun
             yield return new WaitForSeconds(0.1f);
             obj.color = new Color(0, 0, 0, fadeIn);
         }
-        PhotonNetwork.Destroy(obj.gameObject);
+        //PhotonNetwork.Destroy(obj.gameObject);
     }
     public void FadeOut()
     {
