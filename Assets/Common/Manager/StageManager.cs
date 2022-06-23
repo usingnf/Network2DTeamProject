@@ -1,15 +1,13 @@
-﻿using UnityEngine.SceneManagement;
-using Photon.Pun;
+﻿using Photon.Pun;
 using Photon.Realtime;
-using Photon.Pun.UtilityScripts;
-using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
-using System.Collections.Generic;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class StageManager : MonoBehaviourPunCallbacks
 {
+    public UnityAction onReverseGravity;
     public static StageManager Instance { get; private set; }
 
     public int curStage = 1;        // 매 스테이지 StageMgr 둘거면 string nextSceneName 두고 그걸로 불러와도 될듯
@@ -40,8 +38,8 @@ public class StageManager : MonoBehaviourPunCallbacks
         Hashtable props = new Hashtable() { { "RoomState", "ReStart" } };
         PhotonNetwork.CurrentRoom.SetCustomProperties(props);
 
-        PhotonNetwork.LoadLevel("GameScene");
-        //PhotonNetwork.LoadLevel("StageScene_1");
+        //PhotonNetwork.LoadLevel("GameScene");
+        PhotonNetwork.LoadLevel("StageScene_1");
     }
 
     public bool CheckClear()
@@ -88,7 +86,19 @@ public class StageManager : MonoBehaviourPunCallbacks
         Hashtable props = new Hashtable() { { "RoomState", "Clear" } };
         PhotonNetwork.CurrentRoom.SetCustomProperties(props);
 
-        // TODO 스테이지 전환
-        PhotonNetwork.LoadLevel("GameScene");
+        PhotonNetwork.LoadLevel("StageScene_1"); // 임시로
+        //PhotonNetwork.LoadLevel(string.Format( "StageScene_{0}", ++curStage ));
+
+    }
+
+    public void ReverseGravity()
+    {   
+        photonView.RPC("Event_ReverseGravity", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void Event_ReverseGravity()
+    {   
+        onReverseGravity?.Invoke();
     }
 }

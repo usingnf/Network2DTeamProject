@@ -12,9 +12,9 @@ using UnityEngine.SceneManagement;
     {
         public static HInLobby Instance { get; private set; }
 
-        public Transform potalPos;
         public Text infoText;
         public Transform spawnPos;
+    public int readyPlayer = 0;
 
         private void Awake()
         {
@@ -26,7 +26,6 @@ using UnityEngine.SceneManagement;
             ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable() { { GameData.PLAYER_IN, true } };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
             PhotonNetwork.Instantiate("PlayerCharacter", spawnPos.position, spawnPos.rotation, 0);
-            PhotonNetwork.Instantiate("ReadyPotal", potalPos.position, potalPos.rotation, 0);
         }
 
         #region PHOTON CALLBACK
@@ -49,7 +48,7 @@ using UnityEngine.SceneManagement;
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
         {
-            PrintInfo("플레이어를 기다리고있어요 ^오^  " + PhotonNetwork.PlayerList.Length + " / " + PhotonNetwork.CurrentRoom.MaxPlayers);
+            PrintInfo(readyPlayer/2 + " / " + PhotonNetwork.CurrentRoom.MaxPlayers);
             if (changedProps.ContainsKey(GameData.PLAYER_LOAD))
             {
             }

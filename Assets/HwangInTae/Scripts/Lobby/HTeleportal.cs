@@ -5,29 +5,34 @@ using UnityEngine;
 public class HTeleportal : MonoBehaviour
 {
     public HTeleportal otherPortal;
+    Transform playerPos;
 
-   private void OnTriggerStay2D(Collider2D other)
+    bool inPotal = false;
+   private void OnTriggerEnter2D(Collider2D other)
    {
-       Debug.Log("push!!!");
-           StartCoroutine(Teleportal(other));
+        inPotal = true;
+        playerPos = other.transform;
    }
-    //private void Update()
-    //{
-    //    OnPotalEnter();
-    //}
-    //private void OnPotalEnter()
-    //{
-    //    if (Physics2D.BoxCast(transform.position, new Vector2(1, 1), 0,Vector2.zero,0.02f,LayerMask.GetMask("Player")) && Input.GetKeyDown(KeyCode.E))
-    //    {
-    //        other.transform.position = otherPortal.transform.position;
-    //    }
-    //}
-    public IEnumerator Teleportal(Collider2D other)
+    private void OnTriggerExit(Collider other)
     {
-        if(Input.GetKeyDown(KeyCode.E) && other.gameObject.tag == "Player")
+        inPotal = false;
+        playerPos = null;
+    }
+    private void Update()
+    {
+        if(inPotal)
+            StartCoroutine("OnPotalEnter");
+    }
+    private IEnumerator OnPotalEnter()
+    {
+        RaycastHit2D ray = Physics2D.Raycast(transform.position,Vector2.zero);
+        if (ray.transform.tag == "Player" && Input.GetKeyDown(KeyCode.E))
         {
-            other.transform.position = otherPortal.transform.position;
+            inPotal = false;
             yield return new WaitForSeconds(0.2f);
+            playerPos.transform.position = otherPortal.transform.position;
+            yield return new WaitForSeconds(0.5f);
         }
     }
+    
 }

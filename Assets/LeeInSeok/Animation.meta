@@ -1,9 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream
+=======
 <<<<<<<< HEAD:Assets/LeeInSeok/Documentation.meta
-guid: 66fafb389f94cbf44814bc563b0b91b2
+guid: e7b3c101a19a7ce4baef1ef86dca9718
 ========
+>>>>>>> Stashed changes
 guid: d659659fa9c7675488088fa610e44a27
->>>>>>>> LeeInSeok:Assets/LeeInSeok/Animation.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

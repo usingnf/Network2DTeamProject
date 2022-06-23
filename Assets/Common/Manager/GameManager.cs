@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.Log("Disconnected : " + cause.ToString());
-        SceneManager.LoadScene("LobbyScene");
+        SceneManager.LoadScene("LobbyScene_new_220616");
     }
 
     public override void OnLeftRoom()
@@ -122,9 +122,11 @@ public class GameManager : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(1.0f);
         int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
         GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
-        obj.GetComponent<PlayerControl>().text.text = PhotonNetwork.LocalPlayer.NickName;
+        //obj.GetComponent<PlayerControl>().text.text = PhotonNetwork.PlayerList[playerNumber].NickName;
         Camera.main.transform.parent = obj.transform;
         Camera.main.transform.position = new Vector3(0, 0, -10);
+        //TODO: 황인태 1줄 아래 추가
+        Camera.main.GetComponent<HCameraController>().target = obj;
     }
 
     private IEnumerator StartGame()
@@ -135,9 +137,11 @@ public class GameManager : MonoBehaviourPunCallbacks
         int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
         Debug.Log(playerNumber);
         GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
-        obj.GetComponent<PlayerControl>().text.text = PhotonNetwork.LocalPlayer.NickName;
+        //obj.GetComponent<PlayerControl>().text.text = PhotonNetwork.PlayerList[playerNumber].NickName;
         Camera.main.transform.parent = obj.transform;
         Camera.main.transform.position = new Vector3(0, 0, -10);
+        //TODO: 황인태 2줄 아래 추가
+        Camera.main.GetComponent<HCameraController>().target = obj;
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.Instantiate("Wall", new Vector3(0.24f, -1.41f, 0), Quaternion.identity, 0);
@@ -235,4 +239,19 @@ public class GameManager : MonoBehaviourPunCallbacks
         return null;
     }
 
+
+
+    // 게임 중 탈주
+
+    // public void OnExitGame()
+    // {   // Exit, 확인 버튼 눌렀을 때
+    //     PhotonNetwork.LeaveRoom();
+
+    //     SceneManager.LoadScene("LobbyScene_new_220616");
+    // }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        players.Remove(otherPlayer.ActorNumber);
+    }
 }

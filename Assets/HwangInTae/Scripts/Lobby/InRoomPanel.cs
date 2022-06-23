@@ -89,7 +89,7 @@ public class InRoomPanel : MonoBehaviour
             else
             {
                 return false;
-            }
+            } 
         }
 
         return true;

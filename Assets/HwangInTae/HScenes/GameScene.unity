@@ -163,6 +163,7 @@ GameObject:
   - component: {fileID: 49238690}
   - component: {fileID: 49238689}
   - component: {fileID: 49238688}
+  - component: {fileID: 49238692}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -243,6 +244,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &49238692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49238687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 792c866d6b6eea044a3313eb8a9768ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  fadePanel: {fileID: 0}
 --- !u!1 &199871710
 GameObject:
   m_ObjectHideFlags: 0
@@ -1587,7 +1602,7 @@ Transform:
   m_Children:
   - {fileID: 587393362}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2021408848
 GameObject:
@@ -1698,7 +1713,7 @@ PrefabInstance:
     - target: {fileID: 337212787147108619, guid: 7df36e729ae482d4d8e73b455f91a060,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 337212787147108619, guid: 7df36e729ae482d4d8e73b455f91a060,
         type: 3}
@@ -1772,7 +1787,7 @@ PrefabInstance:
     - target: {fileID: 638058019339741307, guid: 6f407aa573196ed45add1ac6a720e4f2,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 638058019339741307, guid: 6f407aa573196ed45add1ac6a720e4f2,
         type: 3}
