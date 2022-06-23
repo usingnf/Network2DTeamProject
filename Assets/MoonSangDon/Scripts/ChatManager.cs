@@ -12,14 +12,18 @@ public class ChatManager : MonoBehaviourPunCallbacks
     public Text chattingList;
     public InputField input;
     public ScrollRect scroll_rect;
+    public GameObject chatBox;
     string chatters;
 
     float timer;
     bool timerOn;
+    bool isAct;
     private void Start()
     {
         PhotonNetwork.IsMessageQueueRunning = true;
         scroll_rect = GameObject.FindObjectOfType<ScrollRect>();
+        chatBox.SetActive(true);
+        timerOn = true;
     }
     public void SendButtonOnClicked()
     {
@@ -37,30 +41,49 @@ public class ChatManager : MonoBehaviourPunCallbacks
     }
     private void Update()
     {
-        chatterUpdate();
+        ChatterUpdate();
         SetInvisible();
         if (Input.GetKeyDown(KeyCode.Return) && !input.isFocused)
         {
             SendButtonOnClicked();
-            
+        }
+        if(Input.GetKeyDown(KeyCode.Return))
+        {
+            if (!isAct)
+            {
+                chatBox.SetActive(true);
+                isAct = true;
+                timerOn = true;
+                input.ActivateInputField();
+            }
+            else if (isAct&&input.isFocused)
+            {
+                chatBox.SetActive(false);
+                input.DeactivateInputField();
+                isAct = false;
+                timerOn = false;
+                timer = 0;
+            }
         }
 
         
     }
     private void SetInvisible()
     {
-        if (timerOn == true&&!input.isFocused)
+        if (timerOn == true)
         {
             timer += Time.deltaTime;
             if (timer >= 3)
             {
-                timer = 0;
-                Debug.Log("투명해지기");
-                timerOn = false;
+                    Debug.Log("투명해지기");
+                    timerOn = false;
+                    //chatBox.SetActive(false);
+                    StartCoroutine(FadeInStart());
+                    timer = 0;
             }
         }
     }
-    private void chatterUpdate()
+    private void ChatterUpdate()
     {
         chatters = "Player List\n";
         foreach (Player p in PhotonNetwork.PlayerList)
@@ -76,4 +99,19 @@ public class ChatManager : MonoBehaviourPunCallbacks
         chatLog.text += "\n" + msg;
         scroll_rect.verticalNormalizedPosition = 0.0f;
     }
+
+    public IEnumerator FadeInStart()
+    {
+        for (float f = 1f; f > 0; f -= 0.02f)
+        {
+            Color c = chatBox.GetComponentInChildren<Image>().color;
+            c.a = f;
+            chatBox.GetComponentInChildren<Image>().color = c;
+            yield return null;
+        }
+        yield return new WaitForSeconds(1);
+        chatBox.SetActive(false);
+        isAct = false;
+    }
+
 }
