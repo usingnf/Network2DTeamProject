@@ -7,6 +7,8 @@ TagManager:
   - ReadyPotal
   - Key
   - Door
+  - side
+  - Trapblock
   layers:
   - Default
   - TransparentFX

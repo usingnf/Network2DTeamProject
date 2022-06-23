@@ -14,6 +14,8 @@ public class ChatManager : MonoBehaviourPunCallbacks
     public ScrollRect scroll_rect;
     string chatters;
 
+    float timer;
+    bool timerOn;
     private void Start()
     {
         PhotonNetwork.IsMessageQueueRunning = true;
@@ -21,6 +23,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
     }
     public void SendButtonOnClicked()
     {
+        
         if (input.text.Equals(""))
             return;
 
@@ -29,11 +32,33 @@ public class ChatManager : MonoBehaviourPunCallbacks
         ReceiveMsg(msg);
         input.ActivateInputField();
         input.text = "";
+        timerOn = true;
+        timer = 0;
     }
     private void Update()
     {
         chatterUpdate();
-        if (Input.GetKeyDown(KeyCode.Return) && !input.isFocused) SendButtonOnClicked();
+        SetInvisible();
+        if (Input.GetKeyDown(KeyCode.Return) && !input.isFocused)
+        {
+            SendButtonOnClicked();
+            
+        }
+
+        
+    }
+    private void SetInvisible()
+    {
+        if (timerOn == true&&!input.isFocused)
+        {
+            timer += Time.deltaTime;
+            if (timer >= 3)
+            {
+                timer = 0;
+                Debug.Log("투명해지기");
+                timerOn = false;
+            }
+        }
     }
     private void chatterUpdate()
     {

@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.Log("Disconnected : " + cause.ToString());
-        SceneManager.LoadScene("LobbyScene");
+        SceneManager.LoadScene("LobbyScene_new_220616");
     }
 
     public override void OnLeftRoom()
@@ -234,4 +234,19 @@ public class GameManager : MonoBehaviourPunCallbacks
         return null;
     }
 
+
+
+    // 게임 중 탈주
+
+    // public void OnExitGame()
+    // {   // Exit, 확인 버튼 눌렀을 때
+    //     PhotonNetwork.LeaveRoom();
+
+    //     SceneManager.LoadScene("LobbyScene_new_220616");
+    // }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        players.Remove(otherPlayer.ActorNumber);
+    }
 }

@@ -47,8 +47,8 @@ public class StageManager : MonoBehaviourPunCallbacks
         Hashtable props = new Hashtable() { { "RoomState", "ReStart" } };
         PhotonNetwork.CurrentRoom.SetCustomProperties(props);
 
-        PhotonNetwork.LoadLevel("GameScene");
-        //PhotonNetwork.LoadLevel("StageScene_1");
+        //PhotonNetwork.LoadLevel("GameScene");
+        PhotonNetwork.LoadLevel("StageScene_1");
     }
 
     public bool CheckClear()
@@ -97,8 +97,9 @@ public class StageManager : MonoBehaviourPunCallbacks
         Hashtable props = new Hashtable() { { "RoomState", "Clear" } };
         PhotonNetwork.CurrentRoom.SetCustomProperties(props);
 
-        // TODO 스테이지 전환
-        PhotonNetwork.LoadLevel("GameScene");
+        PhotonNetwork.LoadLevel("StageScene_1"); // 임시로
+        //PhotonNetwork.LoadLevel(string.Format( "StageScene_{0}", ++curStage ));
+
     }
 
     public void ReverseGravity()
