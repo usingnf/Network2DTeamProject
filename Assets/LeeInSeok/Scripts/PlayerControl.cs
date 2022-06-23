@@ -10,6 +10,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     private Rigidbody2D rigid;
     private BoxCollider2D coll;
     private SpriteRenderer rend;
+    private Animator animator;
     Vector2 moveVec = Vector2.zero;
 
     public float gravity = 1f;
@@ -22,6 +23,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     public Text text;
     public KeyScript key = null;
     private GameObject doorObj = null;             // 현재 관전중인 플레이어 번호
+    public bool isClear = false;
     public bool isShoot;                        // 발사(캐릭터가 직선으로 발사됨) // 중력X, 입력X    
     public bool isReady = false;    //황인태 추가
 
@@ -37,22 +39,23 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
         isObserve = false;
     }
-
-    void Start()
+    void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         coll = GetComponent<BoxCollider2D>();
         rend = GetComponent<SpriteRenderer>();
-
+        animator = GetComponent<Animator>();
+    }
+    void Start()
+    {
         if(GameManager.Instance != null)
+        {
+            if(GameManager.Instance.players.ContainsKey(photonView.OwnerActorNr) == true)
+            {
+                GameManager.Instance.players.Remove(photonView.OwnerActorNr);
+            }
             GameManager.Instance.players.Add(photonView.OwnerActorNr, this.gameObject);
-
-        Debug.Log(string.Format(
-            "photonView.OwnerActorNr : {0} / LocalPlayer.ActorNumber : {1}",
-            photonView.OwnerActorNr,
-            PhotonNetwork.LocalPlayer.ActorNumber)
-        );
-
+        }
         photonView.RPC("SetName", RpcTarget.All, photonView.Owner.NickName);
     }
 
@@ -74,14 +77,21 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         }
         else
         {
+            CheckSide();
             Move();
         }
     }
 
     void Move()
     {
+        if(rigid.velocity.y <= 0)
+        {
+            animator.SetBool("isJump", false);
+            animator.SetBool("isFall", true);
+        }
         if (isShoot)
         {
+            animator.SetFloat("speed", 0);
             if (rigid.velocity == Vector2.zero)
             {
                 ShootStop();
@@ -104,7 +114,44 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             photonView.RPC("Jump", RpcTarget.All, jumpPower);
         }
         moveVec = moveVec.normalized;
+        animator.SetFloat("speed", moveVec.magnitude * speed);
         rigid.position += moveVec * speed * Time.deltaTime;
+        if(moveVec.x > 0)
+        {
+            photonView.RPC("Flip", RpcTarget.All, false);
+        }
+        else if( moveVec.x < 0)
+        {
+            photonView.RPC("Flip", RpcTarget.All, true);
+        }
+        
+    }
+
+    [PunRPC]
+    private void Flip(bool isflip)
+    {
+        rend.flipX = isflip;
+    }
+
+    private void CheckSide()
+    {
+        if (animator.GetBool("isJump") == true)
+            return;
+        GameObject obj = null;
+        RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.down * gravity, size / 2, LayerMask.GetMask("Obstacle"));
+        foreach(RaycastHit2D hit in downHit)
+        {
+            if(hit.collider.tag == "side")
+            {
+                obj = hit.collider.gameObject;
+            }
+        }
+        if(obj != null)
+        {
+            Vector2 vec = this.rigid.position;
+            vec.y = obj.transform.position.y + size / 2;
+            rigid.position = vec;
+        }
     }
 
     void Observe()
@@ -119,9 +166,8 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void Jump(float power)
     {
-        Debug.Log("Jump");
         int count = 0;
-        RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.down * gravity, size / 2, LayerMask.GetMask("UI", "Water"));
+        RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size-0.05f, 0.05f), 0, Vector2.down * gravity, size / 2, LayerMask.GetMask("Player", "Obstacle"));
         foreach(RaycastHit2D hit in downHit)
         {
             if(hit.collider.isTrigger == false)
@@ -133,7 +179,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         {
             return;
         }
-        RaycastHit2D[] upHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.up * gravity, size / 2, LayerMask.GetMask("UI"));
+        RaycastHit2D[] upHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.up * gravity, size / 2, LayerMask.GetMask("Player"));
         count = 0;
         foreach (RaycastHit2D hit in upHit)
         {
@@ -144,6 +190,8 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         }
         if (count <= 1)
         {
+            animator.SetBool("isFall", false);
+            animator.SetBool("isJump", true);
             rigid.AddForce(Vector2.up * gravity * power, ForceMode2D.Impulse);
         }
         
@@ -166,24 +214,29 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
+            //stream.SendNext(doorObj);
             //stream.SendNext(rigid.position);
         }
         else
         {
+            //doorObj = (GameObject)stream.ReceiveNext();
             //rigid.position = (Vector2)stream.ReceiveNext();
         }
     }
 
     public void ClearStage()
-    {   
+    {
         // Hashtable props = new Hashtable() {{GameData.PLAYER_CLEAR, true}};
 
         // PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-        
+        if (isClear == true)
+            return;
 
-        
+        isClear = true;
         // 아직 스테이지 완전 클리어 아니면 옵저버 모드로 전환
         StageManager.Instance.GoalIn(this);
+
+        
 
         // if (!StageManager.Instance.CheckClear())
         // {   
@@ -200,6 +253,8 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         isObserve = true;
         rend.enabled = false;
         coll.enabled = false;
+        text.enabled = false;
+        rigid.velocity = Vector2.zero;
         rigid.gravityScale = 0f;
 
         observeNumber = photonView.OwnerActorNr;
@@ -208,11 +263,17 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     }
 
     void ObserveNext(ref int obNumber)
-    {   
-        Camera.main.transform.SetParent(GameManager.Instance.GetNextObserveTF(ref obNumber));
-        Camera.main.transform.localPosition = new Vector3(0f, 0f, -10f);
-    }
+    {
+        Transform observer = GameManager.Instance.GetNextObserveTF(ref obNumber);
+        if(observer != null)
+        {
+            Camera.main.GetComponent<HCameraController>().target = observer.gameObject;
+            Camera.main.transform.SetParent(GameManager.Instance.GetNextObserveTF(ref obNumber));
+            //Camera.main.transform.localPosition = new Vector3(0f, 0f, -10f);
+        }
 
+    }
+    
     [PunRPC]
     void UseKey()
     {
@@ -220,7 +281,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         {
             Destroy(key.gameObject);
             this.key = null;
-            Destroy(doorObj.gameObject);
+            Destroy(doorObj);
         }
     }
 
@@ -230,14 +291,17 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         if (collision.gameObject.tag == "Key")
         {
             if(collision.GetComponent<KeyScript>().owner == null)
-                collision.GetComponent<KeyScript>().SetOwner(this);
+            {
+                //collision.GetComponent<KeyScript>().SetOwner(this);
+            }
+                
         }
         if (collision.gameObject.tag == "Door")
         {
             if(this.key != null)
             {
-                doorObj = collision.gameObject;
-                photonView.RPC("UseKey", RpcTarget.All);
+                //doorObj = collision.gameObject;
+                //photonView.RPC("UseKey", RpcTarget.All);
                 
             }
             
@@ -271,6 +335,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     {   
         // TODO 열쇠 획득 시 열쇠 해제
         transform.position = GameManager.Instance.spawnPos[0].position;
+        //animator.SetTrigger("Die");
     }
 
     public void ShootInit(Vector2 shootVelocity, Vector2 pos)
@@ -310,7 +375,15 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             yield return new WaitForSeconds(1.0f);
         }
         if(PhotonNetwork.IsMasterClient)
-            PhotonNetwork.LoadLevel(2);
+        {
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject obj in players)
+            {
+                PhotonNetwork.Destroy(obj);
+            }
+            PhotonNetwork.LoadLevel("GameScene");
+        }
+            
     }
     private IEnumerator ReadyCancle()
     {
@@ -331,4 +404,5 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         Camera.main.transform.Rotate(new Vector3(0f, 0f, 180f * gravity), Space.Self);   
         Camera.main.transform.localPosition = new Vector3(0f, 0f, -10f);
     }
+
 }

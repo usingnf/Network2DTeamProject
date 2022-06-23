@@ -575,7 +575,7 @@ GameObject:
   - component: {fileID: 1007408618}
   - component: {fileID: 1007408617}
   - component: {fileID: 1007408616}
-  m_Layer: 4
+  m_Layer: 9
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2001,6 +2001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c36a0a4568479d64b8e136c91a98af31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  potalPos: {fileID: 0}
   infoText: {fileID: 1033362391}
   spawnPos: {fileID: 522589147}
   readyPlayer: 0

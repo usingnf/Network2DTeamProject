@@ -9,7 +9,7 @@ public class ShootBlock : MonoBehaviourPun
 
     private void OnTriggerEnter2D(Collider2D other) 
     {
-        if (other.gameObject.layer == 5)
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {   
             other.transform.GetComponent<PlayerControl>().ShootInit(shootVelocity, transform.position);
         }

@@ -39,14 +39,13 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void Start()
     {
+        Debug.Log("GameManager");
         ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable() { { GameData.PLAYER_LOAD, true } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
-        Debug.Log("GameManager");
-
         if (PhotonNetwork.IsMasterClient)
         {
-            Debug.Log("master");
+            Debug.Log("Master");
             props = new ExitGames.Client.Photon.Hashtable() { { "RoomState", "Start" } };
             PhotonNetwork.CurrentRoom.SetCustomProperties(props);
             masterNum = PhotonNetwork.MasterClient.ActorNumber;
@@ -54,14 +53,15 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            if((string)PhotonNetwork.CurrentRoom.CustomProperties["RoomState"] == "Start")
+            
+            if ((string)PhotonNetwork.CurrentRoom.CustomProperties["RoomState"] == "Start")
             {
-                StartCoroutine(Rejoin());
                 Debug.Log("Rejoin");
+                StartCoroutine(Rejoin());
             }
             else
             {
-                Debug.Log("noMaster");
+                Debug.Log("StartGame");
                 StartCoroutine(StartGame());
             }
         }
@@ -122,10 +122,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(1.0f);
         int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
         GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
-        //obj.GetComponent<PlayerControl>().text.text = PhotonNetwork.PlayerList[playerNumber].NickName;
         Camera.main.transform.parent = obj.transform;
         Camera.main.transform.position = new Vector3(0, 0, -10);
-        //TODO: 황인태 1줄 아래 추가
         Camera.main.GetComponent<HCameraController>().target = obj;
     }
 
@@ -133,19 +131,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(1.0f);
         PrintInfo("Start Game!");
-        
+
+        Debug.Log("Create");
         int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
         Debug.Log(playerNumber);
+
         GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
-        //obj.GetComponent<PlayerControl>().text.text = PhotonNetwork.PlayerList[playerNumber].NickName;
         Camera.main.transform.parent = obj.transform;
         Camera.main.transform.position = new Vector3(0, 0, -10);
-        //TODO: 황인태 2줄 아래 추가
         Camera.main.GetComponent<HCameraController>().target = obj;
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.Instantiate("Wall", new Vector3(0.24f, -1.41f, 0), Quaternion.identity, 0);
-        }
     }
 
     private IEnumerator StartCountDown()
@@ -165,10 +159,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         GameObject obj = PhotonNetwork.Instantiate("PlayerCharacter", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
         Camera.main.transform.parent = obj.transform;
-        if(PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.Instantiate("Wall", new Vector3(0.24f, -1.41f, 0), Quaternion.identity, 0);
-        }
     }
 
     private bool CheckAllPlayerLoadLevel()
@@ -228,7 +218,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             GameObject player;
             players.TryGetValue(obNumber, out player);
-
             if (player.GetComponent<PlayerControl>().isObserve) 
             {   // 이미 클리어 해서 옵저버 모드인 경우
                 continue;
