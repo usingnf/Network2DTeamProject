@@ -24,7 +24,6 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     private GameObject doorObj = null;             // 현재 관전중인 플레이어 번호
     public bool isShoot;                        // 발사(캐릭터가 직선으로 발사됨) // 중력X, 입력X    
     public bool isReady = false;    //황인태 추가
-    public int readyPlayers = 0;
 
     private void OnEnable() 
     {
@@ -244,14 +243,26 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         }
         if(collision.gameObject.tag == "ReadyPotal")
         {
-            photonView.RPC("InReadyLine", RpcTarget.All);
+            if(HInLobby.Instance != null)
+                HInLobby.Instance.readyPlayer++;
+            HInLobby.Instance.PrintInfo(HInLobby.Instance.readyPlayer / 2 + " / " + PhotonNetwork.CurrentRoom.MaxPlayers);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                if (HInLobby.Instance.readyPlayer/2 >= PhotonNetwork.PlayerList.Length)
+                {
+                    //start
+                    photonView.RPC("OnGameStart", RpcTarget.All);
+                }
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "ReadyPotal")
         {
-            photonView.RPC("OutReadyLine", RpcTarget.All);
+            if (HInLobby.Instance != null)
+                HInLobby.Instance.readyPlayer--;
+            photonView.RPC("OnReadyCancle", RpcTarget.All);
         }
     }
 
@@ -278,36 +289,32 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         rigid.velocity = Vector2.zero;
     }
     [PunRPC]
-    public void InReadyLine()
+    public void OnGameStart()
     {
-        readyPlayers++;
-        Debug.Log("준비된 인원" + readyPlayers);
-        if(readyPlayers == 4/*PhotonNetwork.CurrentRoom.MaxPlayers*/)
-        {
-            StartCoroutine("GameStart");
-        }
+        StartCoroutine("GameStart");
     }
     [PunRPC]
-    public void OutReadyLine()
+    public void OnReadyCancle()
     {
-        readyPlayers--;
         StartCoroutine("ReadyCancle");
     }
     private IEnumerator GameStart()
     {
+        
         HInLobby.Instance.PrintInfo("전원 준비 완료");
         yield return new WaitForSeconds(0.7f);
         for(int i = GameData.COUNTDOWN; i > 0; i--) {
             HInLobby.Instance.PrintInfo(i.ToString());
             yield return new WaitForSeconds(1.0f);
         }
-        PhotonNetwork.LoadLevel(2);
+        if(PhotonNetwork.IsMasterClient)
+            PhotonNetwork.LoadLevel(2);
     }
     private IEnumerator ReadyCancle()
     {
         StopCoroutine("GameStart");
         HInLobby.Instance.PrintInfo(text.text + " 준비 취소");
         yield return new WaitForSeconds(1.0f);
-        HInLobby.Instance.PrintInfo(PhotonNetwork.PlayerList.Length + " / " + PhotonNetwork.CurrentRoom.MaxPlayers); ;
+        HInLobby.Instance.PrintInfo(HInLobby.Instance.readyPlayer/2 + " / " + PhotonNetwork.CurrentRoom.MaxPlayers);
     }
 }

@@ -425,7 +425,6 @@ MonoBehaviour:
   key: {fileID: 0}
   isShoot: 0
   isReady: 0
-  readyPlayers: 0
 --- !u!61 &4948414743163805168
 BoxCollider2D:
   m_ObjectHideFlags: 0
