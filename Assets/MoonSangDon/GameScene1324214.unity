@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4482475, g: 0.49827462, b: 0.5755831, a: 1}
+  m_IndirectSpecularColor: {r: 0.4482472, g: 0.49827385, b: 0.57558215, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1497,8 +1497,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bbcf1820875cc4428ebf70d6d81da4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  portalText: {fileID: 0}
   curStage: 1
   clearCount: 0
+  maxPlayer: 0
 --- !u!4 &1684233543
 Transform:
   m_ObjectHideFlags: 0
@@ -1931,6 +1933,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7330801214874260973, guid: 80a9028d952d40544a534fbf965094ff,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80a9028d952d40544a534fbf965094ff, type: 3}
 --- !u!1001 &6132954273371947690
@@ -2096,6 +2103,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383499545559555235, guid: c80641b42e4f21447b6befe51a19657b,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c80641b42e4f21447b6befe51a19657b, type: 3}

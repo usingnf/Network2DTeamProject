@@ -37,7 +37,7 @@ public class HInLobby : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.Log("Disconnected : " + cause.ToString());
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("HLobbyScene_new_220617");
     }
 
     public override void OnLeftRoom()
@@ -45,7 +45,7 @@ public class HInLobby : MonoBehaviourPunCallbacks
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             PhotonNetwork.LeaveRoom();
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene("HLobbyScene_new_220617");
             return;
         }
     }

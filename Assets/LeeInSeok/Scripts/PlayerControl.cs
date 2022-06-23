@@ -371,7 +371,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             yield return new WaitForSeconds(1.0f);
         }
         if(PhotonNetwork.IsMasterClient)
-            PhotonNetwork.LoadLevel(2);
+            PhotonNetwork.LoadLevel("GameScene");
     }
     private IEnumerator ReadyCancle()
     {
