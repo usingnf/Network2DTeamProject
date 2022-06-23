@@ -13,7 +13,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     Vector2 moveVec = Vector2.zero;
 
     public static float defalutGravity = 1f;
-
+    static public RaycastHit2D rayHit;
     public float speed = 4.0f;
     public float jumpPower = 5.0f;
     public float size = 1.0f;
@@ -138,7 +138,8 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         {
             rigid.AddForce(Vector2.up * power, ForceMode2D.Impulse);
         }
-        
+        Debug.DrawRay(transform.position, transform.up * 2f, Color.red, 0.5f);
+        rayHit = Physics2D.Raycast(transform.position, transform.up * 2f, 0.5f);
     }
 
     public void SuperJump(float multiplier)
@@ -151,6 +152,9 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     {
         rigid.velocity = new Vector2(rigid.velocity.x, 0f);
         rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+
+        Debug.DrawRay(transform.position, transform.up * 2f, Color.red, 0.5f);
+        rayHit = Physics2D.Raycast(transform.position, transform.up * 2f, 0.5f);
     }
 
 
