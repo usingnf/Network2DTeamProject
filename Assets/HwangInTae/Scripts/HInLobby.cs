@@ -24,6 +24,15 @@ public class HInLobby : MonoBehaviourPunCallbacks
 
 
     #region PHOTON CALLBACK
+       
+    public void Start()
+    {
+        ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable() { { GameData.PLAYER_IN, true } };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        PhotonNetwork.Instantiate("PlayerCharacter", spawnPos.position, spawnPos.rotation, 0);
+    }
+
+    #region PHOTON CALLBACK
 
     public override void OnDisconnected(DisconnectCause cause)
     {
@@ -35,81 +44,15 @@ public class HInLobby : MonoBehaviourPunCallbacks
     {
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
-            Instance = this;
-        }
-    }
-        
-        public void Start()
-        {
-            ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable() { { GameData.PLAYER_IN, true } };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-            PhotonNetwork.Instantiate("PlayerCharacter", spawnPos.position, spawnPos.rotation, 0);
-        }
-
-        #region PHOTON CALLBACK
-
-        public override void OnDisconnected(DisconnectCause cause)
-        {
-            Debug.Log("Disconnected : " + cause.ToString());
+            PhotonNetwork.LeaveRoom();
             SceneManager.LoadScene(0);
-        }
-
-        public override void OnLeftRoom()
-        {
-            if (SceneManager.GetActiveScene().buildIndex == 1)
-            {
-                PhotonNetwork.LeaveRoom();
-                SceneManager.LoadScene(0);
-                return;
-            }
-        }
-
-        public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
-        {
-            PrintInfo(readyPlayer/2 + " / " + PhotonNetwork.CurrentRoom.MaxPlayers);
-            if (changedProps.ContainsKey(GameData.PLAYER_LOAD))
-            {
-            }
-        }
-
-        #endregion PHOTON CALLBACK
-
-     
-
-        private bool CheckAllPlayerLoadLevel()
-        {
-            return PlayersLoadLevel() == PhotonNetwork.PlayerList.Length;
-        }
-
-        public int PlayersLoadLevel()
-        {
-            int count = 0;
-            foreach (Player p in PhotonNetwork.PlayerList)
-            {
-                object playerLoadedLevel;
-
-                if (p.CustomProperties.TryGetValue(GameData.PLAYER_LOAD, out playerLoadedLevel))
-                {
-                    if ((bool)playerLoadedLevel)
-                    {
-                        count++;
-                    }
-                }
-            }
-
-            return count;
-        }
-
-        public void PrintInfo(string info)
-        {
-            Debug.Log(info);
-            infoText.text = info;
+            return;
         }
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
-        PrintInfo("플레이어를 기다리고있어요 ^오^  " + PhotonNetwork.PlayerList.Length + " / " + PhotonNetwork.CurrentRoom.MaxPlayers);
+        PrintInfo(readyPlayer/2 + " / " + PhotonNetwork.CurrentRoom.MaxPlayers);
         if (changedProps.ContainsKey(GameData.PLAYER_LOAD))
         {
         }
@@ -148,4 +91,8 @@ public class HInLobby : MonoBehaviourPunCallbacks
         Debug.Log(info);
         infoText.text = info;
     }
+ 
+
+    #endregion PHOTON CALLBACK
+
 }
