@@ -64,7 +64,7 @@ public class ReadyPotal : MonoBehaviourPun
         HInLobby.Instance.PrintInfo("Start Game!");
         yield return new WaitForSeconds(0.3f);
         if(PhotonNetwork.IsMasterClient)
-            PhotonNetwork.LoadLevel("GameScene");
+            PhotonNetwork.LoadLevel("StageScene_1");
 
         //int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
         //PhotonNetwork.Instantiate("TestPlayer", spawnPos[playerNumber].position, spawnPos[playerNumber].rotation, 0);
