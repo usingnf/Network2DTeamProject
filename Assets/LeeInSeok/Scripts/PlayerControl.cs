@@ -53,6 +53,8 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             PhotonNetwork.LocalPlayer.ActorNumber)
         );
 
+        StageManager.Instance.onReverseGravity += ReverseGravity;
+
         photonView.RPC("SetName", RpcTarget.All, photonView.Owner.NickName);
     }
 
@@ -310,7 +312,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             yield return new WaitForSeconds(1.0f);
         }
         if(PhotonNetwork.IsMasterClient)
-            PhotonNetwork.LoadLevel(2);
+            PhotonNetwork.LoadLevel(string.Format("StageScene_1"));
     }
     private IEnumerator ReadyCancle()
     {
@@ -323,7 +325,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
     public void ReverseGravity()
     {   
-        Debug.Log("ReverseGravity()");
+        //Debug.Log("ReverseGravity()");
         gravity *= -1f;
         rigid.gravityScale = gravity;
         transform.Rotate(new Vector3(0f, 0f, 180f * gravity), Space.Self); 
