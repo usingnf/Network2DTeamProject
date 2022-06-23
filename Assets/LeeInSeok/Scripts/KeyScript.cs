@@ -29,9 +29,12 @@ public class KeyScript : MonoBehaviourPun
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         if(collision.gameObject.layer == LayerMask.NameToLayer("UI"))
         {
-            SetOwner(collision.gameObject.GetComponent<PlayerControl>());
+            if(owner == null)
+                SetOwner(collision.gameObject.GetComponent<PlayerControl>());
         }
         
     }

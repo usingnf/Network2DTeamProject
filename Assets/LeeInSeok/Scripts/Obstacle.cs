@@ -16,8 +16,4 @@ public class Obstacle : MonoBehaviour
         
     }
 
-    private void OnDestroy()
-    {
-        Debug.Log("Destroy");
-    }
 }

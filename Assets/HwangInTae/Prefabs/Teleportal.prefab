@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3685871749856083464}
   - component: {fileID: 461375153289472011}
   - component: {fileID: 7883293415603619778}
+  - component: {fileID: 4025583357736425349}
   m_Layer: 0
   m_Name: Teleportal
   m_TagString: Untagged
@@ -72,7 +73,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -2
-  m_Sprite: {fileID: 21300000, guid: 9b4fd88037233e54f8521932e2405964, type: 3}
+  m_Sprite: {fileID: 2189510010676529607, guid: 08fac7174e1ccb8459caf47627c2fd65,
+    type: 3}
   m_Color: {r: 0.10453009, g: 0.5618899, b: 0.8207547, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -95,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 206bcc6cfdad7e34487b2d9cbd5a15c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  otherPortar: {fileID: 0}
+  otherPortal: {fileID: 0}
 --- !u!61 &7883293415603619778
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -113,7 +115,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.46, y: 1.49}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -122,3 +124,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!95 &4025583357736425349
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5968059448229238138}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 17e54c6bf7669ca4abe46f6738923806, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

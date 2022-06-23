@@ -42,11 +42,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable() { { GameData.PLAYER_LOAD, true } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
-        Debug.Log("GameManager");
-
         if (PhotonNetwork.IsMasterClient)
         {
-            Debug.Log("master");
             props = new ExitGames.Client.Photon.Hashtable() { { "RoomState", "Start" } };
             PhotonNetwork.CurrentRoom.SetCustomProperties(props);
             masterNum = PhotonNetwork.MasterClient.ActorNumber;
@@ -57,11 +54,9 @@ public class GameManager : MonoBehaviourPunCallbacks
             if((string)PhotonNetwork.CurrentRoom.CustomProperties["RoomState"] == "Start")
             {
                 StartCoroutine(Rejoin());
-                Debug.Log("Rejoin");
             }
             else
             {
-                Debug.Log("noMaster");
                 StartCoroutine(StartGame());
             }
         }

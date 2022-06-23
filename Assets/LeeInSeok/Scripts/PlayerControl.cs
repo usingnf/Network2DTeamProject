@@ -48,7 +48,14 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         animator = GetComponent<Animator>();
 
         if(GameManager.Instance != null)
+        {
+            if(GameManager.Instance.players.ContainsKey(photonView.OwnerActorNr) == true)
+            {
+                GameManager.Instance.players.Remove(photonView.OwnerActorNr);
+            }
             GameManager.Instance.players.Add(photonView.OwnerActorNr, this.gameObject);
+        }
+            
 
         Debug.Log(string.Format(
             "photonView.OwnerActorNr : {0} / LocalPlayer.ActorNumber : {1}",
