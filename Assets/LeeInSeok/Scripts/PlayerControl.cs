@@ -12,7 +12,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     private SpriteRenderer rend;
     Vector2 moveVec = Vector2.zero;
 
-    public static float defalutGravity = 1f;
+    public float gravity = 1f;
 
     public float speed = 4.0f;
     public float jumpPower = 5.0f;
@@ -119,8 +119,9 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void Jump(float power)
     {
+        Debug.Log("Jump");
         int count = 0;
-        RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.down, size / 2, LayerMask.GetMask("UI", "Water"));
+        RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.down * gravity, size / 2, LayerMask.GetMask("UI", "Water"));
         foreach(RaycastHit2D hit in downHit)
         {
             if(hit.collider.isTrigger == false)
@@ -132,8 +133,8 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         {
             return;
         }
+        RaycastHit2D[] upHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.up * gravity, size / 2, LayerMask.GetMask("UI"));
         count = 0;
-        RaycastHit2D[] upHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.up, size / 2, LayerMask.GetMask("UI"));
         foreach (RaycastHit2D hit in upHit)
         {
             if (hit.collider.isTrigger == false)
@@ -143,7 +144,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         }
         if (count <= 1)
         {
-            rigid.AddForce(Vector2.up * power, ForceMode2D.Impulse);
+            rigid.AddForce(Vector2.up * gravity * power, ForceMode2D.Impulse);
         }
         
     }
@@ -157,7 +158,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     void HighJump(float jumpPower)
     {
         rigid.velocity = new Vector2(rigid.velocity.x, 0f);
-        rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+        rigid.AddForce(Vector2.up * gravity * jumpPower, ForceMode2D.Impulse);
     }
 
 
@@ -284,10 +285,11 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     public void ShootStop()
     {
         isShoot = false;
-        rigid.gravityScale = defalutGravity;
+        rigid.gravityScale = gravity;
 
         rigid.velocity = Vector2.zero;
     }
+
     [PunRPC]
     public void OnGameStart()
     {
@@ -315,6 +317,18 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         StopCoroutine("GameStart");
         HInLobby.Instance.PrintInfo(text.text + " 준비 취소");
         yield return new WaitForSeconds(1.0f);
-        HInLobby.Instance.PrintInfo(HInLobby.Instance.readyPlayer/2 + " / " + PhotonNetwork.CurrentRoom.MaxPlayers);
+        HInLobby.Instance.PrintInfo(HInLobby.Instance.readyPlayer / 2 + " / " + PhotonNetwork.CurrentRoom.MaxPlayers);
+    }
+
+
+    public void ReverseGravity()
+    {   
+        Debug.Log("ReverseGravity()");
+        gravity *= -1f;
+        rigid.gravityScale = gravity;
+        transform.Rotate(new Vector3(0f, 0f, 180f * gravity), Space.Self); 
+
+        Camera.main.transform.Rotate(new Vector3(0f, 0f, 180f * gravity), Space.Self);   
+        Camera.main.transform.localPosition = new Vector3(0f, 0f, -10f);
     }
 }
