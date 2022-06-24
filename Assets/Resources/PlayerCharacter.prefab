@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7804508970282623679}
   - component: {fileID: 7112918866365837556}
   - component: {fileID: 8957238652555610740}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 1884559820856763871}
   - component: {fileID: 5153145420402420698}
   - component: {fileID: 3740814241089309636}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 9179771615846864897}
   - component: {fileID: 8177347973882474846}
   - component: {fileID: 4948414743163805168}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: PlayerCharacter
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -255,7 +255,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 8623458573684838780, guid: db3ecd33c9ae81c4ebd371431f2f9e94,
     type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}

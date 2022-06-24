@@ -19,12 +19,12 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     public float jumpPower = 5.0f;
     public float size = 1.0f;
     public bool isObserve;
-    public int observeNumber;
+    public int observeNumber;                   // 현재 관전중인 플레이어 번호
     public Text text;
     public KeyScript key = null;
-    private GameObject doorObj = null;             // 현재 관전중인 플레이어 번호
+    private GameObject doorObj = null;             
     public bool isClear = false;
-    public bool isShoot;                        // 발사(캐릭터가 직선으로 발사됨) // 중력X, 입력X    
+    public bool isShoot;                        
     public bool isReady = false;    //황인태 추가
 
     private void OnEnable() 
@@ -39,14 +39,15 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
         isObserve = false;
     }
-
-    void Start()
+    void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         coll = GetComponent<BoxCollider2D>();
         rend = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-
+    }
+    void Start()
+    {
         if(GameManager.Instance != null)
         {
             if(GameManager.Instance.players.ContainsKey(photonView.OwnerActorNr) == true)
@@ -55,14 +56,9 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             }
             GameManager.Instance.players.Add(photonView.OwnerActorNr, this.gameObject);
         }
-            
 
-        Debug.Log(string.Format(
-            "photonView.OwnerActorNr : {0} / LocalPlayer.ActorNumber : {1}",
-            photonView.OwnerActorNr,
-            PhotonNetwork.LocalPlayer.ActorNumber)
-        );
-
+        StageManager.Instance.onReverseGravity += ReverseGravity;
+        
         photonView.RPC("SetName", RpcTarget.All, photonView.Owner.NickName);
     }
 
@@ -145,7 +141,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         if (animator.GetBool("isJump") == true)
             return;
         GameObject obj = null;
-        RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.down * gravity, size / 2, LayerMask.GetMask("Water"));
+        RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.down * gravity, size / 2, LayerMask.GetMask("Obstacle"));
         foreach(RaycastHit2D hit in downHit)
         {
             if(hit.collider.tag == "side")
@@ -174,7 +170,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     public void Jump(float power)
     {
         int count = 0;
-        RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.down * gravity, size / 2, LayerMask.GetMask("UI", "Water"));
+        RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size-0.05f, 0.05f), 0, Vector2.down * gravity, size / 2, LayerMask.GetMask("Player", "Obstacle"));
         foreach(RaycastHit2D hit in downHit)
         {
             if(hit.collider.isTrigger == false)
@@ -186,7 +182,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         {
             return;
         }
-        RaycastHit2D[] upHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.up * gravity, size / 2, LayerMask.GetMask("UI"));
+        RaycastHit2D[] upHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.up * gravity, size / 2, LayerMask.GetMask("Player"));
         count = 0;
         foreach (RaycastHit2D hit in upHit)
         {
@@ -236,11 +232,14 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         // Hashtable props = new Hashtable() {{GameData.PLAYER_CLEAR, true}};
 
         // PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-
+        if (isClear == true)
+            return;
 
         isClear = true;
         // 아직 스테이지 완전 클리어 아니면 옵저버 모드로 전환
         StageManager.Instance.GoalIn(this);
+
+        
 
         // if (!StageManager.Instance.CheckClear())
         // {   
@@ -257,6 +256,8 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         isObserve = true;
         rend.enabled = false;
         coll.enabled = false;
+        text.enabled = false;
+        rigid.velocity = Vector2.zero;
         rigid.gravityScale = 0f;
 
         observeNumber = photonView.OwnerActorNr;
@@ -265,9 +266,15 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     }
 
     void ObserveNext(ref int obNumber)
-    {   
-        Camera.main.transform.SetParent(GameManager.Instance.GetNextObserveTF(ref obNumber));
-        Camera.main.transform.localPosition = new Vector3(0f, 0f, -10f);
+    {
+        Transform observer = GameManager.Instance.GetNextObserveTF(ref obNumber);
+        if(observer != null)
+        {
+            Camera.main.GetComponent<HCameraController>().target = observer.gameObject;
+            Camera.main.transform.SetParent(GameManager.Instance.GetNextObserveTF(ref obNumber));
+            //Camera.main.transform.localPosition = new Vector3(0f, 0f, -10f);
+        }
+
     }
     
     [PunRPC]
@@ -371,7 +378,15 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             yield return new WaitForSeconds(1.0f);
         }
         if(PhotonNetwork.IsMasterClient)
-            PhotonNetwork.LoadLevel("GameScene");
+        {
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject obj in players)
+            {
+                PhotonNetwork.Destroy(obj);
+            }
+            PhotonNetwork.LoadLevel("StageScene_1");
+        }
+            
     }
     private IEnumerator ReadyCancle()
     {
@@ -384,7 +399,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
     public void ReverseGravity()
     {   
-        Debug.Log("ReverseGravity()");
+        //Debug.Log("ReverseGravity()");
         gravity *= -1f;
         rigid.gravityScale = gravity;
         transform.Rotate(new Vector3(0f, 0f, 180f * gravity), Space.Self); 

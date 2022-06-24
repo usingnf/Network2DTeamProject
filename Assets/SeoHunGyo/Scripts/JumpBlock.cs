@@ -14,7 +14,7 @@ public class JumpBlock : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other) 
     {
-        if (other.gameObject.layer == 5)
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {   
             other.transform.GetComponent<PlayerControl>().SuperJump(jumpPowerMultiplier);
             m_anim.SetTrigger("Works");

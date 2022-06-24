@@ -137,7 +137,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private IEnumerator Join()
     {
         yield return new WaitForSeconds(1.0f);
-        PhotonNetwork.LoadLevel("HPlayLobbyScene_220617");
+        PhotonNetwork.LoadLevel("PlayerLobbyScene");
     }
 
     public override void OnLeftRoom()

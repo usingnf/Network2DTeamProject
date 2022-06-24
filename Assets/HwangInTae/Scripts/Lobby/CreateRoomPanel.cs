@@ -24,7 +24,9 @@ public class CreateRoomPanel : MonoBehaviour
         if (roomPW == "")//비밀번호방 아닐시
         {
             string roomInfo = roomName + "_" + roomPW;
+
             RoomOptions roomOptions = new RoomOptions { MaxPlayers = 4, IsVisible = true, IsOpen = true };
+
             roomOptions.CustomRoomProperties = new Hashtable()
         {
             {"roominfo",roomInfo },     //roomName + PW
@@ -37,7 +39,7 @@ public class CreateRoomPanel : MonoBehaviour
             "roominfo",
             "password",
             "displayname",
-            };
+            };//TODO:정보 좀 더 알아보기
             Debug.Log(roomPW);
             PhotonNetwork.CreateRoom(roomInfo, roomOptions, null);
         }

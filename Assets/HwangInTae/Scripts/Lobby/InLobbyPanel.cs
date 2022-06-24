@@ -52,7 +52,6 @@ public class InLobbyPanel : MonoBehaviour
             entry.transform.SetParent(roomContent.transform);
             entry.transform.localScale = Vector3.one;
             entry.GetComponent<RoomEntry>().Initialize((string)info.CustomProperties["displayname"], (string)info.CustomProperties["password"], (byte)info.PlayerCount, info.MaxPlayers);
-            //CustomProerties[""]시발새끼
             if(info.CustomProperties["password"]!=null)
             {
                 //비밀번호 프리팹 보이게 하기

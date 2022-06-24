@@ -10,9 +10,14 @@ public class ButtonScript : MonoBehaviourPun
     public bool defaultState = true;
     public bool permament = false;
     private bool isUsed = false;
+
+    private SpriteRenderer render;
+    public Sprite on;
+    public Sprite off;
+
     void Start()
     {
-        
+        render = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -24,7 +29,7 @@ public class ButtonScript : MonoBehaviourPun
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log("collide");
-        if(collision.gameObject.layer == LayerMask.NameToLayer("UI"))
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             //Debug.Log("ui");
             count++;
@@ -38,7 +43,7 @@ public class ButtonScript : MonoBehaviourPun
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("UI"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             count--;
             if(count <= 0)
@@ -62,10 +67,12 @@ public class ButtonScript : MonoBehaviourPun
         //Debug.Log("button");
         if (swt == true)
         {
+            render.sprite = off;
             wall.SetActive(false);
         }
         else
         {
+            render.sprite = on;
             wall.SetActive(true);
         }
     }
