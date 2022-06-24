@@ -9,6 +9,14 @@ public class ActivePair : MonoBehaviourPun
 
     private void OnDisable() 
     {
+        if (PhotonNetwork.IsMasterClient)
+            photonView.RPC("Active", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void Active()
+    {
         pairObject.SetActive(true);
     }
+
 }

@@ -8,7 +8,7 @@ public class ReverseGravity : MonoBehaviourPun
 {
     private void OnTriggerEnter2D(Collider2D other) 
     {
-        if (other.gameObject.layer == 5)
+        if (other.CompareTag("Player"))
         {   
             GameManager.Instance.PrintInfo( "중력 반전" );
             StageManager.Instance.ReverseGravity();
