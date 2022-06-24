@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class OptionUI : MonoBehaviour
 {
+    public GameObject optionUI;
     public Slider slider;
+
 
     private void OnEnable() 
     {
@@ -15,6 +17,6 @@ public class OptionUI : MonoBehaviour
 
     public void SetVolume()
     {
-        GameManager.Instance.SetVolume(slider.value);
+        PlayerPrefs.SetFloat("Volume", slider.value);
     }
 }

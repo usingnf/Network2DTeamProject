@@ -29,9 +29,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         if (PhotonNetwork.IsConnected)
-        {
-            SetActivePanel(PANEL.Connect);//여기 참고할것
-        }
+            SetActivePanel(PANEL.Connect);
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
@@ -43,7 +41,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         createRoomPanel.gameObject.SetActive(panel == PANEL.CreateRoom);
         inLobbyPanel.gameObject.SetActive(panel == PANEL.Lobby);
         inRoomPanel.gameObject.SetActive(panel == PANEL.Room);
-        //optionPanel.gameObject.SetActive(panel == PANEL.Option);
+       // optionPanel.gameObject.SetActive(panel == PANEL.Option);
     }
 
     public void ShowError(string error)
