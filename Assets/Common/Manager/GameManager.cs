@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public Transform[] spawnPos;
     public Dictionary<int, GameObject> players = new Dictionary<int, GameObject>();
     public int masterNum = 0;
+    public PlayerControl myPlayer;
 
 
     [Header("Option UI")]
@@ -76,8 +77,14 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (Input.GetButtonDown("Cancel"))
         {
-            optionUI.SetActive(!optionUI.activeSelf);
+            SetOptionUI(!optionUI.activeSelf);
         }
+    }
+
+    void SetOptionUI(bool isOn)
+    {
+        optionUI.SetActive(isOn);
+        myPlayer.isStop = isOn;
     }
 
     #region PHOTON CALLBACK
@@ -245,5 +252,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         players.Remove(otherPlayer.ActorNumber);
+    }
+
+
+    public void SetVolume(float volume)
+    {
+        PlayerPrefs.SetFloat("Volume", volume);
     }
 }

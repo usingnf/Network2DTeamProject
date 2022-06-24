@@ -428,6 +428,7 @@ MonoBehaviour:
   isClear: 0
   isShoot: 0
   isReady: 0
+  isStop: 0
 --- !u!61 &4948414743163805168
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -452,5 +453,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 0.8}
   m_EdgeRadius: 0

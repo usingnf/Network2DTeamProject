@@ -26,6 +26,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     public bool isClear = false;
     public bool isShoot;                        
     public bool isReady = false;    //황인태 추가
+    public bool isStop;                         // 입력 안 받는 상태
 
     private void OnEnable() 
     {
@@ -55,9 +56,14 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
                 GameManager.Instance.players.Remove(photonView.OwnerActorNr);
             }
             GameManager.Instance.players.Add(photonView.OwnerActorNr, this.gameObject);
+
+            GameManager.Instance.myPlayer = this;
         }
 
-        StageManager.Instance.onReverseGravity += ReverseGravity;
+        if (StageManager.Instance != null)
+        {   
+            StageManager.Instance.onReverseGravity += ReverseGravity;
+        }
         
         photonView.RPC("SetName", RpcTarget.All, photonView.Owner.NickName);
     }
@@ -102,28 +108,34 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             return;
         }
 
-        moveVec = Vector2.zero;
-        if (Input.GetKey(KeyCode.A))
+        if (!isStop)
         {
-            moveVec += new Vector2(-1, 0);
+            moveVec = Vector2.zero;
+            if (Input.GetKey(KeyCode.A))
+            {
+                moveVec += new Vector2(-1, 0);
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                moveVec += new Vector2(1, 0);
+            }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                //Jump(jumpPower);
+                photonView.RPC("Jump", RpcTarget.All, jumpPower);
+            }
         }
-        if (Input.GetKey(KeyCode.D))
-        {
-            moveVec += new Vector2(1, 0);
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            //Jump(jumpPower);
-            photonView.RPC("Jump", RpcTarget.All, jumpPower);
-        }
+
+        
         moveVec = moveVec.normalized;
         animator.SetFloat("speed", moveVec.magnitude * speed);
         rigid.position += moveVec * speed * Time.deltaTime;
-        if(moveVec.x > 0)
+
+        if(moveVec.x * gravity > 0)
         {
             photonView.RPC("Flip", RpcTarget.All, false);
         }
-        else if( moveVec.x < 0)
+        else if( moveVec.x * gravity < 0)
         {
             photonView.RPC("Flip", RpcTarget.All, true);
         }
@@ -229,26 +241,12 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
     public void ClearStage()
     {
-        // Hashtable props = new Hashtable() {{GameData.PLAYER_CLEAR, true}};
-
-        // PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         if (isClear == true)
             return;
 
         isClear = true;
         // 아직 스테이지 완전 클리어 아니면 옵저버 모드로 전환
         StageManager.Instance.GoalIn(this);
-
-        
-
-        // if (!StageManager.Instance.CheckClear())
-        // {   
-        //     isObserve = true;
-        //     rend.enabled = false;
-        //     coll.enabled = false;
-        //     ObserveNext(photonView.OwnerActorNr);
-        // }
-
     }
 
     public void SetObserveMode()
@@ -399,13 +397,17 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
     public void ReverseGravity()
     {   
-        //Debug.Log("ReverseGravity()");
+        Debug.Log("ReverseGravity()");
         gravity *= -1f;
         rigid.gravityScale = gravity;
         transform.Rotate(new Vector3(0f, 0f, 180f * gravity), Space.Self); 
 
+        //Flip(gravity > 0 ? false : true);
+
         Camera.main.transform.Rotate(new Vector3(0f, 0f, 180f * gravity), Space.Self);   
         Camera.main.transform.localPosition = new Vector3(0f, 0f, -10f);
+
+        
     }
 
 }

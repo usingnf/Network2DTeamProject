@@ -43,7 +43,7 @@ public class StageManager : MonoBehaviourPunCallbacks
 
 
     void Restart()
-    {   // TODO 씬 이름 "Stage " + curStage로
+    {   
 
         Hashtable props = new Hashtable() { { "RoomState", "ReStart" } };
         PhotonNetwork.CurrentRoom.SetCustomProperties(props);
@@ -114,6 +114,8 @@ public class StageManager : MonoBehaviourPunCallbacks
 
     public void ReverseGravity()
     {   
+        if (!PhotonNetwork.IsMasterClient) return;
+        
         photonView.RPC("Event_ReverseGravity", RpcTarget.All);
     }
 
