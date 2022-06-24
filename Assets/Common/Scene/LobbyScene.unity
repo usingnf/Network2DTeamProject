@@ -3883,6 +3883,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 858409262658641087, guid: 07aba7d93e9ca834581f17fb088733da,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 858409263338113632, guid: 07aba7d93e9ca834581f17fb088733da,
         type: 3}
       propertyPath: m_SizeDelta.y
