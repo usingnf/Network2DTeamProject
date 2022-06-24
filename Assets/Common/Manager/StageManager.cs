@@ -86,7 +86,8 @@ public class StageManager : MonoBehaviourPunCallbacks
         Hashtable props = new Hashtable() { { "RoomState", "Clear" } };
         PhotonNetwork.CurrentRoom.SetCustomProperties(props);
 
-        PhotonNetwork.LoadLevel("StageScene_1"); // 임시로
+        if (PhotonNetwork.IsMasterClient)
+            PhotonNetwork.LoadLevel("StageScene_1");
         //PhotonNetwork.LoadLevel(string.Format( "StageScene_{0}", ++curStage ));
 
     }

@@ -18,11 +18,11 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     public float jumpPower = 5.0f;
     public float size = 1.0f;
     public bool isObserve;
-    public int observeNumber;
+    public int observeNumber;                   // 현재 관전중인 플레이어 번호
     public Text text;
     public KeyScript key = null;
-    private GameObject doorObj = null;             // 현재 관전중인 플레이어 번호
-    public bool isShoot;                        // 발사(캐릭터가 직선으로 발사됨) // 중력X, 입력X    
+    private GameObject doorObj = null;             
+    public bool isShoot;                        
     public bool isReady = false;    //황인태 추가
 
     private void OnEnable() 
@@ -123,7 +123,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     {
         Debug.Log("Jump");
         int count = 0;
-        RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.down * gravity, size / 2, LayerMask.GetMask("UI", "Water"));
+        RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size - 0.05f, 0.05f), 0, Vector2.down * gravity, size / 2, LayerMask.GetMask("UI", "Water"));
         foreach(RaycastHit2D hit in downHit)
         {
             if(hit.collider.isTrigger == false)

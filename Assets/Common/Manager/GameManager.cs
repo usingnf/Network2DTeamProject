@@ -25,6 +25,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     public Dictionary<int, GameObject> players = new Dictionary<int, GameObject>();
     public int masterNum = 0;
 
+
+    [Header("Option UI")]
+    public GameObject optionUI;
+
     private void Awake()
     {
         Instance = this;
@@ -66,6 +70,14 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
         }
         
+    }
+
+    void Update()
+    {
+        if (Input.GetButtonDown("Cancel"))
+        {
+            optionUI.SetActive(!optionUI.activeSelf);
+        }
     }
 
     #region PHOTON CALLBACK
@@ -240,15 +252,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
 
-
-    // 게임 중 탈주
-
-    // public void OnExitGame()
-    // {   // Exit, 확인 버튼 눌렀을 때
-    //     PhotonNetwork.LeaveRoom();
-
-    //     SceneManager.LoadScene("LobbyScene_new_220616");
-    // }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
