@@ -5429,6 +5429,7 @@ MonoBehaviour:
   - {fileID: 1303095379}
   - {fileID: 2080868685}
   masterNum: 0
+  optionUI: {fileID: 0}
 --- !u!4 &2026471132
 Transform:
   m_ObjectHideFlags: 0
@@ -5469,7 +5470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   portalText: {fileID: 0}
-  curStage: 1
+  curStage: 2
   clearCount: 0
   maxPlayer: 0
 --- !u!1001 &2046982817
