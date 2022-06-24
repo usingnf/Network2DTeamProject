@@ -6,6 +6,8 @@ using Photon.Pun;
 
 public class ReverseGravity : MonoBehaviourPun
 {
+    public GameObject pairObject;
+
     private void OnTriggerEnter2D(Collider2D other) 
     {
         if (other.CompareTag("Player"))
@@ -13,8 +15,15 @@ public class ReverseGravity : MonoBehaviourPun
             GameManager.Instance.PrintInfo( "중력 반전" );
             StageManager.Instance.ReverseGravity();
             
-            gameObject.SetActive(false);
+            photonView.RPC("Toggle", RpcTarget.All);
         }
+    }
+
+    [PunRPC]
+    void Toggle()
+    {
+        pairObject.SetActive(true);
+        gameObject.SetActive(false);
     }
     
 }

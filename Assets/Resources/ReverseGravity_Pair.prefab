@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 610580722332805298}
   - component: {fileID: 610580722332805299}
   - component: {fileID: 610580722332805308}
-  - component: {fileID: 610580722332805297}
   - component: {fileID: 5169817667272633952}
   m_Layer: 0
   m_Name: ReverseGravity_Pair
@@ -103,7 +102,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.4375, y: 1.4375}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 1.4375, y: 1.4375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -122,18 +121,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a953f172d4dc9c4294cab073670dc64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &610580722332805297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 610580722332805310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34fcd8355c49983439a72accbbb41b07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pairObject: {fileID: 8955565476357820447}
@@ -203,7 +190,6 @@ GameObject:
   - component: {fileID: 8955565476357820435}
   - component: {fileID: 8955565476357820434}
   - component: {fileID: 8955565476357820445}
-  - component: {fileID: 8955565476357820446}
   - component: {fileID: 1994918335356249976}
   m_Layer: 0
   m_Name: ReverseGravity_Pair (1)
@@ -294,7 +280,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.4375, y: 1.4375}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 1.4375, y: 1.4375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -313,18 +299,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a953f172d4dc9c4294cab073670dc64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8955565476357820446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8955565476357820447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34fcd8355c49983439a72accbbb41b07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pairObject: {fileID: 610580722332805310}
