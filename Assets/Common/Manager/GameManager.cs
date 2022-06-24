@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.Log("Disconnected : " + cause.ToString());
-        SceneManager.LoadScene("LobbyScene_new_220616");
+        SceneManager.LoadScene("LobbyScene");
     }
 
     public override void OnLeftRoom()
