@@ -39,6 +39,7 @@ public class HInLobby : MonoBehaviourPunCallbacks
        if(SceneManager.GetActiveScene().name == "PlayerLobbyScene")
             SceneManager.LoadScene("LobbyScene");
     }
+
     public void LeaveButtonClicker()
     {
         PhotonNetwork.LeaveRoom();
