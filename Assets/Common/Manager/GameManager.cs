@@ -47,6 +47,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void Start()
     {
+        if (spawnPos.Length == 0) return;
+
         ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable() { { GameData.PLAYER_LOAD, true } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
@@ -111,11 +113,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.Log("Disconnected : " + cause.ToString());
-        SceneManager.LoadScene("LobbyScene_new_220616");
+        SceneManager.LoadScene("LobbyScene");
     }
 
     public override void OnLeftRoom()
-    {
+    {   
         PhotonNetwork.Disconnect();
     }
 
@@ -209,8 +211,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void PrintInfo(string info)
     {
         if(info != null) { 
-        Debug.Log(info);
-        infoText.text = info;
+            Debug.Log(info);
+
+            if (infoText == null) return;
+
+            infoText.text = info;
         }
     }
 
@@ -254,11 +259,5 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         players.Remove(otherPlayer.ActorNumber);
-    }
-
-
-    public void SetVolume(float volume)
-    {
-        PlayerPrefs.SetFloat("Volume", volume);
     }
 }
