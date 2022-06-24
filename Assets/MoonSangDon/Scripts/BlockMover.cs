@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockMover : MonoBehaviour
+public class BlockMover : MonoBehaviourPun
 {
 
     public int moveFlag = 1;
@@ -16,13 +17,15 @@ public class BlockMover : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine("BlockMove");
+        if(PhotonNetwork.IsMasterClient)
+            StartCoroutine("BlockMove");
     }
 
     // Update is called once per frame
     private void LateUpdate()
     {
-        Move();
+        if (PhotonNetwork.IsMasterClient)
+            Move();
     }
     void Move()
     {

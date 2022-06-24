@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7804508970282623679}
   - component: {fileID: 7112918866365837556}
   - component: {fileID: 8957238652555610740}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 1884559820856763871}
   - component: {fileID: 5153145420402420698}
   - component: {fileID: 3740814241089309636}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 9179771615846864897}
   - component: {fileID: 8177347973882474846}
   - component: {fileID: 4948414743163805168}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: PlayerCharacter
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -255,8 +255,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9b4fd88037233e54f8521932e2405964, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 8623458573684838780, guid: db3ecd33c9ae81c4ebd371431f2f9e94,
+    type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -320,16 +321,16 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: Die
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isJump
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isFall
   - Type: 1
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: speed
   m_SynchronizeLayers:
   - SynchronizeType: 0
@@ -395,14 +396,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1, y: 0.7894737}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 0.7894737}
   m_EdgeRadius: 0
 --- !u!114 &8177347973882474846
 MonoBehaviour:
@@ -424,6 +425,7 @@ MonoBehaviour:
   observeNumber: 0
   text: {fileID: 8957238652555610740}
   key: {fileID: 0}
+  isClear: 0
   isShoot: 0
   isReady: 0
 --- !u!61 &4948414743163805168
@@ -443,7 +445,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1, y: 0.7894737}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

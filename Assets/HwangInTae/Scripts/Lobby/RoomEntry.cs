@@ -54,9 +54,4 @@ public class RoomEntry : MonoBehaviour
             PhotonNetwork.JoinRoom(roomName);
         }
     }
-
-    private IEnumerator Join()
-    {
-        yield return new WaitForSeconds(1.0f);
-    }
 }

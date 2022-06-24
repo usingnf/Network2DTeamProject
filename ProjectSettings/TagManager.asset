@@ -7,6 +7,9 @@ TagManager:
   - ReadyPotal
   - Key
   - Door
+  - side
+  - Trapblock
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -17,7 +20,7 @@ TagManager:
   - 
   - 
   - Player
-  - 
+  - Obstacle
   - 
   - 
   - 
