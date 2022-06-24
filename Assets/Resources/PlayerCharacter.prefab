@@ -427,6 +427,7 @@ MonoBehaviour:
   key: {fileID: 0}
   isClear: 0
   isShoot: 0
+  trgJump: 0
   isReady: 0
 --- !u!61 &4948414743163805168
 BoxCollider2D:

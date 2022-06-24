@@ -23,12 +23,12 @@ public class TrapBlockTrigger : MonoBehaviourPun
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("엔터됨");
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("엔터엔터됨");
-            Debug.Log("트랩블럭콜라이더 엔터됨");
-            photonView.RPC("OnActiveBlock", RpcTarget.All);
+            if(collision.gameObject.GetComponent<Animator>().GetBool("isJump") == true)
+            {
+                photonView.RPC("OnActiveBlock", RpcTarget.All);
+            }            
         }
     }
 

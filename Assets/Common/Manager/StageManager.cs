@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using System.Collections;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class StageManager : MonoBehaviourPunCallbacks
 {
@@ -49,7 +50,16 @@ public class StageManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.SetCustomProperties(props);
 
         //PhotonNetwork.LoadLevel("GameScene");
-        PhotonNetwork.LoadLevel("StageScene_" + curStage);
+        PlayerPrefs.SetInt("Stage", curStage);
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject obj in players)
+        {
+            Debug.Log(obj.name);
+            PhotonNetwork.Destroy(obj);
+        }
+        if(PhotonNetwork.IsMasterClient)
+            PhotonNetwork.LoadLevel("LoadingScene");
+        //PhotonNetwork.LoadLevel("StageScene_" + curStage);
     }
 
     public bool CheckClear()
@@ -105,7 +115,16 @@ public class StageManager : MonoBehaviourPunCallbacks
                 Debug.Log(obj.name);
                 PhotonNetwork.Destroy(obj);
             }
-            PhotonNetwork.LoadLevel("StageScene_1");
+            int sceneNum = SceneUtility.GetBuildIndexByScenePath("StageScene_" + (curStage + 1));
+            if (sceneNum <= 0)
+            {
+                Debug.Log("다음 스테이지 없음.");
+            }
+            else
+            {
+                PhotonNetwork.LoadLevel("StageScene_" + (curStage + 1));
+            }
+            
         }
             
         //PhotonNetwork.LoadLevel(string.Format( "StageScene_{0}", ++curStage ));

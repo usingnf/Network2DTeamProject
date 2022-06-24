@@ -24,7 +24,8 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     public KeyScript key = null;
     private GameObject doorObj = null;             
     public bool isClear = false;
-    public bool isShoot;                        
+    public bool isShoot;
+    public bool trgJump = false;
     public bool isReady = false;    //황인태 추가
 
     private void OnEnable() 
@@ -56,8 +57,11 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             }
             GameManager.Instance.players.Add(photonView.OwnerActorNr, this.gameObject);
         }
-
-        StageManager.Instance.onReverseGravity += ReverseGravity;
+        if(StageManager.Instance != null)
+        {
+            StageManager.Instance.onReverseGravity += ReverseGravity;
+        }
+        
         
         photonView.RPC("SetName", RpcTarget.All, photonView.Owner.NickName);
     }
@@ -87,11 +91,44 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
     void Move()
     {
-        if(rigid.velocity.y <= 0)
+        int count = 0;
+        RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size - 0.05f, 0.05f), 0, Vector2.down * gravity, size / 2, LayerMask.GetMask("Player", "Obstacle"));
+        foreach (RaycastHit2D hit in downHit)
+        {
+            if (hit.collider.isTrigger == false)
+            {
+                count++;
+            }
+        }
+        if (count > 1)
+        {
+            if(animator.GetBool("isJump") == false)
+            {
+                if (trgJump == true)
+                {
+                    trgJump = false;
+                    SoundManager.Instance.PlaySound("Crash", transform.position, 1.0f, 1.0f);
+                }
+            }
+        }
+        else
+        {
+            trgJump = true;
+        }
+        
+        if (rigid.velocity.y <= 0)
         {
             animator.SetBool("isJump", false);
-            animator.SetBool("isFall", true);
+            if(rigid.velocity.y <= -0.2f)
+            {
+                if (animator.GetBool("isFall") == false)
+                {
+                    trgJump = true;
+                }
+                animator.SetBool("isFall", true);
+            }
         }
+
         if (isShoot)
         {
             animator.SetFloat("speed", 0);
@@ -182,6 +219,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         {
             return;
         }
+        
         RaycastHit2D[] upHit = Physics2D.BoxCastAll(transform.position, new Vector2(size, 0.05f), 0, Vector2.up * gravity, size / 2, LayerMask.GetMask("Player"));
         count = 0;
         foreach (RaycastHit2D hit in upHit)
@@ -193,8 +231,11 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         }
         if (count <= 1)
         {
-            animator.SetBool("isFall", false);
+            SoundManager.Instance.PlaySound("Jump0", this.transform.position, 1, 1);
             animator.SetBool("isJump", true);
+            trgJump = true;
+            animator.SetBool("isFall", false);
+            
             rigid.AddForce(Vector2.up * gravity * power, ForceMode2D.Impulse);
         }
         
@@ -237,6 +278,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
         isClear = true;
         // 아직 스테이지 완전 클리어 아니면 옵저버 모드로 전환
+        SoundManager.Instance.PlaySound("Clear", transform.position, 1.0f, 1.0f);
         StageManager.Instance.GoalIn(this);
 
         

@@ -33,23 +33,24 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         Instance = this;
         object stage = 0;
-        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(GameData.Stage, out stage) == true)
+        if(PhotonNetwork.IsConnected == true)
         {
-            ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable() { { GameData.Stage, (int)stage } };
-            PhotonNetwork.CurrentRoom.SetCustomProperties(props);
+            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(GameData.Stage, out stage) == true)
+            {
+                ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable() { { GameData.Stage, (int)stage } };
+                PhotonNetwork.CurrentRoom.SetCustomProperties(props);
+            }
         }
-        
+            
     }
 
     public void Start()
     {
-        Debug.Log("GameManager");
         ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable() { { GameData.PLAYER_LOAD, true } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
         if (PhotonNetwork.IsMasterClient)
         {
-            Debug.Log("Master");
             props = new ExitGames.Client.Photon.Hashtable() { { "RoomState", "Start" } };
             PhotonNetwork.CurrentRoom.SetCustomProperties(props);
             masterNum = PhotonNetwork.MasterClient.ActorNumber;
@@ -57,17 +58,18 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
         else
         {
+            if(PhotonNetwork.IsConnected == true)
+            {
+                if ((string)PhotonNetwork.CurrentRoom.CustomProperties["RoomState"] == "Start")
+                {
+                    StartCoroutine(Rejoin());
+                }
+                else
+                {
+                    StartCoroutine(StartGame());
+                }
+            }
             
-            if ((string)PhotonNetwork.CurrentRoom.CustomProperties["RoomState"] == "Start")
-            {
-                Debug.Log("Rejoin");
-                StartCoroutine(Rejoin());
-            }
-            else
-            {
-                Debug.Log("StartGame");
-                StartCoroutine(StartGame());
-            }
         }
         
     }
