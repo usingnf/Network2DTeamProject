@@ -43,7 +43,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         createRoomPanel.gameObject.SetActive(panel == PANEL.CreateRoom);
         inLobbyPanel.gameObject.SetActive(panel == PANEL.Lobby);
         inRoomPanel.gameObject.SetActive(panel == PANEL.Room);
-        //optionPanel.gameObject.SetActive(panel == PANEL.Option);
+        optionPanel.gameObject.SetActive(panel == PANEL.Option);
     }
 
     public void ShowError(string error)
