@@ -17,7 +17,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public InLobbyPanel inLobbyPanel;
     public InRoomPanel inRoomPanel;
     public InfoPanel infoPanel;
-    public OptionPanel optionPanel;
+    public GameObject optionPanel;
 
     #region UNITY
 
@@ -41,7 +41,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         createRoomPanel.gameObject.SetActive(panel == PANEL.CreateRoom);
         inLobbyPanel.gameObject.SetActive(panel == PANEL.Lobby);
         inRoomPanel.gameObject.SetActive(panel == PANEL.Room);
-       // optionPanel.gameObject.SetActive(panel == PANEL.Option);
+        optionPanel.gameObject.SetActive(panel == PANEL.Option);
     }
 
     public void ShowError(string error)
