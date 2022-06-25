@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class OptionUI : MonoBehaviour
 {
-    public GameObject optionUI;
     public Slider slider;
 
 
