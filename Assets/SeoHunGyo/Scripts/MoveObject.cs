@@ -11,9 +11,14 @@ public class MoveObject : MonoBehaviourPun
     
     
     Rigidbody2D     m_rigid;
+    SpriteRenderer rend;
 
 
-    private void Awake()    { m_rigid = GetComponent<Rigidbody2D>(); }
+    private void Awake()
+    { 
+        m_rigid = GetComponent<Rigidbody2D>();
+        rend = GetComponent<SpriteRenderer>();
+    }
     private void Update()   { Move(); }
 
 
@@ -21,10 +26,12 @@ public class MoveObject : MonoBehaviourPun
     {
         if (isLeft)
         {
+            rend.flipX = true;
             m_rigid.position -= new Vector2 (moveSpeed * Time.deltaTime , 0f) ;
         }
         else
         {
+            rend.flipX = false;
             m_rigid.position += new Vector2 (moveSpeed * Time.deltaTime , 0f) ;
         }
     }

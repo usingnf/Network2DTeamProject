@@ -5,8 +5,8 @@ using Photon.Pun;
 
 public class TrapBlockTrigger : MonoBehaviourPun
 {
-    public GameObject            box;
-    public Collider2D           trap; 
+    public GameObject       box;
+    public Collider2D        trap; 
     private SpriteRenderer      rend;
     private Color               invisibleColor;
     private Color               originColor;
@@ -17,20 +17,18 @@ public class TrapBlockTrigger : MonoBehaviourPun
     void Start()
     { 
         rend =              GetComponentInChildren<SpriteRenderer>();
-        box.SetActive(false);
         //originColor =       rend.color;
         //invisibleColor.a =  0f;
         //rend.color =        invisibleColor;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("엔터됨");
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("엔터엔터됨");
-            Debug.Log("트랩블럭콜라이더 엔터됨");
-            OnActiveBlock();
-            photonView.RPC("OnActiveBlock", RpcTarget.All);
+            if(collision.gameObject.GetComponent<Animator>().GetBool("isJump") == true)
+            {
+                photonView.RPC("OnActiveBlock", RpcTarget.All);
+            }            
         }
     }
 
