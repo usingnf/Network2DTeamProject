@@ -385,11 +385,16 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             photonView.RPC("OnReadyCancle", RpcTarget.All);
         }
     }
-
-    public void Reset()
+    [PunRPC]
+    public void Die()
     {   
         // TODO 열쇠 획득 시 열쇠 해제
         transform.position = GameManager.Instance.spawnPos[0].position;
+
+        if (key != null)
+        {
+            key.GetComponent<PhotonView>().RPC("Return", RpcTarget.All);
+        }
         //animator.SetTrigger("Die");
     }
 
@@ -436,7 +441,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             {
                 PhotonNetwork.Destroy(obj);
             }
-            PhotonNetwork.LoadLevel("StageScene_2");
+            PhotonNetwork.LoadLevel("StageScene_1");
         }
             
     }
