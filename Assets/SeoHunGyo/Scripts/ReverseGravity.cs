@@ -6,8 +6,6 @@ using Photon.Pun;
 
 public class ReverseGravity : MonoBehaviourPun
 {
-    public GameObject pairObject;
-
     private void OnTriggerEnter2D(Collider2D other) 
     {
 
@@ -22,15 +20,8 @@ public class ReverseGravity : MonoBehaviourPun
                 
                 photonView.RPC("Toggle", RpcTarget.All);
             }
-            
+           
         }
-    }
-
-    [PunRPC]
-    void Toggle()
-    {
-        pairObject.SetActive(true);
-        gameObject.SetActive(false);
     }
     
 }

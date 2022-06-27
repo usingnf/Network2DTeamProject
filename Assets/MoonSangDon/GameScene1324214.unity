@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4482472, g: 0.49827385, b: 0.57558215, a: 1}
+  m_IndirectSpecularColor: {r: 0.4482475, g: 0.49827462, b: 0.5755831, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1534,6 +1534,8 @@ MonoBehaviour:
   - {fileID: 229007108}
   - {fileID: 447806859}
   masterNum: 0
+  myPlayer: {fileID: 0}
+  optionUI: {fileID: 0}
 --- !u!114 &1684233545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1947,6 +1949,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 406963784673338037, guid: bf5b3351847169b4b9761be2ff6e1e38,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6132954272068449909, guid: bf5b3351847169b4b9761be2ff6e1e38,
         type: 3}
       propertyPath: m_RootOrder

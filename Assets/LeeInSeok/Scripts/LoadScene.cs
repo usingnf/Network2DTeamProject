@@ -21,16 +21,6 @@ public class LoadScene : MonoBehaviourPun
     public IEnumerator MoveScene()
     {
         yield return new WaitForSeconds(1.0f);
-        int curStage = PlayerPrefs.GetInt("Stage");
-        if(curStage <= 0)
-        {
-            PhotonNetwork.Disconnect();
-        }
-        else
-        {
-            if (PhotonNetwork.IsMasterClient)
-                PhotonNetwork.LoadLevel("StageScene_" + curStage);
-        }
-        
+        PhotonNetwork.LoadLevel("GameScene");
     }
 }

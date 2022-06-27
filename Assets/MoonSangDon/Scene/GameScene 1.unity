@@ -597,6 +597,10 @@ MonoBehaviour:
   count: 0
   defaultState: 1
   permament: 0
+  reverse: {fileID: 0}
+  on: {fileID: 0}
+  off: {fileID: 0}
+  timer: 0
 --- !u!1 &587393361
 GameObject:
   m_ObjectHideFlags: 0
@@ -1258,6 +1262,96 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1834858806619465820, guid: 39e7e35b6d0244a488e6c4b913d5a79b,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 1869771840756149287, guid: 39e7e35b6d0244a488e6c4b913d5a79b,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912787326449818639, guid: 39e7e35b6d0244a488e6c4b913d5a79b,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2392154208638897312, guid: 39e7e35b6d0244a488e6c4b913d5a79b,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2554249733639117113, guid: 39e7e35b6d0244a488e6c4b913d5a79b,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466704130278598740, guid: 39e7e35b6d0244a488e6c4b913d5a79b,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3638309136512922350, guid: 39e7e35b6d0244a488e6c4b913d5a79b,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3792230668259477197, guid: 39e7e35b6d0244a488e6c4b913d5a79b,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 3947742983342218742, guid: 39e7e35b6d0244a488e6c4b913d5a79b,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4074304605724441514, guid: 39e7e35b6d0244a488e6c4b913d5a79b,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4151528771316800275, guid: 39e7e35b6d0244a488e6c4b913d5a79b,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4382643030896706758, guid: 39e7e35b6d0244a488e6c4b913d5a79b,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066205403252882731, guid: 39e7e35b6d0244a488e6c4b913d5a79b,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 5344864991451908437, guid: 39e7e35b6d0244a488e6c4b913d5a79b,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5820993979608260246, guid: 39e7e35b6d0244a488e6c4b913d5a79b,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7398519857767118993, guid: 39e7e35b6d0244a488e6c4b913d5a79b,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816583636602463640, guid: 39e7e35b6d0244a488e6c4b913d5a79b,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156749404170589231, guid: 39e7e35b6d0244a488e6c4b913d5a79b,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 9179771615846864896, guid: 39e7e35b6d0244a488e6c4b913d5a79b,
         type: 3}
       propertyPath: sceneViewId
@@ -1575,8 +1669,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bbcf1820875cc4428ebf70d6d81da4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  portalText: {fileID: 0}
   curStage: 1
   clearCount: 0
+  maxPlayer: 0
 --- !u!4 &1684233543
 Transform:
   m_ObjectHideFlags: 0
@@ -1610,6 +1706,8 @@ MonoBehaviour:
   - {fileID: 229007108}
   - {fileID: 447806859}
   masterNum: 0
+  myPlayer: {fileID: 0}
+  optionUI: {fileID: 0}
 --- !u!1 &1974712457
 GameObject:
   m_ObjectHideFlags: 0
