@@ -198,6 +198,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         throw new System.NotImplementedException();
     }
 
+
     public Transform GetNextObserveTF(ref int obNumber)
     {
         for (int i = 1; i <= players.Count; i++)

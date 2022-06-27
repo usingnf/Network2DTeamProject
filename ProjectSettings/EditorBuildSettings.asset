@@ -11,16 +11,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Common/Scene/PlayerLobbyScene.unity
     guid: cbfb4c0ab87ec684dbec6aa7818ffbd3
-  - enabled: 0
-    path: Assets/MoonSangDon/Scene/StageScene_Moons_1.unity
-    guid: 27e6ceca24bbb034e9ef167adedfa134
   - enabled: 1
-    path: Assets/Common/Scene/StageScene_3.unity
+    path: Assets/Common/Scene/GameScene.unity
+    guid: 2dd348104eb553e4dbd2d5e646a48aaf
+  - enabled: 1
+    path: Assets/Common/Scene/StageScene_1.unity
     guid: 55d1316c36994bf408c78c6e25b7e731
-  - enabled: 1
-    path: Assets/Common/Scene/StageScene_11.unity
-    guid: 66cb18ec9bc174941adbd637f56d0570
   - enabled: 1
     path: Assets/Common/Scene/LoadingScene.unity
     guid: 124b7d2326b851643b87e64b72da3c6b
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects: {}

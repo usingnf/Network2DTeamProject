@@ -3,33 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RevButtonScript : MonoBehaviourPun
+public class ButtonScript : MonoBehaviourPun
 {
     public GameObject wall;
     public int count = 0;
     public bool defaultState = true;
     public bool permament = false;
     private bool isUsed = false;
-    public GameObject reverse;
 
     private SpriteRenderer render;
     public Sprite on;
     public Sprite off;
-    public float timer;
 
     void Start()
     {
         render = GetComponent<SpriteRenderer>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        timer += Time.deltaTime;
-        if(timer <=3)
-        {
-            reverse.SetActive(false);
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -38,11 +26,15 @@ public class RevButtonScript : MonoBehaviourPun
         if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             //Debug.Log("ui");
-            count++;
-            if(count > 0)
+            if(collision.isTrigger == true)
             {
-                photonView.RPC("Button", RpcTarget.All, defaultState);
+                count++;
+                if (count > 0)
+                {
+                    photonView.RPC("Button", RpcTarget.All, defaultState);
+                }
             }
+            
             
         }
     }
@@ -51,21 +43,21 @@ public class RevButtonScript : MonoBehaviourPun
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            count--;
-            if(count <= 0)
+            if (collision.isTrigger == true)
             {
-                photonView.RPC("Button", RpcTarget.All, !defaultState);
+                count--;
+                if (count <= 0)
+                {
+                    photonView.RPC("Button", RpcTarget.All, !defaultState);
+                }
             }
+                
         }
     }
 
     [PunRPC]
     public void Button(bool swt)
     {
-<<<<<<< HEAD:Assets/LeeInSeok/Scripts/RevButtonScript.cs
-        reverse.SetActive(true);
-        timer = 0f;
-=======
         if(isUsed == true)
         {
             return;
@@ -77,14 +69,15 @@ public class RevButtonScript : MonoBehaviourPun
         //Debug.Log("button");
         if (swt == true)
         {
+            SoundManager.Instance.PlaySound("Button", transform.position, 1.0f, 1.0f);
             render.sprite = off;
             wall.SetActive(false);
         }
         else
         {
+            SoundManager.Instance.PlaySound("Button", transform.position, 1.0f, 1.0f);
             render.sprite = on;
             wall.SetActive(true);
         }
->>>>>>> parent of 2e08183 (Merge branch 'main' into Moons):Assets/LeeInSeok/Scripts/ButtonScript.cs
     }
 }
