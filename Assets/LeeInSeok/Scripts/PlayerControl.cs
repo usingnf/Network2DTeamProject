@@ -17,7 +17,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
     public float speed = 4.0f;
     public float jumpPower = 5.0f;
-    public float size = 1.0f;
+    private float size = 0.8f;
     public bool isObserve;
     public int observeNumber;                   // 현재 관전중인 플레이어 번호
     public Text text;
@@ -156,6 +156,17 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 //Jump(jumpPower);
+                if(moveVec.x < 0)
+                {
+                    RaycastHit2D[] leftHit = Physics2D.BoxCastAll(transform.position, new Vector2(size - 0.05f, 0.05f), 0, Vector2.down * gravity, size / 2, LayerMask.GetMask("Player", "Obstacle"));
+                    foreach (RaycastHit2D hit in downHit)
+                    {
+                        if (hit.collider.isTrigger == false)
+                        {
+                            count++;
+                        }
+                    }
+                }
                 photonView.RPC("Jump", RpcTarget.All, jumpPower);
             }
         }
@@ -216,7 +227,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     public void Jump(float power)
     {
         int count = 0;
-        RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size-0.05f, 0.05f), 0, Vector2.down * gravity, size / 2, LayerMask.GetMask("Player", "Obstacle"));
+        RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size-0.1f, 0.05f), 0, Vector2.down * gravity, size / 2, LayerMask.GetMask("Player", "Obstacle"));
         foreach(RaycastHit2D hit in downHit)
         {
             if(hit.collider.isTrigger == false)
