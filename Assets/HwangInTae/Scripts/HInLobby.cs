@@ -34,15 +34,20 @@ public class HInLobby : MonoBehaviourPunCallbacks
 
     #region PHOTON CALLBACK
 
-    public override void OnLeftRoom()
+    public override void OnDisconnected(DisconnectCause cause)
     {
-       if(SceneManager.GetActiveScene().name == "PlayerLobbyScene")
-            SceneManager.LoadScene("LobbyScene");
+        Debug.Log("Disconnected : " + cause.ToString());
+        SceneManager.LoadScene("LobbyScene");
     }
 
-    public void LeaveButtonClicker()
+    public override void OnLeftRoom()
     {
-        PhotonNetwork.LeaveRoom();
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            PhotonNetwork.LeaveRoom();
+            SceneManager.LoadScene("LobbyScene");
+            return;
+        }
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)

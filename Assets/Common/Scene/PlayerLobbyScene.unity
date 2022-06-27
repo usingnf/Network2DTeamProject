@@ -384,7 +384,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2121508345}
-        m_MethodName: LeaveButtonClicker
+        m_MethodName: OnLeftRoom
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
