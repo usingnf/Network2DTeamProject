@@ -29,6 +29,9 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     public bool isReady = false;    //황인태 추가
     public bool isStop;                         // 입력 안 받는 상태
 
+    public GameObject EmotePos;
+    public GameObject[] EmotesObj;
+    private GameObject Temp;
     private void OnEnable() 
     {
         ResetClearCustomProperties();
@@ -50,7 +53,8 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     }
     void Start()
     {
-        if(GameManager.Instance != null)
+        EmoteInit();
+        if (GameManager.Instance != null)
         {
             if(GameManager.Instance.players.ContainsKey(photonView.OwnerActorNr) == true)
             {
@@ -90,6 +94,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             CheckSide();
             Move();
         }
+
     }
 
     void Move()
@@ -173,7 +178,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         {
             photonView.RPC("Flip", RpcTarget.All, true);
         }
-        
+        EmoteControl();
     }
 
     [PunRPC]
@@ -394,7 +399,155 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
         rigid.velocity = Vector2.zero;
     }
+    public void EmoteInit()
+    {
+        EmotePos = transform.Find("Emotepos").gameObject;
+        for (int i = 0; i < EmotesObj.Length; i++)
+        {
+            EmotesObj[i].SetActive(false);
+        }
+    }
 
+    [PunRPC]
+    public void EmotePopUp(short Num)
+    {
+        switch (Num)
+        {
+            case 0:
+                if (Temp != null)
+                {
+                    return;
+                }
+                Temp = Instantiate(EmotesObj[0].gameObject,EmotePos.transform);
+                Temp.SetActive(true);
+                Destroy(Temp, 3f);
+                break;
+            case 1:
+                if (Temp != null)
+                {
+                    return;
+                }
+                Temp = Instantiate(EmotesObj[1].gameObject,EmotePos.transform);
+                Temp.SetActive(true);
+                Destroy(Temp, 3f);
+                break;
+            case 2:
+                if (Temp != null)
+                {
+                    return;
+                }
+                Temp = Instantiate(EmotesObj[2].gameObject,EmotePos.transform);
+                Temp.SetActive(true);
+                Destroy(Temp, 3f);
+                break;
+            case 3:
+                if (Temp != null)
+                {
+                    return;
+                }
+                Temp = Instantiate(EmotesObj[3].gameObject,EmotePos.transform);
+                Temp.SetActive(true);
+                Destroy(Temp, 3f);
+                break;
+            case 4:
+                if (Temp != null)
+                {
+                    return;
+                }
+                Temp = Instantiate(EmotesObj[4].gameObject,EmotePos.transform);
+                Temp.SetActive(true);
+                Destroy(Temp, 3f);
+                break;
+            case 5:
+                if (Temp != null)
+                {
+                    return;
+                }
+                Temp = Instantiate(EmotesObj[5].gameObject,EmotePos.transform);
+                Temp.SetActive(true);
+                Destroy(Temp, 3f);
+                break;
+            case 6:
+                if (Temp != null)
+                {
+                    return;
+                }
+                Temp = Instantiate(EmotesObj[6].gameObject,EmotePos.transform);
+                Temp.SetActive(true);
+                Destroy(Temp, 3f);
+                break;
+            case 7:
+                if (Temp != null)
+                {
+                    return;
+                }
+                Temp = Instantiate(EmotesObj[7].gameObject, EmotePos.transform);
+                Temp.SetActive(true);
+                Destroy(Temp, 3f);
+                break;
+            case 8:
+                if (Temp != null)
+                {
+                    return;
+                }
+                Temp = Instantiate(EmotesObj[8].gameObject, EmotePos.transform);
+                Temp.SetActive(true);
+                Destroy(Temp, 3f);
+                break;
+            case 9:
+                if (Temp != null)
+                {
+                    return;
+                }
+                Temp = Instantiate(EmotesObj[9].gameObject, EmotePos.transform);
+                Temp.SetActive(true);
+                Destroy(Temp, 3f);
+                break;
+        }
+    }
+    public void EmoteControl()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            photonView.RPC("EmotePopUp", RpcTarget.All, (short)0);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            photonView.RPC("EmotePopUp", RpcTarget.All, (short)1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            photonView.RPC("EmotePopUp", RpcTarget.All, (short)2);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            photonView.RPC("EmotePopUp", RpcTarget.All, (short)3);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            photonView.RPC("EmotePopUp", RpcTarget.All, (short)4);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            photonView.RPC("EmotePopUp", RpcTarget.All, (short)5);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            photonView.RPC("EmotePopUp", RpcTarget.All, (short)6);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            photonView.RPC("EmotePopUp", RpcTarget.All, (short)7);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            photonView.RPC("EmotePopUp", RpcTarget.All, (short)8);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            photonView.RPC("EmotePopUp", RpcTarget.All, (short)9);
+        }
+    }
     [PunRPC]
     public void OnGameStart()
     {
@@ -448,5 +601,14 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
         
     }
+    //IEnumerator FadeOut()
+    //{
+    //    for (float ff = 1.0f; ff >= 0.0f;)
+    //    {
+    //        ff -= 0.2f;
+    //        fade.color = new Color(0, 0, 0, ff);
+    //        yield return new WaitForSeconds(0.5f);
+    //    }
+    //}
 
 }

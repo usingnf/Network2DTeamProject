@@ -16,7 +16,7 @@ public class SoundManager : MonoBehaviour
         GameObject obj = Instantiate(soundPrefab, pos, Quaternion.identity);
         AudioSource audio = obj.GetComponent<AudioSource>();
         audio.clip = Resources.Load<AudioClip>("Sound/" + sound);
-        audio.volume = Volume;
+        audio.volume = Volume * PlayerPrefs.GetFloat("Volume");
 
         audio.spatialBlend = ThreeD;
         audio.Play();
