@@ -430,7 +430,10 @@ MonoBehaviour:
   trgJump: 0
   isReady: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
   isStop: 0
+=======
+>>>>>>> parent of e2f6941 (EmoteSystem Done)
 =======
 >>>>>>> parent of e2f6941 (EmoteSystem Done)
 --- !u!61 &4948414743163805168
