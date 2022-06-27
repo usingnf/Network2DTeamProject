@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ButtonScript : MonoBehaviourPun
 {
-    public GameObject wall;
+    public List<GameObject> wall = new List<GameObject>();
     public int count = 0;
     public bool defaultState = true;
     public bool permament = false;
@@ -62,12 +62,19 @@ public class ButtonScript : MonoBehaviourPun
         if (swt == true)
         {
             render.sprite = off;
-            wall.SetActive(false);
+            foreach(GameObject obj in wall)
+            {
+                obj.SetActive(false);
+            }
+            
         }
         else
         {
             render.sprite = on;
-            wall.SetActive(true);
+            foreach (GameObject obj in wall)
+            {
+                obj.SetActive(true);
+            }
         }
     }
 }
