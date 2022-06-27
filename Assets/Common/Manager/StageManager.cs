@@ -114,11 +114,7 @@ public class StageManager : MonoBehaviourPunCallbacks
 
     public void ReverseGravity(PlayerControl player)
     {   
-<<<<<<< HEAD
         if (!player.photonView.IsMine) return;
-        
-=======
->>>>>>> parent of 2e08183 (Merge branch 'main' into Moons)
         photonView.RPC("Event_ReverseGravity", RpcTarget.All);
     }
 
