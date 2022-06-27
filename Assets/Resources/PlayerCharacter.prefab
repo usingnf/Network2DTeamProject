@@ -428,7 +428,9 @@ MonoBehaviour:
   key: {fileID: 0}
   isClear: 0
   isShoot: 0
+  trgJump: 0
   isReady: 0
+  isStop: 0
   EmotePos: {fileID: 0}
   EmotesObj:
   - {fileID: 1060949815021624449}

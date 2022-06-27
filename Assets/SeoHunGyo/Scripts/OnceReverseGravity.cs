@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 
 
-public class ReverseGravity : MonoBehaviourPun
+public class OnceReverseGravity : MonoBehaviourPun
 {
     public GameObject pairObject;
 
@@ -14,16 +14,12 @@ public class ReverseGravity : MonoBehaviourPun
         {   
             GameManager.Instance.PrintInfo( "중력 반전" );
             StageManager.Instance.ReverseGravity();
-            
-            photonView.RPC("Toggle", RpcTarget.All);
         }
     }
 
     [PunRPC]
     void Toggle()
     {
-        pairObject.SetActive(true);
-        gameObject.SetActive(false);
     }
     
 }
