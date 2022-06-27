@@ -121,8 +121,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
-<<<<<<< HEAD
-<<<<<<< HEAD
 --- !u!1 &30831879
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,19 +202,12 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
-=======
-=======
->>>>>>> parent of e2f6941 (EmoteSystem Done)
 --- !u!1 &3110789 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 858409262362773645, guid: 07aba7d93e9ca834581f17fb088733da,
     type: 3}
   m_PrefabInstance: {fileID: 1087680530}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
->>>>>>> parent of e2f6941 (EmoteSystem Done)
-=======
->>>>>>> parent of e2f6941 (EmoteSystem Done)
 --- !u!1 &50412872
 GameObject:
   m_ObjectHideFlags: 0
@@ -1691,8 +1682,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
-<<<<<<< HEAD
 --- !u!1 &1263789690
 GameObject:
   m_ObjectHideFlags: 0
@@ -1864,10 +1853,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1276653525}
   m_CullTransparentMesh: 0
-=======
->>>>>>> parent of e2f6941 (EmoteSystem Done)
-=======
->>>>>>> parent of e2f6941 (EmoteSystem Done)
 --- !u!1 &1489671357
 GameObject:
   m_ObjectHideFlags: 0

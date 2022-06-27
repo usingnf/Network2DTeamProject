@@ -429,13 +429,6 @@ MonoBehaviour:
   isShoot: 0
   trgJump: 0
   isReady: 0
-<<<<<<< HEAD
-<<<<<<< HEAD
-  isStop: 0
-=======
->>>>>>> parent of e2f6941 (EmoteSystem Done)
-=======
->>>>>>> parent of e2f6941 (EmoteSystem Done)
 --- !u!61 &4948414743163805168
 BoxCollider2D:
   m_ObjectHideFlags: 0

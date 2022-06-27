@@ -5,8 +5,8 @@ using Photon.Pun;
 
 public class TrapBlockTrigger : MonoBehaviourPun
 {
-    public GameObject            box;
-    public Collider2D           trap; 
+    public GameObject       box;
+    public Collider2D        trap; 
     private SpriteRenderer      rend;
     private Color               invisibleColor;
     private Color               originColor;
@@ -17,7 +17,6 @@ public class TrapBlockTrigger : MonoBehaviourPun
     void Start()
     { 
         rend =              GetComponentInChildren<SpriteRenderer>();
-        box.SetActive(false);
         //originColor =       rend.color;
         //invisibleColor.a =  0f;
         //rend.color =        invisibleColor;
@@ -29,10 +28,7 @@ public class TrapBlockTrigger : MonoBehaviourPun
         {
             Debug.Log("엔터엔터됨");
             Debug.Log("트랩블럭콜라이더 엔터됨");
-<<<<<<< HEAD
-=======
             OnActiveBlock();
->>>>>>> parent of 2e08183 (Merge branch 'main' into Moons)
             photonView.RPC("OnActiveBlock", RpcTarget.All);
         }
     }

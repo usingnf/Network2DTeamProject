@@ -12,10 +12,7 @@ GameObject:
   - component: {fileID: 6132954272068449908}
   - component: {fileID: 6132954272068449866}
   - component: {fileID: 6132954272068449867}
-<<<<<<< HEAD
-=======
   - component: {fileID: 2852763226892857891}
->>>>>>> parent of 2e08183 (Merge branch 'main' into Moons)
   m_Layer: 4
   m_Name: TrapBlockTrigger
   m_TagString: Untagged
@@ -97,8 +94,6 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
-<<<<<<< HEAD
-=======
 --- !u!114 &2852763226892857891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,7 +116,6 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
->>>>>>> parent of 2e08183 (Merge branch 'main' into Moons)
 --- !u!1 &6132954272881400299
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,7 +134,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6132954272881400303
 Transform:
   m_ObjectHideFlags: 0
