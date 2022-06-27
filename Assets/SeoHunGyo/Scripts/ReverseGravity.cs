@@ -6,10 +6,9 @@ using Photon.Pun;
 
 public class ReverseGravity : MonoBehaviourPun
 {
-    public GameObject pairObject;
-
     private void OnTriggerEnter2D(Collider2D other) 
     {
+<<<<<<< HEAD
 
         if (other.CompareTag("Player"))
         {
@@ -23,14 +22,15 @@ public class ReverseGravity : MonoBehaviourPun
                 photonView.RPC("Toggle", RpcTarget.All);
             }
             
+=======
+        if (other.gameObject.layer == 5)
+        {   
+            GameManager.Instance.PrintInfo( "중력 반전" );
+            StageManager.Instance.ReverseGravity();
+            
+            gameObject.SetActive(false);
+>>>>>>> parent of 2e08183 (Merge branch 'main' into Moons)
         }
-    }
-
-    [PunRPC]
-    void Toggle()
-    {
-        pairObject.SetActive(true);
-        gameObject.SetActive(false);
     }
     
 }

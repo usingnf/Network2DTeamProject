@@ -26,15 +26,11 @@ public class ButtonScript : MonoBehaviourPun
         if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             //Debug.Log("ui");
-            if(collision.isTrigger == true)
+            count++;
+            if(count > 0)
             {
-                count++;
-                if (count > 0)
-                {
-                    photonView.RPC("Button", RpcTarget.All, defaultState);
-                }
+                photonView.RPC("Button", RpcTarget.All, defaultState);
             }
-            
             
         }
     }
@@ -43,15 +39,11 @@ public class ButtonScript : MonoBehaviourPun
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            if (collision.isTrigger == true)
+            count--;
+            if(count <= 0)
             {
-                count--;
-                if (count <= 0)
-                {
-                    photonView.RPC("Button", RpcTarget.All, !defaultState);
-                }
+                photonView.RPC("Button", RpcTarget.All, !defaultState);
             }
-                
         }
     }
 
@@ -69,13 +61,11 @@ public class ButtonScript : MonoBehaviourPun
         //Debug.Log("button");
         if (swt == true)
         {
-            SoundManager.Instance.PlaySound("Button", transform.position, 1.0f, 1.0f);
             render.sprite = off;
             wall.SetActive(false);
         }
         else
         {
-            SoundManager.Instance.PlaySound("Button", transform.position, 1.0f, 1.0f);
             render.sprite = on;
             wall.SetActive(true);
         }

@@ -527,6 +527,7 @@ PlayerSettings:
   ps5UseAudio3dBackend: 0
   ps5ScriptOptimizationLevel: 2
   ps5Audio3dVirtualSpeakerCount: 14
+  ps5VrrSupport: 0
   ps5UpdateReferencePackage: 
   ps5disableAutoHideSplash: 0
   ps5OperatingSystemCanDisableSplashScreen: 0
@@ -655,10 +656,17 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
+<<<<<<< HEAD
   cloudProjectId: 52596a41-d7bf-45ee-bafa-0d21f26ff756
   framebufferDepthMemorylessMode: 0
   projectName: Network2DTeamProject
   organizationId: thereforeiam
+=======
+  cloudProjectId: d875e441-0d48-44c5-8b11-907513d0e43e
+  framebufferDepthMemorylessMode: 0
+  projectName: Network2DTeamProject
+  organizationId: dkdl73
+>>>>>>> parent of 2e08183 (Merge branch 'main' into Moons)
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
