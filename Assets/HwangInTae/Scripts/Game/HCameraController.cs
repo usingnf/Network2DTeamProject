@@ -1,5 +1,4 @@
 ﻿using Photon.Pun;
-using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +22,6 @@ public class HCameraController : MonoBehaviourPun
         if(shake)
             CameraShake();
     }
-    
     public void MoveCamera()
     {
         if (null == target)

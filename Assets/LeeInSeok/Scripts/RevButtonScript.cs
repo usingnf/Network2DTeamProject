@@ -38,15 +38,11 @@ public class RevButtonScript : MonoBehaviourPun
         if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             //Debug.Log("ui");
-            if(collision.isTrigger == true)
+            count++;
+            if(count > 0)
             {
-                count++;
-                if (count > 0)
-                {
-                    photonView.RPC("Button", RpcTarget.All, defaultState);
-                }
+                photonView.RPC("Button", RpcTarget.All, defaultState);
             }
-            
             
         }
     }
@@ -55,22 +51,40 @@ public class RevButtonScript : MonoBehaviourPun
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            if (collision.isTrigger == true)
+            count--;
+            if(count <= 0)
             {
-                count--;
-                if (count <= 0)
-                {
-                    photonView.RPC("Button", RpcTarget.All, !defaultState);
-                }
+                photonView.RPC("Button", RpcTarget.All, !defaultState);
             }
-                
         }
     }
 
     [PunRPC]
     public void Button(bool swt)
     {
+<<<<<<< HEAD:Assets/LeeInSeok/Scripts/RevButtonScript.cs
         reverse.SetActive(true);
         timer = 0f;
+=======
+        if(isUsed == true)
+        {
+            return;
+        }
+        if(permament == true)
+        {
+            isUsed = true;
+        }
+        //Debug.Log("button");
+        if (swt == true)
+        {
+            render.sprite = off;
+            wall.SetActive(false);
+        }
+        else
+        {
+            render.sprite = on;
+            wall.SetActive(true);
+        }
+>>>>>>> parent of 2e08183 (Merge branch 'main' into Moons):Assets/LeeInSeok/Scripts/ButtonScript.cs
     }
 }
