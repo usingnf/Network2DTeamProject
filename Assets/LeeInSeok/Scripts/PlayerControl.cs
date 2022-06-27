@@ -421,7 +421,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             {
                 PhotonNetwork.Destroy(obj);
             }
-            PhotonNetwork.LoadLevel("StageScene_1");
+            PhotonNetwork.LoadLevel("StageScene_2");
         }
             
     }

@@ -29,7 +29,6 @@ public class HTeleportal : MonoBehaviour
         if (ray.transform.tag == "Player" && Input.GetKeyDown(KeyCode.E))
         {
             inPotal = false;
-            yield return new WaitForSeconds(0.2f);
             playerPos.transform.position = otherPortal.transform.position;
             yield return new WaitForSeconds(0.5f);
         }
