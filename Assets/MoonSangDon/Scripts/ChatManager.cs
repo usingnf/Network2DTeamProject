@@ -13,8 +13,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
     public InputField input;
     public ScrollRect scroll_rect;
     public GameObject chatBox;
-    public PlayerControl emoteCon;
-    private string chatters;
+    string chatters;
 
     float timer;
     bool timerOn;
@@ -28,6 +27,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
     }
     public void SendButtonOnClicked()
     {
+        
         if (input.text.Equals(""))
             return;
 
@@ -67,6 +67,8 @@ public class ChatManager : MonoBehaviourPunCallbacks
                 timer = 0;
             }
         }
+
+        
     }
     private void SetInvisible()
     {
@@ -99,55 +101,39 @@ public class ChatManager : MonoBehaviourPunCallbacks
         chatLog.text += "\n" + msg;
         scroll_rect.verticalNormalizedPosition = 0.0f;
     }
-
     public void Emote1()
     {
-        //emoteCon.EmotePopUp(0);
+        Debug.Log("표현1을 사용했습니다");
         timer = 0;
     }
     public void Emote2()
     {
-        //emoteCon.EmotePopUp(1);
+        Debug.Log("표현2을 사용했습니다");
         timer = 0;
     }
     public void Emote3()
     {
-        //emoteCon.EmotePopUp(2);
+        Debug.Log("표현3을 사용했습니다");
         timer = 0;
     }
     public void Emote4()
     {
-        //emoteCon.EmotePopUp(3);
+        Debug.Log("표현4을 사용했습니다");
         timer = 0;
     }
     public void Emote5()
     {
-        //emoteCon.EmotePopUp(4);
+        Debug.Log("표현5을 사용했습니다");
         timer = 0;
     }
     public void Emote6()
     {
-        //emoteCon.EmotePopUp(5);
+        Debug.Log("표현6을 사용했습니다");
         timer = 0;
     }
     public void Emote7()
     {
-        //emoteCon.EmotePopUp(6);
-        timer = 0;
-    }
-    public void Emote8()
-    {
-        //emoteCon.EmotePopUp(7);
-        timer = 0;
-    }
-    public void Emote9()
-    {
-        //emoteCon.EmotePopUp(8);
-        timer = 0;
-    }
-    public void Emote10()
-    {
-        //emoteCon.EmotePopUp(9);
+        Debug.Log("표현7을 사용했습니다");
         timer = 0;
     }
     public IEnumerator FadeInStart()
