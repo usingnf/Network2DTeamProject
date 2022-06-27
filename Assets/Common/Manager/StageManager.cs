@@ -131,9 +131,9 @@ public class StageManager : MonoBehaviourPunCallbacks
 
     }
 
-    public void ReverseGravity()
+    public void ReverseGravity(PlayerControl player)
     {   
-        if (!PhotonNetwork.IsMasterClient) return;
+        if (!player.photonView.IsMine) return;
         
         photonView.RPC("Event_ReverseGravity", RpcTarget.All);
     }

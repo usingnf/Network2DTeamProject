@@ -432,9 +432,7 @@ PlayerSettings:
   switchNetworkInterfaceManagerInitializeEnabled: 1
   switchPlayerConnectionEnabled: 1
   switchUseMicroSleepForYield: 1
-  switchEnableRamDiskSupport: 0
   switchMicroSleepForYieldTime: 25
-  switchRamDiskSpaceSize: 12
   ps4NPAgeRating: 12
   ps4NPTitleSecret: 
   ps4NPTrophyPackPath: 
@@ -657,10 +655,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 8cbc3e6d-460a-4897-a189-db81fb0a468f
+  cloudProjectId: 52596a41-d7bf-45ee-bafa-0d21f26ff756
   framebufferDepthMemorylessMode: 0
   projectName: Network2DTeamProject
-  organizationId: nicefriend
+  organizationId: thereforeiam
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

@@ -10,12 +10,19 @@ public class ReverseGravity : MonoBehaviourPun
 
     private void OnTriggerEnter2D(Collider2D other) 
     {
+
         if (other.CompareTag("Player"))
-        {   
-            GameManager.Instance.PrintInfo( "중력 반전" );
-            StageManager.Instance.ReverseGravity();
+        {
+            PlayerControl player = other.GetComponent<PlayerControl>();
+
+            if(player.photonView.IsMine)
+            {
+                GameManager.Instance.PrintInfo( "중력 반전" );
+                StageManager.Instance.ReverseGravity(player);
+                
+                photonView.RPC("Toggle", RpcTarget.All);
+            }
             
-            photonView.RPC("Toggle", RpcTarget.All);
         }
     }
 
