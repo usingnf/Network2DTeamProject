@@ -10,7 +10,8 @@ public class ShootBlock : MonoBehaviourPun
     private void OnTriggerEnter2D(Collider2D other) 
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {   
+        {
+            SoundManager.Instance.PlaySound("CannonMove", transform.position, 1.0f, 1.0f);
             other.transform.GetComponent<PlayerControl>().ShootInit(shootVelocity, transform.position);
         }
     }

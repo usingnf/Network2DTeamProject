@@ -20,17 +20,27 @@ public class ButtonScript : MonoBehaviourPun
         render = GetComponent<SpriteRenderer>();
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log("collide");
         if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             //Debug.Log("ui");
-            count++;
-            if(count > 0)
+            if(collision.isTrigger == true)
             {
-                photonView.RPC("Button", RpcTarget.All, defaultState);
+                count++;
+                if (count > 0)
+                {
+                    photonView.RPC("Button", RpcTarget.All, defaultState);
+                }
             }
+            
             
         }
     }
@@ -39,11 +49,15 @@ public class ButtonScript : MonoBehaviourPun
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            count--;
-            if(count <= 0)
+            if (collision.isTrigger == true)
             {
-                photonView.RPC("Button", RpcTarget.All, !defaultState);
+                count--;
+                if (count <= 0)
+                {
+                    photonView.RPC("Button", RpcTarget.All, !defaultState);
+                }
             }
+                
         }
     }
 
@@ -61,20 +75,27 @@ public class ButtonScript : MonoBehaviourPun
         //Debug.Log("button");
         if (swt == true)
         {
+            SoundManager.Instance.PlaySound("Button", transform.position, 1.0f, 1.0f);
             render.sprite = off;
-            foreach(GameObject obj in wall)
+            if(wall.Count > 0)
             {
-                obj.SetActive(false);
+                foreach (GameObject obj in wall)
+                {
+                    obj.SetActive(false);
+                }
             }
-            
         }
         else
         {
+            SoundManager.Instance.PlaySound("Button", transform.position, 1.0f, 1.0f);
             render.sprite = on;
-            foreach (GameObject obj in wall)
+            if (wall.Count > 0)
             {
-                obj.SetActive(true);
-            }
+                foreach (GameObject obj in wall)
+                {
+                    obj.SetActive(true);
+                }
+            }   
         }
     }
 }

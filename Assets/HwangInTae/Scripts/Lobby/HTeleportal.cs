@@ -11,10 +11,10 @@ public class HTeleportal : MonoBehaviour
     bool inPotal = false;
    private void OnTriggerEnter2D(Collider2D other)
    {
-        PhotonView photonview = other.GetComponent<PhotonView>();
-        if (photonview != null)
+        PhotonView photonView = other.GetComponent<PhotonView>();
+        if(photonView != null)
         {
-            if(photonview.IsMine == true)
+            if(photonView.IsMine == true)
             {
                 inPotal = true;
                 playerPos = other.transform;
@@ -24,16 +24,16 @@ public class HTeleportal : MonoBehaviour
    }
     private void OnTriggerExit(Collider other)
     {
-        PhotonView photonview = other.GetComponent<PhotonView>();
-        if (photonview != null)
+        PhotonView photonView = other.GetComponent<PhotonView>();
+        if (photonView != null)
         {
-            if (photonview.IsMine == true)
+            if (photonView.IsMine == true)
             {
                 inPotal = false;
                 playerPos = null;
             }
         }
-        
+            
     }
     private void Update()
     {
@@ -41,13 +41,10 @@ public class HTeleportal : MonoBehaviour
         {
             if(Input.GetKeyDown(KeyCode.E))
             {
-                if(playerPos != null)
-                {
-                    inPotal = false;
-                    playerPos.position = otherPortal.transform.position;
-                }
+                inPotal = false;
+                playerPos = null;
+                playerPos.transform.position = otherPortal.transform.position;
             }
         }
-            
-    }    
+    }
 }
