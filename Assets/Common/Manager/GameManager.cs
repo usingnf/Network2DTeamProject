@@ -187,9 +187,10 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void PrintInfo(string info)
     {
-        if(info != null) { 
-        Debug.Log(info);
-        infoText.text = info;
+        if(infoText != null) 
+        { 
+            Debug.Log(info);
+            infoText.text = info;
         }
     }
 
