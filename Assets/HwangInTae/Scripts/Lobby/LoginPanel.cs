@@ -27,10 +27,13 @@ public class LoginPanel : MonoBehaviour
     public void QuitButtonClicked()
     {
         if (PhotonNetwork.IsConnected)
-            return;
-        else
         {
-            Application.Quit();
+            PhotonNetwork.Disconnect();
         }
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit(); // 어플리케이션 종료
+#endif
     }
 }

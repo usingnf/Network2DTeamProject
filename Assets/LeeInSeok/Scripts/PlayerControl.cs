@@ -92,7 +92,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         }
     }
 
-    void Move()
+    private void Move()
     {
         int count = 0;
         RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size - 0.05f, 0.05f), 0, Vector2.down * gravity, size / 2, LayerMask.GetMask("Player", "Obstacle"));
@@ -203,7 +203,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         }
     }
 
-    void Observe()
+    private void Observe()
     {
         if (Input.GetKeyDown(KeyCode.D))
         {
@@ -302,7 +302,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         ObserveNext(ref observeNumber);
     }
 
-    void ObserveNext(ref int obNumber)
+    private void ObserveNext(ref int obNumber)
     {
         Transform observer = GameManager.Instance.GetNextObserveTF(ref obNumber);
         if(observer != null)
