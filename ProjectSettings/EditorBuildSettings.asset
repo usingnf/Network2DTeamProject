@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Common/Scene/StageScene_2.unity
     guid: 66cb18ec9bc174941adbd637f56d0570
+  - enabled: 1
+    path: Assets/MoonSangDon/Scene/StageScene_Moons_4.unity
+    guid: 6a74ddc9f9f1bb447be994d5d246cd16
   m_configObjects: {}
