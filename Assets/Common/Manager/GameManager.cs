@@ -24,28 +24,36 @@ public class GameManager : MonoBehaviourPunCallbacks
     public Transform[] spawnPos;
     public Dictionary<int, GameObject> players = new Dictionary<int, GameObject>();
     public int masterNum = 0;
+    public PlayerControl myPlayer;
+
+
+    [Header("Option UI")]
+    public GameObject optionUI;
 
     private void Awake()
     {
         Instance = this;
         object stage = 0;
-        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(GameData.Stage, out stage) == true)
+        if(PhotonNetwork.IsConnected == true)
         {
-            ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable() { { GameData.Stage, (int)stage } };
-            PhotonNetwork.CurrentRoom.SetCustomProperties(props);
+            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(GameData.Stage, out stage) == true)
+            {
+                ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable() { { GameData.Stage, (int)stage } };
+                PhotonNetwork.CurrentRoom.SetCustomProperties(props);
+            }
         }
-        
+            
     }
 
     public void Start()
     {
-        Debug.Log("GameManager");
+        if (spawnPos.Length == 0) return;
+
         ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable() { { GameData.PLAYER_LOAD, true } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
         if (PhotonNetwork.IsMasterClient)
         {
-            Debug.Log("Master");
             props = new ExitGames.Client.Photon.Hashtable() { { "RoomState", "Start" } };
             PhotonNetwork.CurrentRoom.SetCustomProperties(props);
             masterNum = PhotonNetwork.MasterClient.ActorNumber;
@@ -53,19 +61,34 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
         else
         {
+            if(PhotonNetwork.IsConnected == true)
+            {
+                if ((string)PhotonNetwork.CurrentRoom.CustomProperties["RoomState"] == "Start")
+                {
+                    StartCoroutine(Rejoin());
+                }
+                else
+                {
+                    StartCoroutine(StartGame());
+                }
+            }
             
-            if ((string)PhotonNetwork.CurrentRoom.CustomProperties["RoomState"] == "Start")
-            {
-                Debug.Log("Rejoin");
-                StartCoroutine(Rejoin());
-            }
-            else
-            {
-                Debug.Log("StartGame");
-                StartCoroutine(StartGame());
-            }
         }
         
+    }
+
+    void Update()
+    {
+        if (Input.GetButtonDown("Cancel"))
+        {
+            SetOptionUI(!optionUI.activeSelf);
+        }
+    }
+
+    void SetOptionUI(bool isOn)
+    {
+        optionUI.SetActive(isOn);
+        myPlayer.isStop = isOn;
     }
 
     #region PHOTON CALLBACK
@@ -90,11 +113,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.Log("Disconnected : " + cause.ToString());
-        SceneManager.LoadScene("LobbyScene_new_220616");
+        SceneManager.LoadScene("LobbyScene");
     }
 
     public override void OnLeftRoom()
-    {
+    {   
         PhotonNetwork.Disconnect();
     }
 
@@ -187,9 +210,11 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void PrintInfo(string info)
     {
-        if(infoText != null) 
-        { 
+        if(info != null) { 
             Debug.Log(info);
+
+            if (infoText == null) return;
+
             infoText.text = info;
         }
     }
@@ -230,15 +255,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
 
-
-    // 게임 중 탈주
-
-    // public void OnExitGame()
-    // {   // Exit, 확인 버튼 눌렀을 때
-    //     PhotonNetwork.LeaveRoom();
-
-    //     SceneManager.LoadScene("LobbyScene_new_220616");
-    // }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {

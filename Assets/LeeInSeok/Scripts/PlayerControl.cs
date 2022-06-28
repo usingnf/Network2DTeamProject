@@ -17,7 +17,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
     public float speed = 4.0f;
     public float jumpPower = 5.0f;
-    private float size = 0.8f;
+    public float size = 1.0f;
     public bool isObserve;
     public int observeNumber;                   // 현재 관전중인 플레이어 번호
     public Text text;
@@ -28,9 +28,6 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     public bool trgJump = false;
     public bool isReady = false;    //황인태 추가
     public bool isStop;                         // 입력 안 받는 상태
-    public GameObject EmotePos;
-    public GameObject[] EmotesObj;
-    private GameObject Temp;
 
     private void OnEnable() 
     {
@@ -53,8 +50,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     }
     void Start()
     {
-        EmoteInit();
-        if (GameManager.Instance != null)
+        if(GameManager.Instance != null)
         {
             if(GameManager.Instance.players.ContainsKey(photonView.OwnerActorNr) == true)
             {
@@ -62,7 +58,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             }
             GameManager.Instance.players.Add(photonView.OwnerActorNr, this.gameObject);
 
-            //GameManager.Instance.myPlayer = this;
+            GameManager.Instance.myPlayer = this;
         }
         
         if(StageManager.Instance != null)
@@ -160,17 +156,6 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 //Jump(jumpPower);
-                if(moveVec.x < 0)
-                {
-                    RaycastHit2D[] leftHit = Physics2D.BoxCastAll(transform.position, new Vector2(size - 0.05f, 0.05f), 0, Vector2.down * gravity, size / 2, LayerMask.GetMask("Player", "Obstacle"));
-                    foreach (RaycastHit2D hit in downHit)
-                    {
-                        if (hit.collider.isTrigger == false)
-                        {
-                            count++;
-                        }
-                    }
-                }
                 photonView.RPC("Jump", RpcTarget.All, jumpPower);
             }
         }
@@ -188,7 +173,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         {
             photonView.RPC("Flip", RpcTarget.All, true);
         }
-        EmoteControl();
+        
     }
 
     [PunRPC]
@@ -231,7 +216,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     public void Jump(float power)
     {
         int count = 0;
-        RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size-0.1f, 0.05f), 0, Vector2.down * gravity, size / 2, LayerMask.GetMask("Player", "Obstacle"));
+        RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size-0.05f, 0.05f), 0, Vector2.down * gravity, size / 2, LayerMask.GetMask("Player", "Obstacle"));
         foreach(RaycastHit2D hit in downHit)
         {
             if(hit.collider.isTrigger == false)
@@ -338,7 +323,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             this.key = null;
             Destroy(doorObj);
         }
-    }
+    } 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -385,18 +370,11 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             photonView.RPC("OnReadyCancle", RpcTarget.All);
         }
     }
-    [PunRPC]
-    public void Die()
+
+    public void Reset()
     {   
         // TODO 열쇠 획득 시 열쇠 해제
         transform.position = GameManager.Instance.spawnPos[0].position;
-        
-        rigid.velocity = Vector2.zero;
-
-        if (key != null)
-        {
-            key.GetComponent<PhotonView>().RPC("Return", RpcTarget.All);
-        }
         //animator.SetTrigger("Die");
     }
 
@@ -469,154 +447,6 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         Camera.main.transform.localPosition = new Vector3(0f, 0f, -10f);
 
         
-    }
-    public void EmoteInit()
-    {
-        EmotePos = transform.Find("EmotePos").gameObject;
-        for (int i = 0; i < EmotesObj.Length; i++)
-        {
-            EmotesObj[i].SetActive(false);
-        }
-    }
-    [PunRPC]
-    public void EmotePopUp(short Num)
-    {
-        switch (Num)
-        {
-            case 0:
-                if (Temp != null)
-                {
-                    return;
-                }
-                Temp = Instantiate(EmotesObj[0].gameObject, EmotePos.transform);
-                Temp.SetActive(true);
-                Destroy(Temp, 3f);
-                break;
-            case 1:
-                if (Temp != null)
-                {
-                    return;
-                }
-                Temp = Instantiate(EmotesObj[1].gameObject, EmotePos.transform);
-                Temp.SetActive(true);
-                Destroy(Temp, 3f);
-                break;
-            case 2:
-                if (Temp != null)
-                {
-                    return;
-                }
-                Temp = Instantiate(EmotesObj[2].gameObject, EmotePos.transform);
-                Temp.SetActive(true);
-                Destroy(Temp, 3f);
-                break;
-            case 3:
-                if (Temp != null)
-                {
-                    return;
-                }
-                Temp = Instantiate(EmotesObj[3].gameObject, EmotePos.transform);
-                Temp.SetActive(true);
-                Destroy(Temp, 3f);
-                break;
-            case 4:
-                if (Temp != null)
-                {
-                    return;
-                }
-                Temp = Instantiate(EmotesObj[4].gameObject, EmotePos.transform);
-                Temp.SetActive(true);
-                Destroy(Temp, 3f);
-                break;
-            case 5:
-                if (Temp != null)
-                {
-                    return;
-                }
-                Temp = Instantiate(EmotesObj[5].gameObject, EmotePos.transform);
-                Temp.SetActive(true);
-                Destroy(Temp, 3f);
-                break;
-            case 6:
-                if (Temp != null)
-                {
-                    return;
-                }
-                Temp = Instantiate(EmotesObj[6].gameObject, EmotePos.transform);
-                Temp.SetActive(true);
-                Destroy(Temp, 3f);
-                break;
-            case 7:
-                if (Temp != null)
-                {
-                    return;
-                }
-                Temp = Instantiate(EmotesObj[7].gameObject, EmotePos.transform);
-                Temp.SetActive(true);
-                Destroy(Temp, 3f);
-                break;
-            case 8:
-                if (Temp != null)
-                {
-                    return;
-                }
-                Temp = Instantiate(EmotesObj[8].gameObject, EmotePos.transform);
-                Temp.SetActive(true);
-                Destroy(Temp, 3f);
-                break;
-            case 9:
-                if (Temp != null)
-                {
-                    return;
-                }
-                Temp = Instantiate(EmotesObj[9].gameObject, EmotePos.transform);
-                Temp.SetActive(true);
-                Destroy(Temp, 3f);
-                break;
-        }
-    }
-    public void EmoteControl()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            photonView.RPC("EmotePopUp", RpcTarget.All, (short)0);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            photonView.RPC("EmotePopUp", RpcTarget.All, (short)1);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            photonView.RPC("EmotePopUp", RpcTarget.All, (short)2);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            photonView.RPC("EmotePopUp", RpcTarget.All, (short)3);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            photonView.RPC("EmotePopUp", RpcTarget.All, (short)4);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            photonView.RPC("EmotePopUp", RpcTarget.All, (short)5);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            photonView.RPC("EmotePopUp", RpcTarget.All, (short)6);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            photonView.RPC("EmotePopUp", RpcTarget.All, (short)7);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            photonView.RPC("EmotePopUp", RpcTarget.All, (short)8);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            photonView.RPC("EmotePopUp", RpcTarget.All, (short)9);
-        }
     }
 
 }

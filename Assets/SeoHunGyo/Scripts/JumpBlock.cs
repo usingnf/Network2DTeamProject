@@ -15,7 +15,8 @@ public class JumpBlock : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) 
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {   
+        {
+            SoundManager.Instance.PlaySound("HighJump", this.transform.position, 1, 1);
             other.transform.GetComponent<PlayerControl>().SuperJump(jumpPowerMultiplier);
             m_anim.SetTrigger("Works");
         }

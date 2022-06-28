@@ -55,7 +55,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   masterNum: 0
-  myPlayer: {fileID: 0}
   optionUI: {fileID: 0}
 --- !u!114 &7005914704153665431
 MonoBehaviour:
@@ -70,7 +69,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   portalText: {fileID: 0}
-  curStage: 2
+  curStage: 1
   clearCount: 0
   maxPlayer: 0
 --- !u!114 &7005914704153665432
