@@ -135,7 +135,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         if (isShoot)
         {
             animator.SetFloat("speed", 0);
-            if (rigid.velocity == Vector2.zero)
+            if (Mathf.Abs(rigid.velocity.x) <= 0.2f)
             {
                 ShootStop();
             }
@@ -386,6 +386,11 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     {   
         // TODO 열쇠 획득 시 열쇠 해제
         transform.position = GameManager.Instance.spawnPos[0].position;
+        rigid.velocity = Vector2.zero;
+        if (key != null)
+        {
+            key.GetComponent<PhotonView>().RPC("Return", RpcTarget.All);
+        }
         //animator.SetTrigger("Die");
     }
 
