@@ -62,7 +62,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             }
             GameManager.Instance.players.Add(photonView.OwnerActorNr, this.gameObject);
 
-            if(photonView.IsMine)
+            if (photonView.IsMine)
                 GameManager.Instance.myPlayer = this;
         }
         

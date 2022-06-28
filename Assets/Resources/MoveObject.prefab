@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4281095652824349976}
   - component: {fileID: 4281095652824349969}
   - component: {fileID: 2481588306707698852}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MoveObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,7 +32,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4281095652824349977}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.88, y: -1.19, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -201,9 +201,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 537f1718a50c53349a2f39c23a25c449, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 512
   moveObjectScript: {fileID: 4281095652824349976}
 --- !u!95 &2481588306707698852
 Animator:
