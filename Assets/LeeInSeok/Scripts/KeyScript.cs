@@ -31,7 +31,7 @@ public class KeyScript : MonoBehaviourPun
     {
         if (!PhotonNetwork.IsMasterClient)
             return;
-        if(collision.gameObject.layer == LayerMask.NameToLayer("UI"))
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             if(owner == null)
                 SetOwner(collision.gameObject.GetComponent<PlayerControl>());

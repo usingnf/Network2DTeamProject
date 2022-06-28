@@ -81,22 +81,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        if (true)
-        {
             SetActivePanel(PANEL.Connect);
-            infoPanel.ShowError("비밀번호가 틀렸어요! \n다시 입력해주세요 \n^오^");
-        }
-        else
-        {
-            SetActivePanel(PANEL.Connect);
-            infoPanel.ShowError("Join Room Failed with Error(" + returnCode + ") : " + message);
-        }
-
+            infoPanel.ShowError("비밀번호가 틀렸어요! \n다시 입력해주세요");
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        string roomName = "나는데구리야앙기모디" + Random.Range(1000, 10000);
+        string roomName = "슬라임방" + Random.Range(1000, 10000);
         string roomPW = "";
 
         string roomInfo = roomName + "_" + roomPW;
