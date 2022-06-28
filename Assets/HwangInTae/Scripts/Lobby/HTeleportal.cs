@@ -14,7 +14,7 @@ public class HTeleportal : MonoBehaviour
         PhotonView photonView = other.GetComponent<PhotonView>();
         if(photonView != null)
         {
-            if(photonView.IsMine == true)
+            if(photonView.IsMine)
             {
                 inPotal = true;
                 playerPos = other.transform;
@@ -27,7 +27,7 @@ public class HTeleportal : MonoBehaviour
         PhotonView photonView = other.GetComponent<PhotonView>();
         if (photonView != null)
         {
-            if (photonView.IsMine == true)
+            if (photonView.IsMine)
             {
                 inPotal = false;
                 playerPos = null;
@@ -42,8 +42,8 @@ public class HTeleportal : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.E))
             {
                 inPotal = false;
-                playerPos = null;
                 playerPos.transform.position = otherPortal.transform.position;
+                playerPos = null;
             }
         }
     }

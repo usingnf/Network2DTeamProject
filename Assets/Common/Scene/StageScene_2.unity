@@ -5325,7 +5325,7 @@ PrefabInstance:
     - target: {fileID: 638058019339741307, guid: 6f407aa573196ed45add1ac6a720e4f2,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 638058019339741307, guid: 6f407aa573196ed45add1ac6a720e4f2,
         type: 3}
@@ -5976,6 +5976,11 @@ PrefabInstance:
       propertyPath: portalText
       value: 
       objectReference: {fileID: 1433955683}
+    - target: {fileID: 7005914704153665433, guid: 2d848d5e0a35b6a43900f991d8f59bd2,
+        type: 3}
+      propertyPath: infoText
+      value: 
+      objectReference: {fileID: 94149176}
     - target: {fileID: 7005914704153665433, guid: 2d848d5e0a35b6a43900f991d8f59bd2,
         type: 3}
       propertyPath: spawnPos.Array.data[0]
