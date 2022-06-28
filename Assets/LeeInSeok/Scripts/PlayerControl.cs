@@ -17,7 +17,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
     public float speed = 4.0f;
     public float jumpPower = 5.0f;
-    public float size = 1.0f;
+    private float size = 0.8f;
     public bool isObserve;
     public int observeNumber;                   // 현재 관전중인 플레이어 번호
     public Text text;

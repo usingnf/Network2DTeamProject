@@ -43,7 +43,7 @@ public class StageManager : MonoBehaviourPunCallbacks
     }
 
 
-    void Restart()
+    private void Restart()
     {   
 
         Hashtable props = new Hashtable() { { "RoomState", "ReStart" } };

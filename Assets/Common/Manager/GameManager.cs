@@ -26,7 +26,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     public int masterNum = 0;
     public PlayerControl myPlayer;
 
-
     [Header("Option UI")]
     public GameObject optionUI;
 
@@ -45,7 +44,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             
     }
 
-    public void Start()
+    private void Start()
     {
         if (spawnPos.Length == 0) return;
 
@@ -85,7 +84,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
-    void SetOptionUI(bool isOn)
+    private void SetOptionUI(bool isOn)
     {
         optionUI.SetActive(isOn);
         myPlayer.isStop = isOn;
