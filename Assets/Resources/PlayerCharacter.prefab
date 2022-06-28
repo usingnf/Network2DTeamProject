@@ -421,7 +421,6 @@ MonoBehaviour:
   gravity: 1
   speed: 4
   jumpPower: 5
-  size: 1
   isObserve: 0
   observeNumber: 0
   text: {fileID: 8957238652555610740}
