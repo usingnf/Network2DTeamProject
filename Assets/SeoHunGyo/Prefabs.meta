@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: 7baf42cec491e7c44a5ab2adb595ea1e
+<<<<<<<< HEAD:Assets/HwangInTae/Animation.meta
+guid: d376f6f12e624d748b2ad54ac705d54c
+========
+guid: 6e6f25b6be2f15b4d9cbb32fc9aa2870
+>>>>>>>> main:Assets/SeoHunGyo/Prefabs.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

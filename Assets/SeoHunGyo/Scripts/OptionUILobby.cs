@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OptionUI : MonoBehaviour
+public class OptionUILobby : MonoBehaviour
 {
     public GameObject optionUI;
     public Slider slider;
@@ -18,5 +18,10 @@ public class OptionUI : MonoBehaviour
     public void SetVolume()
     {
         PlayerPrefs.SetFloat("Volume", slider.value);
+    }
+
+    public void ClickOptionExit()
+    {
+        LobbyManager.instance.SetActivePanel(LobbyManager.PANEL.Connect);
     }
 }

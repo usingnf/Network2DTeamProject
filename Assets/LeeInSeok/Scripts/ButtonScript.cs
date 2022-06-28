@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ButtonScript : MonoBehaviourPun
 {
-    public GameObject wall;
+    public List<GameObject> wall = new List<GameObject>();
     public int count = 0;
     public bool defaultState = true;
     public bool permament = false;
@@ -18,6 +18,12 @@ public class ButtonScript : MonoBehaviourPun
     void Start()
     {
         render = GetComponent<SpriteRenderer>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -71,13 +77,25 @@ public class ButtonScript : MonoBehaviourPun
         {
             SoundManager.Instance.PlaySound("Button", transform.position, 1.0f, 1.0f);
             render.sprite = off;
-            wall.SetActive(false);
+            if(wall.Count > 0)
+            {
+                foreach (GameObject obj in wall)
+                {
+                    obj.SetActive(false);
+                }
+            }
         }
         else
         {
             SoundManager.Instance.PlaySound("Button", transform.position, 1.0f, 1.0f);
             render.sprite = on;
-            wall.SetActive(true);
+            if (wall.Count > 0)
+            {
+                foreach (GameObject obj in wall)
+                {
+                    obj.SetActive(true);
+                }
+            }   
         }
     }
 }

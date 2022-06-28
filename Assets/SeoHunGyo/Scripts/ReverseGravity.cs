@@ -10,7 +10,6 @@ public class ReverseGravity : MonoBehaviourPun
 
     private void OnTriggerEnter2D(Collider2D other) 
     {
-
         if (other.CompareTag("Player"))
         {
             PlayerControl player = other.GetComponent<PlayerControl>();
