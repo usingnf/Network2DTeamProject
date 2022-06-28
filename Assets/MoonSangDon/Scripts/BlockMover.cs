@@ -8,6 +8,7 @@ public class BlockMover : MonoBehaviourPun
 
     public int moveFlag = 1;
     public float moveSpeed = 20;
+    public float moveTime;
     public bool upPos;
     public bool fowardPos;
     public bool crossPos;
@@ -82,7 +83,7 @@ public class BlockMover : MonoBehaviourPun
         {
             moveFlag = 1;
         }
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(moveTime);
         StartCoroutine("BlockMove");
     }
 }
