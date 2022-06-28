@@ -13,6 +13,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
     public InputField input;
     public ScrollRect scroll_rect;
     public GameObject chatBox;
+    public GameObject contents;
     string chatters;
 
     float timer;
@@ -56,7 +57,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
                 isAct = true;
                 timerOn = false;
                 input.ActivateInputField();
-
+                
             }
             else if (isAct&&!input.isFocused)
             {
@@ -65,10 +66,14 @@ public class ChatManager : MonoBehaviourPunCallbacks
                 isAct = false;
                 timerOn = true;
                 timer = 0;
+                
             }
         }
+        if(input.isFocused)
+            GameManager.Instance.myPlayer.isStop = true;
+        if (!input.isFocused)
+            GameManager.Instance.myPlayer.isStop = false;
 
-        
     }
     private void SetInvisible()
     {
@@ -100,42 +105,15 @@ public class ChatManager : MonoBehaviourPunCallbacks
     {
         chatLog.text += "\n" + msg;
         scroll_rect.verticalNormalizedPosition = 0.0f;
+        contents.SetActive(true);
     }
-    public void Emote1()
+
+    public void EmoteSystem(int num)
     {
-        Debug.Log("표현1을 사용했습니다");
+        GameManager.Instance.myPlayer.EmoteControl(num);
         timer = 0;
-    }
-    public void Emote2()
-    {
-        Debug.Log("표현2을 사용했습니다");
-        timer = 0;
-    }
-    public void Emote3()
-    {
-        Debug.Log("표현3을 사용했습니다");
-        timer = 0;
-    }
-    public void Emote4()
-    {
-        Debug.Log("표현4을 사용했습니다");
-        timer = 0;
-    }
-    public void Emote5()
-    {
-        Debug.Log("표현5을 사용했습니다");
-        timer = 0;
-    }
-    public void Emote6()
-    {
-        Debug.Log("표현6을 사용했습니다");
-        timer = 0;
-    }
-    public void Emote7()
-    {
-        Debug.Log("표현7을 사용했습니다");
-        timer = 0;
-    }
+    }    
+
     public IEnumerator FadeInStart()
     {
         for (float f = 1; f > 0; f -= 0.02f)

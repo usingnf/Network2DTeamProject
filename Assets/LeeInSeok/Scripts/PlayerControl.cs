@@ -29,6 +29,10 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     public bool isReady = false;    //황인태 추가
     public bool isStop;                         // 입력 안 받는 상태
 
+    public GameObject EmotePos;
+    public GameObject[] EmotesObj;
+    private GameObject Temp;
+
     private void OnEnable() 
     {
         ResetClearCustomProperties();
@@ -58,7 +62,8 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             }
             GameManager.Instance.players.Add(photonView.OwnerActorNr, this.gameObject);
 
-            GameManager.Instance.myPlayer = this;
+            if(photonView.IsMine)
+                GameManager.Instance.myPlayer = this;
         }
         
         if(StageManager.Instance != null)
@@ -67,6 +72,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         }
         
         photonView.RPC("SetName", RpcTarget.All, photonView.Owner.NickName);
+        EmoteInit();
     }
 
     [PunRPC]
@@ -94,6 +100,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
     void Move()
     {
+        EmoteControl();
         int count = 0;
         RaycastHit2D[] downHit = Physics2D.BoxCastAll(transform.position, new Vector2(size - 0.05f, 0.05f), 0, Vector2.down * gravity, size / 2, LayerMask.GetMask("Player", "Obstacle"));
         foreach (RaycastHit2D hit in downHit)
@@ -440,18 +447,168 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
 
     public void ReverseGravity()
-    {   
+    {
         Debug.Log("ReverseGravity()");
         gravity *= -1f;
         rigid.gravityScale = gravity;
-        transform.Rotate(new Vector3(0f, 0f, 180f * gravity), Space.Self); 
+        transform.Rotate(new Vector3(0f, 0f, 180f * gravity), Space.Self);
 
         //Flip(gravity > 0 ? false : true);
 
-        Camera.main.transform.Rotate(new Vector3(0f, 0f, 180f * gravity), Space.Self);   
+        Camera.main.transform.Rotate(new Vector3(0f, 0f, 180f * gravity), Space.Self);
         Camera.main.transform.localPosition = new Vector3(0f, 0f, -10f);
 
-        
+
+    }
+
+    public void EmoteInit()
+    {
+        EmotePos = transform.Find("EmotePos").gameObject;
+        for (int i = 0; i < EmotesObj.Length; i++)
+        {
+            EmotesObj[i].SetActive(false);
+        }
+    }
+
+    [PunRPC]
+    public void EmotePopUp(int Num)
+    {
+        switch (Num)
+        {
+            case 0:
+                if (Temp != null)
+                {
+                    return;
+                }
+                Temp = Instantiate(EmotesObj[0].gameObject, EmotePos.transform);
+                Temp.SetActive(true);
+                Destroy(Temp, 3f);
+                break;
+            case 1:
+                if (Temp != null)
+                {
+                    return;
+                }
+                Temp = Instantiate(EmotesObj[1].gameObject, EmotePos.transform);
+                Temp.SetActive(true);
+                Destroy(Temp, 3f);
+                break;
+            case 2:
+                if (Temp != null)
+                {
+                    return;
+                }
+                Temp = Instantiate(EmotesObj[2].gameObject, EmotePos.transform);
+                Temp.SetActive(true);
+                Destroy(Temp, 3f);
+                break;
+            case 3:
+                if (Temp != null)
+                {
+                    return;
+                }
+                Temp = Instantiate(EmotesObj[3].gameObject, EmotePos.transform);
+                Temp.SetActive(true);
+                Destroy(Temp, 3f);
+                break;
+            case 4:
+                if (Temp != null)
+                {
+                    return;
+                }
+                Temp = Instantiate(EmotesObj[4].gameObject, EmotePos.transform);
+                Temp.SetActive(true);
+                Destroy(Temp, 3f);
+                break;
+            case 5:
+                if (Temp != null)
+                {
+                    return;
+                }
+                Temp = Instantiate(EmotesObj[5].gameObject, EmotePos.transform);
+                Temp.SetActive(true);
+                Destroy(Temp, 3f);
+                break;
+            case 6:
+                if (Temp != null)
+                {
+                    return;
+                }
+                Temp = Instantiate(EmotesObj[6].gameObject, EmotePos.transform);
+                Temp.SetActive(true);
+                Destroy(Temp, 3f);
+                break;
+            case 7:
+                if (Temp != null)
+                {
+                    return;
+                }
+                Temp = Instantiate(EmotesObj[7].gameObject, EmotePos.transform);
+                Temp.SetActive(true);
+                Destroy(Temp, 3f);
+                break;
+            case 8:
+                if (Temp != null)
+                {
+                    return;
+                }
+                Temp = Instantiate(EmotesObj[8].gameObject, EmotePos.transform);
+                Temp.SetActive(true);
+                Destroy(Temp, 3f);
+                break;
+            case 9:
+                if (Temp != null)
+                {
+                    return;
+                }
+                Temp = Instantiate(EmotesObj[9].gameObject, EmotePos.transform);
+                Temp.SetActive(true);
+                Destroy(Temp, 3f);
+                break;
+        }
+    }
+    public void EmoteControl(int num = -1)
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1)||num==0)
+        {
+            photonView.RPC("EmotePopUp", RpcTarget.All, 0);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2) || num == 1)
+        {
+            photonView.RPC("EmotePopUp", RpcTarget.All, 1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3) || num == 2)
+        {
+            photonView.RPC("EmotePopUp", RpcTarget.All, 2);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4) || num == 3)
+        {
+            photonView.RPC("EmotePopUp", RpcTarget.All, 3);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5) || num == 4)
+        {
+            photonView.RPC("EmotePopUp", RpcTarget.All, 4);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha6) || num == 5)
+        {
+            photonView.RPC("EmotePopUp", RpcTarget.All, 5);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha7) || num == 6)
+        {
+            photonView.RPC("EmotePopUp", RpcTarget.All, 6);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha8) || num == 7)
+        {
+            photonView.RPC("EmotePopUp", RpcTarget.All , 7);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha9) || num == 8)
+        {
+            photonView.RPC("EmotePopUp", RpcTarget.All, 8);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha0) || num == 9)
+        {
+            photonView.RPC("EmotePopUp", RpcTarget.All, 9);
+        }
     }
 
 }
