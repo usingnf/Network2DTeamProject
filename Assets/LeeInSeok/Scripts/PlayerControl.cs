@@ -456,99 +456,13 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void EmotePopUp(int Num)
     {
-        switch (Num)
+        if (Temp != null)
         {
-            case 0:
-                if (Temp != null)
-                {
-                    return;
-                }
-                Temp = Instantiate(EmotesObj[0].gameObject, EmotePos.transform);
-                Temp.SetActive(true);
-                Destroy(Temp, 3f);
-                break;
-            case 1:
-                if (Temp != null)
-                {
-                    return;
-                }
-                Temp = Instantiate(EmotesObj[1].gameObject, EmotePos.transform);
-                Temp.SetActive(true);
-                Destroy(Temp, 3f);
-                break;
-            case 2:
-                if (Temp != null)
-                {
-                    return;
-                }
-                Temp = Instantiate(EmotesObj[2].gameObject, EmotePos.transform);
-                Temp.SetActive(true);
-                Destroy(Temp, 3f);
-                break;
-            case 3:
-                if (Temp != null)
-                {
-                    return;
-                }
-                Temp = Instantiate(EmotesObj[3].gameObject, EmotePos.transform);
-                Temp.SetActive(true);
-                Destroy(Temp, 3f);
-                break;
-            case 4:
-                if (Temp != null)
-                {
-                    return;
-                }
-                Temp = Instantiate(EmotesObj[4].gameObject, EmotePos.transform);
-                Temp.SetActive(true);
-                Destroy(Temp, 3f);
-                break;
-            case 5:
-                if (Temp != null)
-                {
-                    return;
-                }
-                Temp = Instantiate(EmotesObj[5].gameObject, EmotePos.transform);
-                Temp.SetActive(true);
-                Destroy(Temp, 3f);
-                break;
-            case 6:
-                if (Temp != null)
-                {
-                    return;
-                }
-                Temp = Instantiate(EmotesObj[6].gameObject, EmotePos.transform);
-                Temp.SetActive(true);
-                Destroy(Temp, 3f);
-                break;
-            case 7:
-                if (Temp != null)
-                {
-                    return;
-                }
-                Temp = Instantiate(EmotesObj[7].gameObject, EmotePos.transform);
-                Temp.SetActive(true);
-                Destroy(Temp, 3f);
-                break;
-            case 8:
-                if (Temp != null)
-                {
-                    return;
-                }
-                Temp = Instantiate(EmotesObj[8].gameObject, EmotePos.transform);
-                Temp.SetActive(true);
-                Destroy(Temp, 3f);
-                break;
-            case 9:
-                if (Temp != null)
-                {
-                    return;
-                }
-                Temp = Instantiate(EmotesObj[9].gameObject, EmotePos.transform);
-                Temp.SetActive(true);
-                Destroy(Temp, 3f);
-                break;
+            return;
         }
+        Temp = Instantiate(EmotesObj[Num].gameObject, EmotePos.transform);
+        Temp.SetActive(true);
+        Destroy(Temp, 3f);
     }
     public void EmoteControl(int num = -1)
     {
