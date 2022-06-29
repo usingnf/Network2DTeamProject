@@ -41,6 +41,8 @@ public class HTeleportal : MonoBehaviour
         {
             if(Input.GetKeyDown(KeyCode.E))
             {
+                if (null == otherPortal)
+                    return;
                 inPotal = false;
                 playerPos.transform.position = otherPortal.transform.position;
                 playerPos = null;
