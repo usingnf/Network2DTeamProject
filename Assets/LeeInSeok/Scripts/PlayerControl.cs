@@ -149,9 +149,10 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             return;
         }
 
+        moveVec = Vector2.zero;
+
         if (!isStop)
         {
-            moveVec = Vector2.zero;
             if (Input.GetKey(KeyCode.A))
             {
                 moveVec += new Vector2(-1, 0);
@@ -167,7 +168,6 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             }
         }
 
-        
         moveVec = moveVec.normalized;
         animator.SetFloat("speed", moveVec.magnitude * speed);
         rigid.position += moveVec * speed * Time.deltaTime;
@@ -334,25 +334,6 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //TODO: 테그 추가해야함.
-        if (collision.gameObject.tag == "Key")
-        {
-            if(collision.GetComponent<KeyScript>().owner == null)
-            {
-                //collision.GetComponent<KeyScript>().SetOwner(this);
-            }
-                
-        }
-        if (collision.gameObject.tag == "Door")
-        {
-            if(this.key != null)
-            {
-                //doorObj = collision.gameObject;
-                //photonView.RPC("UseKey", RpcTarget.All);
-                
-            }
-            
-        }
         if(collision.gameObject.tag == "ReadyPotal")
         {
             if(HInLobby.Instance != null)
@@ -378,9 +359,8 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         }
     }
 
-    public void Reset()
+    public void Return()
     {   
-        // TODO 열쇠 획득 시 열쇠 해제
         transform.position = GameManager.Instance.spawnPos[0].position;
         rigid.velocity = Vector2.zero;
         if (key != null)

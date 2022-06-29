@@ -14,7 +14,7 @@ public class ResetObstacle : MonoBehaviour
                 string.Format("{0}가 원위치 되었습니다", other.gameObject.name)
             );
             //SoundManager.Instance.PlaySound("Die", this.transform.position, 1, 1);
-            other.transform.GetComponent<PlayerControl>().Reset();
+            other.transform.GetComponent<PlayerControl>().Return();
         }
     }
 }

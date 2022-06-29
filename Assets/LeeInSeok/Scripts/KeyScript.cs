@@ -39,6 +39,7 @@ public class KeyScript : MonoBehaviourPun
         
     }
 
+    [PunRPC]
     public void Return()
     {
         owner.GetComponent<PlayerControl>().key = null;
