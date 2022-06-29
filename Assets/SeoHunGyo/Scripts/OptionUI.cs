@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class OptionUI : MonoBehaviour
 {
-    public GameObject optionUI;
-    public Slider slider;
+    public GameObject   optionUI;
+    public Slider       slider;
 
 
     private void OnEnable() 
