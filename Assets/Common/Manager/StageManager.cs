@@ -80,10 +80,13 @@ public class StageManager : MonoBehaviourPunCallbacks
         return true;
     }
 
-    public void GoalIn(PlayerControl player)
+    [PunRPC]
+    public void GoalIn(int playerActNum)
     {
-        clearCount++;
         maxPlayer = PhotonNetwork.PlayerList.Length;
+
+        GameManager.Instance.PrintInfo(string.Format("목적지에 도달하였습니다 {0} / {1}", ++clearCount, maxPlayer));
+
         if(portalText != null)
             portalText.text = $"{clearCount}/{maxPlayer}";
 
@@ -93,7 +96,11 @@ public class StageManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            player.SetObserveMode();
+            GameObject playerObj;
+            GameManager.Instance.players.TryGetValue(playerActNum, out playerObj);
+
+            PlayerControl player = playerObj.GetComponent<PlayerControl>();
+            player?.GoalIn();
         }
     }
 

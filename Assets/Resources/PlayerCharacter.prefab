@@ -189,9 +189,9 @@ GameObject:
   - component: {fileID: 9179771615846864905}
   - component: {fileID: 9179771615846864904}
   - component: {fileID: 9179771615846864902}
-  - component: {fileID: 9179771615846864900}
   - component: {fileID: 9179771615846864896}
   - component: {fileID: 9179771615846864901}
+  - component: {fileID: 9179771615846864900}
   - component: {fileID: 9179771615846864897}
   - component: {fileID: 8177347973882474846}
   - component: {fileID: 4948414743163805168}
@@ -306,36 +306,6 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &9179771615846864900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9179771615846864910}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 9
-    SynchronizeType: 1
-    Name: Die
-  - Type: 4
-    SynchronizeType: 1
-    Name: isJump
-  - Type: 4
-    SynchronizeType: 1
-    Name: isFall
-  - Type: 1
-    SynchronizeType: 1
-    Name: speed
-  m_SynchronizeLayers:
-  - SynchronizeType: 0
-    LayerIndex: 0
 --- !u!114 &9179771615846864896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,6 +350,36 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &9179771615846864900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9179771615846864910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 9
+    SynchronizeType: 1
+    Name: Die
+  - Type: 4
+    SynchronizeType: 1
+    Name: isJump
+  - Type: 4
+    SynchronizeType: 1
+    Name: isFall
+  - Type: 1
+    SynchronizeType: 1
+    Name: speed
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!61 &9179771615846864897
 BoxCollider2D:
   m_ObjectHideFlags: 0
