@@ -253,6 +253,14 @@ public class GameManager : MonoBehaviourPunCallbacks
         return null;
     }
 
+    public IEnumerator MoveScene(int num)
+    {
+        yield return new WaitForSeconds(1.2f);
+        if(PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("StageScene_" + num);
+        }
+    }
 
 
     public override void OnPlayerLeftRoom(Player otherPlayer)

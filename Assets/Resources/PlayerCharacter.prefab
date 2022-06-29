@@ -430,6 +430,7 @@ MonoBehaviour:
   trgJump: 0
   isReady: 0
   isStop: 0
+  isDead: 0
   EmotePos: {fileID: 5794299253002412687}
   EmotesObj:
   - {fileID: 5794299253996477763}

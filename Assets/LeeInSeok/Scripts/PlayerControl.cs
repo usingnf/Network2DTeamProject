@@ -28,6 +28,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     public bool trgJump = false;
     public bool isReady = false;    //황인태 추가
     public bool isStop;                         // 입력 안 받는 상태
+    public bool isDead = false;
 
     public GameObject EmotePos;
     public GameObject[] EmotesObj;
@@ -149,9 +150,9 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             return;
         }
 
+        moveVec = Vector2.zero;
         if (!isStop)
         {
-            moveVec = Vector2.zero;
             if (Input.GetKey(KeyCode.A))
             {
                 moveVec += new Vector2(-1, 0);
@@ -374,11 +375,13 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         {
             if (HInLobby.Instance != null)
                 HInLobby.Instance.readyPlayer--;
-            photonView.RPC("OnReadyCancle", RpcTarget.All);
+            if(isDead == false)
+                photonView.RPC("OnReadyCancle", RpcTarget.All);
         }
     }
 
-    public void Reset()
+    [PunRPC]
+    public void Return()
     {   
         // TODO 열쇠 획득 시 열쇠 해제
         transform.position = GameManager.Instance.spawnPos[0].position;
@@ -410,6 +413,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void OnGameStart()
     {
+        Debug.Log("gs");
         StartCoroutine("GameStart");
     }
     [PunRPC]
@@ -426,16 +430,15 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
             HInLobby.Instance.PrintInfo(i.ToString());
             yield return new WaitForSeconds(1.0f);
         }
-        if(PhotonNetwork.IsMasterClient)
+        this.isDead = true;
+        //if (photonView.IsMine == true)
+        //PhotonNetwork.Destroy(this.gameObject);
+        if (PhotonNetwork.IsMasterClient)
         {
-            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-            foreach (GameObject obj in players)
-            {
-                PhotonNetwork.Destroy(obj);
-            }
-            PhotonNetwork.LoadLevel("StageScene_1");
+            PhotonNetwork.DestroyAll();
+            GameManager.Instance.StartCoroutine(GameManager.Instance.MoveScene(1));
         }
-            
+        
     }
     private IEnumerator ReadyCancle()
     {

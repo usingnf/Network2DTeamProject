@@ -657,10 +657,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 7e19065f-9a35-4791-b1d2-abca90342dca
+  cloudProjectId: 
   framebufferDepthMemorylessMode: 0
-  projectName: Network2DTeamProject (1)
-  organizationId: ghkddlsxo
+  projectName: 
+  organizationId: 
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
