@@ -107,7 +107,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             "displayname",
         };
 
-        Debug.Log(roomPW);
         PhotonNetwork.CreateRoom(roomInfo, roomOptions, null);
         //string roomName = "데구리방 " + Random.Range(1000, 10000);
         //RoomOptions options = new RoomOptions { MaxPlayers = 4 };

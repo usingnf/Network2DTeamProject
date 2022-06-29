@@ -39,9 +39,11 @@ public class KeyScript : MonoBehaviourPun
         
     }
 
+    [PunRPC]
     public void Return()
     {
-        owner.GetComponent<PlayerControl>().key = null;
+        if(owner != null)
+            owner.GetComponent<PlayerControl>().key = null;
         this.owner = null;
         this.transform.position = startVec;
     }

@@ -70,10 +70,15 @@ public class ChatManager : MonoBehaviourPunCallbacks
             }
         }
         if(input.isFocused)
-            GameManager.Instance.myPlayer.isStop = true;
-        if (!input.isFocused)
-            GameManager.Instance.myPlayer.isStop = false;
-
+        {
+            if(GameManager.Instance.myPlayer != null)
+                GameManager.Instance.myPlayer.isStop = true;
+        }
+        else
+        {
+            if (GameManager.Instance.myPlayer != null)
+                GameManager.Instance.myPlayer.isStop = false;
+        }           
     }
     private void SetInvisible()
     {

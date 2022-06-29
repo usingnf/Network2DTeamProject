@@ -109,12 +109,7 @@ public class StageManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.SetCustomProperties(props);
         if(PhotonNetwork.IsMasterClient)
         {
-            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-            foreach (GameObject obj in players)
-            {
-                Debug.Log(obj.name);
-                PhotonNetwork.Destroy(obj);
-            }
+            PhotonNetwork.DestroyAll();
             int sceneNum = SceneUtility.GetBuildIndexByScenePath("StageScene_" + (curStage + 1));
             if (sceneNum <= 0)
             {
