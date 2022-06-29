@@ -6,6 +6,7 @@ using Photon.Pun;
 
 public class MoonsEdit_Reverse : MonoBehaviourPun
 {
+    public GameObject pairObject;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -18,17 +19,17 @@ public class MoonsEdit_Reverse : MonoBehaviourPun
                 GameManager.Instance.PrintInfo("중력 반전");
                 StageManager.Instance.ReverseGravity(player);
 
-                //photonView.RPC("Toggle", RpcTarget.All);
+                photonView.RPC("Toggle", RpcTarget.All);
             }
 
         }
     }
 
-    //[PunRPC]
-    //void Toggle()
-    //{
-    //    pairObject.SetActive(true);
-    //    gameObject.SetActive(false);
-    //}
+    [PunRPC]
+    void Toggle()
+    {
+        pairObject.SetActive(false);
+        gameObject.SetActive(false);
+    }
 
 }

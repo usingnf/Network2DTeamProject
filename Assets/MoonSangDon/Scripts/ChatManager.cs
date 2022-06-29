@@ -110,7 +110,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
     {
         chatLog.text += "\n" + msg;
         scroll_rect.verticalNormalizedPosition = 0.0f;
-        contents.SetActive(true);
+        chatBox.SetActive(true);
     }
 
     public void EmoteSystem(int num)

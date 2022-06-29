@@ -1,35 +1,23 @@
 ﻿using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MoonsEdit_button : MonoBehaviourPun
 {
-    //private SpriteRenderer render;
-    //public Sprite on;
-    public GameObject pairGravity;
-   static public float timer;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.gameObject.tag =="Player")
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-                    photonView.RPC("MoonsButton", RpcTarget.All);
-        }
-    }
-    private void Update()
-    {
-        //timer += Time.deltaTime;
-        //if (timer < 3)
-        //    pairGravity.SetActive(false);
-    }
+            if (other.GetComponent<PhotonView>().IsMine == true)
+            {
+                GameManager.Instance.PrintInfo(
+                string.Format("{0}가 리셋발판을 밟았습니다", other.gameObject.name));
 
-    [PunRPC]
-    public void MoonsButton()
-    {
-            //SoundManager.Instance.PlaySound("Button", transform.position, 1.0f, 1.0f);
-            //render.sprite = on;
-            pairGravity.SetActive(true);
-            timer = 0;
+                //SoundManager.Instance.PlaySound("Die", this.transform.position, 1, 1);
+                PhotonNetwork.LoadLevel("StageScene_5");
+                //other.transform.GetComponent<PlayerControl>().Return();
+            }
+
+        }
     }
 }
