@@ -28,10 +28,8 @@ public class ButtonScript : MonoBehaviourPun
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Debug.Log("collide");
         if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            //Debug.Log("ui");
             if(collision.isTrigger == true)
             {
                 count++;
