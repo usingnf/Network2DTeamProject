@@ -28,7 +28,11 @@ public class ReverseGravity : MonoBehaviourPun
     [PunRPC]
     void Toggle()
     {
-        pairObject.SetActive(true);
+        if (pairObject != null)
+        {
+            pairObject.SetActive(true);
+
+        }
         gameObject.SetActive(false);
     }
     

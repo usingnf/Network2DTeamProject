@@ -285,15 +285,16 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         }
     }
 
-    public void ClearStage()
+    public void GoalIn()
     {
-        if (isClear == true)
+        if (isClear)
             return;
 
         isClear = true;
+
         // 아직 스테이지 완전 클리어 아니면 옵저버 모드로 전환
         SoundManager.Instance.PlaySound("Clear", transform.position, 1.0f, 1.0f);
-        StageManager.Instance.GoalIn(this);
+        SetObserveMode();
     }
 
     public void SetObserveMode()
@@ -305,8 +306,15 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         rigid.velocity = Vector2.zero;
         rigid.gravityScale = 0f;
 
-        observeNumber = photonView.OwnerActorNr;
+        if (photonView.IsMine)
+        {
+            SetObserveCam();
+        }
+    }
 
+    public void SetObserveCam()
+    {
+        observeNumber = photonView.OwnerActorNr;
         ObserveNext(ref observeNumber);
     }
 
@@ -436,12 +444,11 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         rigid.gravityScale = gravity;
         transform.Rotate(new Vector3(0f, 0f, 180f * gravity), Space.Self);
 
-        //Flip(gravity > 0 ? false : true);
+
+        if (!photonView.IsMine) return;
 
         Camera.main.transform.Rotate(new Vector3(0f, 0f, 180f * gravity), Space.Self);
         Camera.main.transform.localPosition = new Vector3(0f, 0f, -10f);
-
-
     }
 
     public void EmoteInit()
