@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HTeleportal : MonoBehaviour
+public class HTeleportal : MonoBehaviourPun
 {
     public HTeleportal otherPortal;
     Transform playerPos;
@@ -39,7 +39,7 @@ public class HTeleportal : MonoBehaviour
     {
         if(inPotal)
         {
-            if(Input.GetKeyDown(KeyCode.E))
+            if(Input.GetKeyDown(KeyCode.E) && playerPos.GetComponent<PhotonView>().IsMine)
             {
                 if (null == otherPortal)
                     return;

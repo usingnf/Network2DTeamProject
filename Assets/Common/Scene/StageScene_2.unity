@@ -126,7 +126,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 181287491}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 461375153289472011, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
@@ -136,17 +136,17 @@ PrefabInstance:
     - target: {fileID: 3591835315754707223, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 3591835315754707223, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 55.220833
+      value: 74.06607
       objectReference: {fileID: 0}
     - target: {fileID: 3591835315754707223, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -14.088211
+      value: -15.27
       objectReference: {fileID: 0}
     - target: {fileID: 3591835315754707223, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
@@ -191,7 +191,7 @@ PrefabInstance:
     - target: {fileID: 5968059448229238138, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
       propertyPath: m_Name
-      value: Teleportal (1)
+      value: Teleportal3
       objectReference: {fileID: 0}
     - target: {fileID: 7883293415603619778, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
@@ -217,12 +217,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 206bcc6cfdad7e34487b2d9cbd5a15c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &24613822 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3591835315754707223, guid: f29a3d32038598e45b56daf79be6117d,
-    type: 3}
-  m_PrefabInstance: {fileID: 24613820}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &38780874
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -668,7 +662,7 @@ Transform:
   m_Children:
   - {fileID: 1468398893}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &94149174
 GameObject:
@@ -1027,40 +1021,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 178937333}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &181287490
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 181287491}
-  m_Layer: 0
-  m_Name: Teleportal
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &181287491
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 181287490}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.845236, y: -1.1817892, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 883560668}
-  - {fileID: 1886896356}
-  - {fileID: 1051677853}
-  - {fileID: 24613822}
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &185382739
 GameObject:
   m_ObjectHideFlags: 0
@@ -3252,7 +3212,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 181287491}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 461375153289472011, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
@@ -3262,17 +3222,17 @@ PrefabInstance:
     - target: {fileID: 3591835315754707223, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 3591835315754707223, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.85
+      value: 25.695236
       objectReference: {fileID: 0}
     - target: {fileID: 3591835315754707223, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.9
+      value: 6.718211
       objectReference: {fileID: 0}
     - target: {fileID: 3591835315754707223, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
@@ -3317,7 +3277,7 @@ PrefabInstance:
     - target: {fileID: 5968059448229238138, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
       propertyPath: m_Name
-      value: Teleportal (1)
+      value: Teleportal
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f29a3d32038598e45b56daf79be6117d, type: 3}
@@ -3333,12 +3293,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 206bcc6cfdad7e34487b2d9cbd5a15c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &883560668 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3591835315754707223, guid: f29a3d32038598e45b56daf79be6117d,
-    type: 3}
-  m_PrefabInstance: {fileID: 883560666}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &883741473
 GameObject:
   m_ObjectHideFlags: 0
@@ -4106,7 +4060,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 181287491}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 461375153289472011, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
@@ -4116,17 +4070,17 @@ PrefabInstance:
     - target: {fileID: 3591835315754707223, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 3591835315754707223, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 49.572357
+      value: 68.417595
       objectReference: {fileID: 0}
     - target: {fileID: 3591835315754707223, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14.871789
+      value: 13.69
       objectReference: {fileID: 0}
     - target: {fileID: 3591835315754707223, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
@@ -4171,7 +4125,7 @@ PrefabInstance:
     - target: {fileID: 5968059448229238138, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
       propertyPath: m_Name
-      value: Teleportal (2)
+      value: Teleportal2
       objectReference: {fileID: 0}
     - target: {fileID: 7883293415603619778, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
@@ -4197,12 +4151,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 206bcc6cfdad7e34487b2d9cbd5a15c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1051677853 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3591835315754707223, guid: f29a3d32038598e45b56daf79be6117d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1051677851}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1068417696
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6564,7 +6512,7 @@ Transform:
   - {fileID: 38780875}
   - {fileID: 910130164}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1674059131
 PrefabInstance:
@@ -6771,7 +6719,7 @@ Transform:
   - {fileID: 1871418676}
   - {fileID: 1154682424}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1744142719
 GameObject:
@@ -7433,7 +7381,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 181287491}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 461375153289472011, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
@@ -7443,17 +7391,17 @@ PrefabInstance:
     - target: {fileID: 3591835315754707223, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 3591835315754707223, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -21.72
+      value: -2.8747635
       objectReference: {fileID: 0}
     - target: {fileID: 3591835315754707223, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.93
+      value: 9.748211
       objectReference: {fileID: 0}
     - target: {fileID: 3591835315754707223, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
@@ -7498,7 +7446,7 @@ PrefabInstance:
     - target: {fileID: 5968059448229238138, guid: f29a3d32038598e45b56daf79be6117d,
         type: 3}
       propertyPath: m_Name
-      value: Teleportal
+      value: Teleportal1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f29a3d32038598e45b56daf79be6117d, type: 3}
@@ -7514,12 +7462,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 206bcc6cfdad7e34487b2d9cbd5a15c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1886896356 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3591835315754707223, guid: f29a3d32038598e45b56daf79be6117d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1886896354}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1910967710
 GameObject:
   m_ObjectHideFlags: 0

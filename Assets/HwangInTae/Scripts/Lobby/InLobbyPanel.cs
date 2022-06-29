@@ -20,8 +20,7 @@ public class InLobbyPanel : MonoBehaviour
 
     private void OnDisable()
     {
-        cachedRoomList.Clear();
-        roomListEntries.Clear();
+        ClearRoomList();
     }
 
     public void OnBackButtonClicked()
