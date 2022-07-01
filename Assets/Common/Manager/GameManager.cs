@@ -82,6 +82,11 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             SetOptionUI(!optionUI.activeSelf);
         }
+
+        if (Input.GetKeyDown(KeyCode.L) && PhotonNetwork.IsMasterClient)
+        {
+            StageManager.Instance.photonView.RPC("Cheat", RpcTarget.All);
+        }
     }
 
     private void SetOptionUI(bool isOn)
@@ -225,7 +230,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 
     public Transform GetNextObserveTF(ref int obNumber)
-    {
+    {   Debug.Log("GetNextObserveTF()");
         for (int i = 1; i <= players.Count; i++)
         {
             obNumber += 1;

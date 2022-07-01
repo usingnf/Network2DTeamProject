@@ -22,7 +22,7 @@ public class HTeleportal : MonoBehaviourPun
         }
         
    }
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         PhotonView photonView = other.GetComponent<PhotonView>();
         if (photonView != null)

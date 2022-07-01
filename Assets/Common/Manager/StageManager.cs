@@ -62,23 +62,23 @@ public class StageManager : MonoBehaviourPunCallbacks
         //PhotonNetwork.LoadLevel("StageScene_" + curStage);
     }
 
-    public bool CheckClear()
-    {
-        foreach (Player player in PhotonNetwork.PlayerList)
-        {   // 플레이어 돌면서 Clear 확인
-            object isClear;
-            if (player.CustomProperties.TryGetValue(GameData.PLAYER_CLEAR, out isClear))
-            {
-                if (!(bool)isClear) 
-                {   //Debug.Log("UnClear");
-                    return false;
-                }
-            }
-        }
+    // public bool CheckClear()
+    // {
+    //     foreach (Player player in PhotonNetwork.PlayerList)
+    //     {   // 플레이어 돌면서 Clear 확인
+    //         object isClear;
+    //         if (player.CustomProperties.TryGetValue(GameData.PLAYER_CLEAR, out isClear))
+    //         {
+    //             if (!(bool)isClear) 
+    //             {   //Debug.Log("UnClear");
+    //                 return false;
+    //             }
+    //         }
+    //     }
 
-        StartCoroutine(StageClear());
-        return true;
-    }
+    //     StartCoroutine(StageClear());
+    //     return true;
+    // }
 
     [PunRPC]
     public void GoalIn(int playerActNum)
@@ -101,7 +101,15 @@ public class StageManager : MonoBehaviourPunCallbacks
 
             PlayerControl player = playerObj.GetComponent<PlayerControl>();
             player?.GoalIn();
+
+            GameManager.Instance.myPlayer.TeamGoalIn(playerActNum);
         }
+    }
+
+    [PunRPC]
+    public void Cheat()
+    {
+        StartCoroutine(StageClear());
     }
 
 
