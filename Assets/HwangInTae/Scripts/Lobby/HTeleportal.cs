@@ -44,7 +44,8 @@ public class HTeleportal : MonoBehaviourPun
                 if (null == otherPortal)
                     return;
                 inPotal = false;
-                playerPos.transform.position = otherPortal.transform.position;
+                //playerPos.transform.position = otherPortal.transform.position;
+                playerPos.GetComponent<PlayerControl>().photonView.RPC("Teleport", RpcTarget.All, otherPortal.transform.position);
                 playerPos = null;
             }
         }

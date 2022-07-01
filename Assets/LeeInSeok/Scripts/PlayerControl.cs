@@ -448,6 +448,12 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
         Camera.main.transform.localPosition = new Vector3(0f, 0f, -10f);
     }
 
+    [PunRPC]
+    public void Teleport(Vector3 pos)
+    {
+        transform.position = pos;
+    }
+
     public void EmoteInit()
     {
         EmotePos = transform.Find("EmotePos").gameObject;

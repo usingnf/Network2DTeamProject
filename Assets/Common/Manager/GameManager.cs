@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     public int masterNum = 0;
     public PlayerControl myPlayer;
 
+    float cheatTimer = 0f;
+
     [Header("Option UI")]
     public GameObject optionUI;
 
@@ -83,9 +85,21 @@ public class GameManager : MonoBehaviourPunCallbacks
             SetOptionUI(!optionUI.activeSelf);
         }
 
-        if (Input.GetKeyDown(KeyCode.L) && PhotonNetwork.IsMasterClient)
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        if (Input.GetKey(KeyCode.L))
         {
-            StageManager.Instance.photonView.RPC("Cheat", RpcTarget.All);
+            cheatTimer += Time.deltaTime;
+        }
+
+        if (Input.GetKeyUp(KeyCode.L))
+        {
+            if (cheatTimer >= 2f)
+            {
+                StageManager.Instance.photonView.RPC("Cheat", RpcTarget.All);
+            }
+
+            cheatTimer = 0f;
         }
     }
 
