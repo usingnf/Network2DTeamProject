@@ -5,28 +5,22 @@ using UnityEngine.UI;
 
 public class OptionUILobby : MonoBehaviour
 {
-    public AudioSource bgm_Source;
     public Slider bgm_Slider;
-    public GameObject bgm_GameObject;
 
     public GameObject optionUI;
     public Slider slider;
 
-    private void Start()
-    {
-        bgm_Source = bgm_GameObject.GetComponent<AudioSource>();
-        bgm_Source.volume = 0.3f;
-        bgm_Slider.value = bgm_Source.volume;
-    }
-
     private void OnEnable() 
     {
         slider.value = PlayerPrefs.GetFloat("Volume");
+        bgm_Slider.value = PlayerPrefs.GetFloat("MusicVolume");
+        SoundManager.Instance.SetMusicVolume(bgm_Slider.value);
     }
     
     public void SetBgmVolume()
     {
-        bgm_Source.volume = bgm_Slider.value;
+        PlayerPrefs.SetFloat("MusicVolume", bgm_Slider.value);
+        SoundManager.Instance.SetMusicVolume(bgm_Slider.value);
     }
 
     public void SetVolume()

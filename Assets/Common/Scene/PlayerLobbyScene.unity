@@ -331,7 +331,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 90eae78e8ce85a849b5b0ca11b2de641, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -2672,6 +2672,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundPrefab: {fileID: 6011528168041591835, guid: e5c3a84913d9cbe4d80aa8038c69ca11,
     type: 3}
+  bgm_Source: {fileID: 112728667}
 --- !u!114 &2121508349
 MonoBehaviour:
   m_ObjectHideFlags: 0

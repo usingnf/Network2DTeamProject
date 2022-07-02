@@ -18,6 +18,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public InRoomPanel inRoomPanel;
     public InfoPanel infoPanel;
     public GameObject optionPanel;
+    
 
     #region UNITY
 
