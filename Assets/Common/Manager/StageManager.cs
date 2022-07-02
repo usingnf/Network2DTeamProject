@@ -88,7 +88,11 @@ public class StageManager : MonoBehaviourPunCallbacks
         GameManager.Instance.PrintInfo(string.Format("목적지에 도달하였습니다 {0} / {1}", ++clearCount, maxPlayer));
 
         if(portalText != null)
-            portalText.text = $"{clearCount}/{maxPlayer}";
+        {
+            if(clearCount <= maxPlayer)
+                portalText.text = $"{clearCount}/{maxPlayer}";
+        }
+            
 
         if (clearCount == PhotonNetwork.PlayerList.Length)
         {

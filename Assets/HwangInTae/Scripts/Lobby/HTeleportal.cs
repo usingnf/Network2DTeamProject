@@ -22,9 +22,10 @@ public class HTeleportal : MonoBehaviourPun
         }
         
    }
-    private void OnTriggerExit(Collider other)
+
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        PhotonView photonView = other.GetComponent<PhotonView>();
+        PhotonView photonView = collision.GetComponent<PhotonView>();
         if (photonView != null)
         {
             if (photonView.IsMine)
@@ -33,8 +34,8 @@ public class HTeleportal : MonoBehaviourPun
                 playerPos = null;
             }
         }
-            
     }
+
     private void Update()
     {
         if(inPotal)
