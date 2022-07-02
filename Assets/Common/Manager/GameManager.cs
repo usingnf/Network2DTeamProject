@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     public int masterNum = 0;
     public PlayerControl myPlayer;
 
+    float cheatTimer = 0f;
+
     [Header("Option UI")]
     public GameObject optionUI;
 
@@ -81,6 +83,23 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (Input.GetButtonDown("Cancel"))
         {
             SetOptionUI(!optionUI.activeSelf);
+        }
+
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        if (Input.GetKey(KeyCode.L))
+        {
+            cheatTimer += Time.deltaTime;
+        }
+
+        if (Input.GetKeyUp(KeyCode.L))
+        {
+            if (cheatTimer >= 2f)
+            {
+                StageManager.Instance.photonView.RPC("Cheat", RpcTarget.All);
+            }
+
+            cheatTimer = 0f;
         }
     }
 
@@ -225,7 +244,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 
     public Transform GetNextObserveTF(ref int obNumber)
-    {
+    {   Debug.Log("GetNextObserveTF()");
         for (int i = 1; i <= players.Count; i++)
         {
             obNumber += 1;

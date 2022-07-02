@@ -19,13 +19,6 @@ public class ClearPortal : MonoBehaviourPun
 
                 StageManager.Instance.photonView.RPC("GoalIn", RpcTarget.All , player.photonView.OwnerActorNr);
 
-                // if (other.transform.GetComponent<PlayerControl>().isClear == true)
-                //     return;
-                // GameManager.Instance.PrintInfo(
-                //     string.Format("{0}가 목적지에 도달하였습니다", other.gameObject.name)
-                // );
-                
-                // other.transform.GetComponent<PlayerControl>().ClearStage();
             }
 
             

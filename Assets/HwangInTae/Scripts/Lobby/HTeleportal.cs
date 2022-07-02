@@ -22,7 +22,7 @@ public class HTeleportal : MonoBehaviourPun
         }
         
    }
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         PhotonView photonView = other.GetComponent<PhotonView>();
         if (photonView != null)
@@ -44,7 +44,8 @@ public class HTeleportal : MonoBehaviourPun
                 if (null == otherPortal)
                     return;
                 inPotal = false;
-                playerPos.transform.position = otherPortal.transform.position;
+                //playerPos.transform.position = otherPortal.transform.position;
+                playerPos.GetComponent<PlayerControl>().photonView.RPC("Teleport", RpcTarget.All, otherPortal.transform.position);
                 playerPos = null;
             }
         }

@@ -49,36 +49,39 @@ public class StageManager : MonoBehaviourPunCallbacks
         Hashtable props = new Hashtable() { { "RoomState", "ReStart" } };
         PhotonNetwork.CurrentRoom.SetCustomProperties(props);
 
-        //PhotonNetwork.LoadLevel("GameScene");
         PlayerPrefs.SetInt("Stage", curStage);
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        foreach (GameObject obj in players)
-        {
-            Debug.Log(obj.name);
-            PhotonNetwork.Destroy(obj);
-        }
+
+        // foreach (GameObject obj in players)
+        // {
+        //     Debug.Log(obj.name);
+        //     PhotonNetwork.Destroy(obj);
+        // }
+
         if(PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.DestroyAll();
             PhotonNetwork.LoadLevel("LoadingScene");
-        //PhotonNetwork.LoadLevel("StageScene_" + curStage);
-    }
-
-    public bool CheckClear()
-    {
-        foreach (Player player in PhotonNetwork.PlayerList)
-        {   // 플레이어 돌면서 Clear 확인
-            object isClear;
-            if (player.CustomProperties.TryGetValue(GameData.PLAYER_CLEAR, out isClear))
-            {
-                if (!(bool)isClear) 
-                {   //Debug.Log("UnClear");
-                    return false;
-                }
-            }
         }
-
-        StartCoroutine(StageClear());
-        return true;
     }
+
+    // public bool CheckClear()
+    // {
+    //     foreach (Player player in PhotonNetwork.PlayerList)
+    //     {   // 플레이어 돌면서 Clear 확인
+    //         object isClear;
+    //         if (player.CustomProperties.TryGetValue(GameData.PLAYER_CLEAR, out isClear))
+    //         {
+    //             if (!(bool)isClear) 
+    //             {   //Debug.Log("UnClear");
+    //                 return false;
+    //             }
+    //         }
+    //     }
+
+    //     StartCoroutine(StageClear());
+    //     return true;
+    // }
 
     [PunRPC]
     public void GoalIn(int playerActNum)
@@ -101,7 +104,15 @@ public class StageManager : MonoBehaviourPunCallbacks
 
             PlayerControl player = playerObj.GetComponent<PlayerControl>();
             player?.GoalIn();
+
+            GameManager.Instance.myPlayer.TeamGoalIn(playerActNum);
         }
+    }
+
+    [PunRPC]
+    public void Cheat()
+    {
+        StartCoroutine(StageClear());
     }
 
 

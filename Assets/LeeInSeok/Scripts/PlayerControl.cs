@@ -21,8 +21,7 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     public bool isObserve;
     public int observeNumber;                   // 현재 관전중인 플레이어 번호
     public Text text;
-    public KeyScript key = null;
-    private GameObject doorObj = null;             
+    public KeyScript key = null;       
     public bool isClear = false;
     public bool isShoot;
     public bool trgJump = false;
@@ -292,7 +291,6 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
         isClear = true;
 
-        // 아직 스테이지 완전 클리어 아니면 옵저버 모드로 전환
         SoundManager.Instance.PlaySound("Clear", transform.position, 1.0f, 1.0f);
         SetObserveMode();
     }
@@ -313,34 +311,33 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
     }
 
     public void SetObserveCam()
-    {
+    {   
         observeNumber = photonView.OwnerActorNr;
         ObserveNext(ref observeNumber);
     }
 
     private void ObserveNext(ref int obNumber)
-    {
-        Transform observer = GameManager.Instance.GetNextObserveTF(ref obNumber);
-        if(observer != null)
+    {   
+        Transform observeTF = GameManager.Instance.GetNextObserveTF(ref obNumber);
+        if (observeTF != null)
         {
-            Camera.main.GetComponent<HCameraController>().target = observer.gameObject;
-            Camera.main.transform.SetParent(GameManager.Instance.GetNextObserveTF(ref obNumber));
+            Camera.main.GetComponent<HCameraController>().target = observeTF.gameObject;
+            Camera.main.transform.SetParent(observeTF);
             //Camera.main.transform.localPosition = new Vector3(0f, 0f, -10f);
         }
 
     }
-    
-    [PunRPC]
-    void UseKey()
-    {
-        if (this.key != null)
-        {
-            Destroy(key.gameObject);
-            this.key = null;
-            Destroy(doorObj);
-        }
-    } 
 
+    public void TeamGoalIn(int actorNumber)
+    {   
+        if (!isObserve) return;
+
+        if (observeNumber == actorNumber)
+        {
+            ObserveNext(ref observeNumber);
+        }
+    }
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "ReadyPotal")
@@ -449,6 +446,12 @@ public class PlayerControl : MonoBehaviourPun, IPunObservable
 
         Camera.main.transform.Rotate(new Vector3(0f, 0f, 180f * gravity), Space.Self);
         Camera.main.transform.localPosition = new Vector3(0f, 0f, -10f);
+    }
+
+    [PunRPC]
+    public void Teleport(Vector3 pos)
+    {
+        transform.position = pos;
     }
 
     public void EmoteInit()
