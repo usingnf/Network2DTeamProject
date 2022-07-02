@@ -9110,6 +9110,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5917063139092713733, guid: 2d848d5e0a35b6a43900f991d8f59bd2,
+        type: 3}
+      propertyPath: bgm_Source
+      value: 
+      objectReference: {fileID: 1832660815}
     - target: {fileID: 7005914704153665428, guid: 2d848d5e0a35b6a43900f991d8f59bd2,
         type: 3}
       propertyPath: m_Name
@@ -9169,6 +9174,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7005914704153665431, guid: 2d848d5e0a35b6a43900f991d8f59bd2,
+        type: 3}
+      propertyPath: curStage
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7005914704153665431, guid: 2d848d5e0a35b6a43900f991d8f59bd2,
         type: 3}
